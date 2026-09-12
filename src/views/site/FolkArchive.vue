@@ -96,7 +96,7 @@ const ARCHIVES = [
       { heading: '存疑', text: '“沈砚秋”一名，在 1927 年万和号账簿中并不存在；而本馆《馆员登记表》中另有一名“沈砚秋”，在编，入职年份早于本馆成立。' }
     ],
     images: [
-      { key: 'family-tree', src: '/img/qianwen.webp', caption: '沈晚族谱 · 谱末残页' }
+      { key: 'family-tree', src: '/img/zupu.webp', caption: '沈晚族谱 · 谱末残页' }
     ],
     linkedTo: '/help',
     linkLabel: '查看关联线索',
