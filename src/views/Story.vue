@@ -68,7 +68,6 @@ import game from '../stores/game'
 import FRAGMENTS from '../data/fragments'
 import Glitch from '../components/Glitch.vue'
 import { glitch } from '../utils/glitch'
-import { levelOf } from '../data/net'
 
 const wish = ref('')
 
