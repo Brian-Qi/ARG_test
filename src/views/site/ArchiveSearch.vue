@@ -84,7 +84,7 @@ const ALL = [
   { title: '「君子爱财，取之有道」考释', type: '思想考释', id: '专题 CW-0013', desc: '由《论语》富与贵之辩出发，考释"取之有道""为富且仁"在民间财神信俗中的渗透。', kw: ['取之有道', '君子爱财', '为富且仁', '义利'] },
   { title: '「以德聚财，以财济世」理念溯源', type: '思想考释', id: '专题 CW-0014', desc: '探讨财神信俗精髓"以德聚财、以财济世"，如何体现民间光明磊落的财富观。', kw: ['以德聚财', '济世', '财富观'] },
   // —— 隐匿族谱：解锁后才会出现 ——
-  { title: '沈晚族谱', type: '家谱档案', id: '馆藏号 SP-1927-0007', hidden: true, desc: '万和号店主沈氏一族家谱。谱末一栏记其后人：女，沈晚。父，沈砚秋。', kw: ['沈晚', '族谱', '沈砚秋', '家谱'] }
+  { to: '/archives/SP-1927-0007', title: '沈晚族谱', type: '家谱档案', id: '馆藏号 SP-1927-0007', hidden: true, desc: '万和号店主沈氏一族家谱。谱末一栏记其后人：女，沈晚。父，沈砚秋。', kw: ['沈晚', '族谱', '沈砚秋', '家谱'] }
 ]
 
 const results = computed(() => {
@@ -106,18 +106,14 @@ const snippetRows = [
 
 function goSearch() {
   const v = kw.value.trim()
-  if (!v) router.replace({ path: '/search' })
-  else if (/沈砚秋/.test(v)) { markShenSearched(); router.replace('/help') }
-  else router.replace({ path: '/search', query: { q: v } })
+  if (!v) { router.replace({ path: '/search' }); return }
+  if (/沈砚秋/.test(v)) markShenSearched()
+  router.replace({ path: '/search', query: { q: v } })
 }
 
 function applyQuery() {
   q.value = (route.query.q || '').toString()
-  if (/沈砚秋/.test(q.value)) {
-    markShenSearched()
-    router.replace('/help')
-    return
-  }
+  if (/沈砚秋/.test(q.value)) markShenSearched()
   kw.value = q.value
   flashDone.value = false
   showGhost.value = false

@@ -26,7 +26,6 @@
         </p>
         <p v-if="m.type === 'shen' && unlocked" class="msg-note">
           族谱已解锁：可在「馆藏检索」输入 <b>沈砚秋</b>。
-          <RouterLink class="btn-flat" to="/help">前往帮助</RouterLink>
         </p>
 
         <time class="msg-time">{{ fmt(m.time) }}</time>
