@@ -25,4 +25,8 @@ Thumbs.db
 
 # 本地文档（保留在本地，不入库）
 *.md
+!README.md
 *.xlsx
+
+# 未启用的素材暂存
+new_img/
