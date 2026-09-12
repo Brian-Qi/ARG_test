@@ -118,7 +118,8 @@ watch(() => chosen.value.join('|'), () => {
     return
   }
   if (val.join('') === recorded.join('')) {
-    // 照录音先后选的——正是最容易踩的坑：给引导，不吓唬
+    // 照录音先后选的——最容易踩的坑：给引导，同时照跳脸
+    game.triggerScare('face', '不要数到六。')
     message.value = '算盘重新响起。它没有说你错，只说“耳听为虚，眼见为实”。'
     return
   }
