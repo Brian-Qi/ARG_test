@@ -2,12 +2,17 @@
   <div>
     <p class="page-back"><RouterLink class="back-link" to="/">← 返回首页</RouterLink></p>
 
-    <article class="archive-panel">
+    <article v-if="notice" class="archive-panel">
       <h1 class="notice-detail-title">{{ notice.title }}</h1>
       <p class="muted notice-detail-meta">发布日期：{{ notice.date }}　来源：杭州民俗数字档案馆</p>
       <hr class="notice-detail-divider" />
       <p v-for="(p, i) in notice.body" :key="i">{{ p }}</p>
     </article>
+
+    <div v-else class="archive-panel">
+      <h1>公告不存在</h1>
+      <p class="muted">该公告可能已撤下，或编号有误。</p>
+    </div>
 
     <h2 class="section-title">往期公告</h2>
     <div class="notice-list">
@@ -110,9 +115,6 @@ const ALL = [
   }
 ]
 
-const notice = computed(() => {
-  const id = route.params.id || '1'
-  return ALL.find(n => n.id === id) || ALL[0]
-})
-const others = computed(() => ALL.filter(n => n.id !== notice.value.id))
+const notice = computed(() => ALL.find(n => n.id === route.params.id))
+const others = computed(() => (notice.value ? ALL.filter(n => n.id !== notice.value.id) : ALL))
 </script>
