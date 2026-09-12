@@ -1,7 +1,7 @@
 import { reactive, watch } from 'vue'
 
 // 需持久化的字段（白名单；scare 等瞬时状态不入盘）
-const PERSIST_KEYS = ['wish', 'signed', 'roadSolved', 'audioSolved', 'portraitSolved', 'ending', 'shortcuts', 'pagesRead', 'keys', 'read']
+const PERSIST_KEYS = ['wish', 'signed', 'roadSolved', 'audioSolved', 'portraitSolved', 'ending', 'shortcuts', 'keys', 'read']
 const K_STATE = 'cx_game'
 const K_SEEN = 'cx_seen_hidden'
 const K_FAMILY = 'cx_family_unlocked'
@@ -32,7 +32,6 @@ const state = reactive({
   ending: null,           // 结账
   scare: null,
   shortcuts: 0,
-  pagesRead: 0,
   keys: {},               // 已获得钥匙（碎片网解锁用）
   read: {}                // 已调阅碎片（隐藏碎片的揭示）
 })
@@ -107,7 +106,7 @@ function triggerScare(type, text) {
 function reset() {
   Object.assign(state, {
     wish: '', signed: false, roadSolved: false, audioSolved: false, portraitSolved: false,
-    ending: null, scare: null, shortcuts: 0, pagesRead: 0, keys: {}, read: {}
+    ending: null, scare: null, shortcuts: 0, keys: {}, read: {}
   })
   localStorage.removeItem(K_STATE)
   localStorage.removeItem(K_SEEN)
