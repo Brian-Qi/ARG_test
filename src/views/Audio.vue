@@ -2,14 +2,17 @@
   <div class="audio-widget">
     <audio
       ref="audioEl"
-      class="tape-audio"
+      :class="native ? 'tape-audio native' : 'tape-audio'"
+      :controls="native"
       src="/audio/rec.mp3"
-      preload="none"
+      preload="metadata"
+      playsinline
       @timeupdate="onTime"
       @loadedmetadata="onMeta"
       @ended="onEnd"
       @play="onPlay"
       @pause="onPause"
+      @error="onError"
     ></audio>
 
     <div class="audio-layout">
@@ -56,7 +59,7 @@
         </div>
       </div>
 
-      <div class="tape">
+      <div class="tape" @click="toggle" title="播放 / 暂停" role="button" tabindex="0" @keydown.enter="toggle">
         <div class="tape-window"><span>REC</span><b>00:03:47</b></div>
         <div class="reel left"></div>
         <div class="reel right"></div>
@@ -65,6 +68,8 @@
         <span class="tape-blood" aria-hidden="true"></span>
       </div>
     </div>
+
+    <p v-if="hint" class="deck-hint">{{ hint }}</p>
 
     <Transition name="reveal-in">
       <div v-if="message" class="archive-panel audio-answer"><p>{{ message }}</p></div>
@@ -98,6 +103,8 @@ const timeText = ref('00:00')
 
 const audioEl = ref(null)
 const waveEl = ref(null)
+const native = ref(false)   // 播放被拦时，露出系统原生播放器兜底
+const hint = ref('')
 
 watch(() => chosen.value.join('|'), () => {
   const val = chosen.value
@@ -119,10 +126,24 @@ function pick(c) {
 function resetOrder() { chosen.value = [] }
 
 // —— 播放 / 定位 ——
-function toggle() {
+async function toggle() {
   const a = audioEl.value
   if (!a) return
-  if (a.paused) a.play().catch(() => {}); else a.pause()
+  if (!a.paused) { a.pause(); return }
+  try {
+    await a.play()
+    hint.value = ''
+  } catch (e) {
+    // 被浏览器/自动播放策略拦下：露出系统原生播放器兜底
+    native.value = true
+    hint.value = '当前浏览器阻止了自定义播放，已切换为系统播放器，请点下方播放键。'
+  }
+}
+function onError() {
+  const a = audioEl.value
+  const code = a && a.error ? a.error.code : '?'
+  native.value = true
+  hint.value = '音频加载失败（错误码 ' + code + '），请点下方系统播放器重试。'
 }
 function seek(e) {
   const a = audioEl.value
@@ -167,7 +188,11 @@ async function loadPeaks() {
   } catch (e) { /* 断网/解码失败 → 保留空波形 */ }
 }
 
-onMounted(loadPeaks)
+onMounted(() => {
+  loadPeaks()
+  const a = audioEl.value
+  if (a) a.load()
+})
 onBeforeUnmount(() => { if (actx) { actx.close(); actx = null } })
 </script>
 
@@ -198,6 +223,8 @@ onBeforeUnmount(() => { if (actx) { actx.close(); actx = null } })
 .order-empty { font-size: 0.78rem; color: #6f5a3d; }
 .reset-order { margin-left: auto; }
 
-/* 隐式播放器 */
-.tape-audio { display: none; }
+/* 隐式播放器：视觉隐藏（而非 display:none，避免部分浏览器不播）；被拦时露出原生控件 */
+.tape-audio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.tape-audio.native { position: static; width: 100%; height: auto; opacity: 1; pointer-events: auto; margin: 0.8rem 0 0; }
+.deck-hint { margin: 0.6rem 0 0; font-size: 0.78rem; color: #d8a24a; }
 </style>
