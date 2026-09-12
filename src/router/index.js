@@ -24,6 +24,9 @@ const router = createRouter({
 
     /* ================= B 层 · 馆藏异变副本（碎片网） ================= */
     { path: '/story', name: 'story', component: () => import('../views/Story.vue'), meta: { mode: 'vault', title: '馆藏总目 - 杭州民俗数字档案馆' } },
+    { path: '/vault-search', name: 'vault-search', component: () => import('../views/VaultSearch.vue'), meta: { mode: 'vault', title: '馆藏检索 - 杭州民俗数字档案馆' } },
+    { path: '/journal', name: 'vault-journal', component: () => import('../views/VaultJournal.vue'), meta: { mode: 'vault', title: '研究辑录 - 杭州民俗数字档案馆' } },
+    { path: '/journal/:id', name: 'vault-article', component: () => import('../views/VaultArticle.vue'), meta: { mode: 'vault', title: '研究辑录 - 杭州民俗数字档案馆' } },
     { path: '/f/:id', name: 'vault-fragment', component: () => import('../views/VaultFragment.vue'), meta: { mode: 'vault', title: '馆藏卷宗 - 杭州民俗数字档案馆' } },
     { path: '/e/:id', name: 'vault-entity', component: () => import('../views/VaultEntity.vue'), meta: { mode: 'vault', title: '名号索引 - 杭州民俗数字档案馆' } },
     { path: '/strike-zero', name: 'strike-zero', component: () => import('../views/StrikeZero.vue'), meta: { mode: 'vault', title: '万和号 · 第零笔' } },

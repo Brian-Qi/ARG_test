@@ -75,8 +75,8 @@ const ARCHIVES = [
       { heading: '整理流程', text: '按征集登记、除尘修复、逐页扫描、文字著录、双人复核、分级公开的流程推进，著录馆藏号、年代、店号、经营内容、页数等字段。' }
     ],
     images: [
-      { key: 'folk-01', src: '/img/folk-01.png', caption: '近代商号账簿书影' },
-      { key: 'folk-02', src: '/img/folk-02.png', caption: '账册逐页扫描场景' }
+      { key: 'folk-01', src: '/img/folk-01.webp', caption: '近代商号账簿书影' },
+      { key: 'folk-02', src: '/img/folk-02.webp', caption: '账册逐页扫描场景' }
     ],
     linkedTo: '/digital-project',
     linkLabel: '查看项目详情',
@@ -94,8 +94,8 @@ const ARCHIVES = [
       { heading: '整理原则', text: '按"信俗类型—地域—年代"三级分类著录，对存在异说的材料采取并列存目、注明歧异的方式，保留原始面貌。' }
     ],
     images: [
-      { key: 'folk-03', src: '/img/folk-03.png', caption: '财神信俗文献书影' },
-      { key: 'folk-04', src: '/img/folk-04.png', caption: '旧刻财神经册内页' }
+      { key: 'folk-03', src: '/img/folk-03.webp', caption: '财神信俗文献书影' },
+      { key: 'folk-04', src: '/img/folk-04.webp', caption: '旧刻财神经册内页' }
     ],
     from: '/'
   },
@@ -111,8 +111,8 @@ const ARCHIVES = [
       { heading: '吉祥符号', text: '画面中的元宝、聚宝盆、如意、连钱等符号逐一考源，说明其在民间表达中"招财纳福"的象征意义。' }
     ],
     images: [
-      { key: 'folk-05', src: '/img/folk-05.png', caption: '五路财神年画横幅' },
-      { key: 'folk-06', src: '/img/folk-06.png', caption: '财神年画版印拓本' }
+      { key: 'folk-05', src: '/img/folk-05.webp', caption: '五路财神年画横幅' },
+      { key: 'folk-06', src: '/img/folk-06.webp', caption: '财神年画版印拓本' }
     ],
     from: '/'
   },
@@ -128,8 +128,8 @@ const ARCHIVES = [
       { heading: '著录方法', text: '逐页著录日期、摘要、金额与经手人，对残缺处按规范标注，兼顾版式与笔迹信息的保留。' }
     ],
     images: [
-      { key: 'folk-07', src: '/img/folk-07.png', caption: '民国商号流水账页' },
-      { key: 'folk-08', src: '/img/folk-08.png', caption: '旧商铺契约单据' }
+      { key: 'folk-07', src: '/img/folk-07.webp', caption: '民国商号流水账页' },
+      { key: 'folk-08', src: '/img/folk-08.webp', caption: '旧商铺契约单据' }
     ],
     from: '/'
   },
@@ -145,8 +145,8 @@ const ARCHIVES = [
       { heading: '应用场合', text: '按年节开市、乔迁、祭祀等场合分列，附注仪式中的赞礼、上香与化疏等环节说明。' }
     ],
     images: [
-      { key: 'folk-09', src: '/img/folk-09.png', caption: '祭财神祝文抄本' },
-      { key: 'folk-10', src: '/img/folk-10.png', caption: '商铺开市化疏仪式' }
+      { key: 'folk-09', src: '/img/folk-09.webp', caption: '祭财神祝文抄本' },
+      { key: 'folk-10', src: '/img/folk-10.webp', caption: '商铺开市化疏仪式' }
     ],
     from: '/'
   },
@@ -162,8 +162,8 @@ const ARCHIVES = [
       { heading: '著录说明', text: '对碑额、碑阴、款识与拓本年代逐项著录，辨析漫漶文字，附碑文重录与存疑标记。' }
     ],
     images: [
-      { key: 'folk-11', src: '/img/folk-11.png', caption: '施粥义举碑记拓片' },
-      { key: 'folk-12', src: '/img/folk-12.png', caption: '行会公所碑文拓片' }
+      { key: 'folk-11', src: '/img/folk-11.webp', caption: '施粥义举碑记拓片' },
+      { key: 'folk-12', src: '/img/folk-12.webp', caption: '行会公所碑文拓片' }
     ],
     from: '/'
   },
@@ -179,8 +179,8 @@ const ARCHIVES = [
       { heading: '古俗寓意', text: '解读点灯为"照亮财路"、供三牲为"酬谢神佑"等象征，说明民间渴望丰盈的朴素心理。' }
     ],
     images: [
-      { key: 'folk-13', src: '/img/folk-13.png', caption: '破五开市敬神供桌' },
-      { key: 'folk-14', src: '/img/folk-14.png', caption: '商铺点灯迎财场景' }
+      { key: 'folk-13', src: '/img/folk-13.webp', caption: '破五开市敬神供桌' },
+      { key: 'folk-14', src: '/img/folk-14.webp', caption: '商铺点灯迎财场景' }
     ],
     from: '/'
   },
@@ -196,8 +196,8 @@ const ARCHIVES = [
       { heading: '当代形态', text: '记录庙会、商铺供奉与新式求财习俗，探讨传统信俗在现代社会中的延续与变易。' }
     ],
     images: [
-      { key: 'folk-15', src: '/img/folk-15.png', caption: '田野访谈财神神龛' },
-      { key: 'folk-16', src: '/img/folk-16.png', caption: '庙会祈财场面旧照' }
+      { key: 'folk-15', src: '/img/folk-15.webp', caption: '田野访谈财神神龛' },
+      { key: 'folk-16', src: '/img/folk-16.webp', caption: '庙会祈财场面旧照' }
     ],
     from: '/'
   },
@@ -215,8 +215,8 @@ const ARCHIVES = [
       { heading: '著录说明', text: '该账册纸张脆化、部分页角缺损，著录时对缺损处以"□"标示；个别影像页与著录页码存在错位，以纸质原件为准。' }
     ],
     images: [
-      { key: 'folk-17', src: '/img/folk-17.png', caption: '万和号流水账首页' },
-      { key: 'folk-18', src: '/img/folk-18.png', caption: '账页著录文字样张' }
+      { key: 'folk-17', src: '/img/folk-17.webp', caption: '万和号流水账首页' },
+      { key: 'folk-18', src: '/img/folk-18.webp', caption: '账页著录文字样张' }
     ],
     linkedTo: '/collection/HZ-1927-0512',
     linkLabel: '查看完整馆藏',
@@ -234,8 +234,8 @@ const ARCHIVES = [
       { heading: '财神化进程', text: '由五路之"神"逐步演进为具体的历史人物财神，反映民间信仰由泛神向人神复合的转向。' }
     ],
     images: [
-      { key: 'folk-19', src: '/img/folk-19.png', caption: '五路财神组合神像' },
-      { key: 'folk-20', src: '/img/folk-20.png', caption: '五路通财年画' }
+      { key: 'folk-19', src: '/img/folk-19.webp', caption: '五路财神组合神像' },
+      { key: 'folk-20', src: '/img/folk-20.webp', caption: '五路通财年画' }
     ],
     from: '/'
   },
@@ -251,8 +251,8 @@ const ARCHIVES = [
       { heading: '定型之后', text: '封号"金龙如意正一龙虎玄坛真君"，黑面浓须、骑黑虎、持银鞭与元宝，兼掌驱雷除瘟与管领财运。' }
     ],
     images: [
-      { key: 'folk-21', src: '/img/folk-21.png', caption: '赵公明骑虎形象' },
-      { key: 'folk-22', src: '/img/folk-22.png', caption: '玄坛真君神签' }
+      { key: 'folk-21', src: '/img/folk-21.webp', caption: '赵公明骑虎形象' },
+      { key: 'folk-22', src: '/img/folk-22.webp', caption: '玄坛真君神签' }
     ],
     from: '/'
   },
@@ -268,8 +268,8 @@ const ARCHIVES = [
       { heading: '三教共尊', text: '关羽一身兼为佛之护法、道之圣君、儒之文衡，在跨信仰背景下更添"义中求财"的普适性。' }
     ],
     images: [
-      { key: 'folk-23', src: '/img/folk-23.png', caption: '关公读春秋立像' },
-      { key: 'folk-24', src: '/img/folk-24.png', caption: '武财神关公神像' }
+      { key: 'folk-23', src: '/img/folk-23.webp', caption: '关公读春秋立像' },
+      { key: 'folk-24', src: '/img/folk-24.webp', caption: '武财神关公神像' }
     ],
     from: '/'
   },
@@ -285,8 +285,8 @@ const ARCHIVES = [
       { heading: '文财神之德', text: '文财神多以文官形象出现，寓意以德行财、以公持家，构成民间"取之有道"的人格化身。' }
     ],
     images: [
-      { key: 'folk-25', src: '/img/folk-25.png', caption: '文财神比干画像' },
-      { key: 'folk-26', src: '/img/folk-26.png', caption: '公正无私文财神' }
+      { key: 'folk-25', src: '/img/folk-25.webp', caption: '文财神比干画像' },
+      { key: 'folk-26', src: '/img/folk-26.webp', caption: '公正无私文财神' }
     ],
     from: '/'
   },
@@ -302,8 +302,8 @@ const ARCHIVES = [
       { heading: '职司分化', text: '招宝、纳珍、招财、利市四司分别掌宝货、财珍、财运与市利，体现民间对财源精细化的祈愿。' }
     ],
     images: [
-      { key: 'folk-27', src: '/img/folk-27.png', caption: '小五路财神方位图' },
-      { key: 'folk-28', src: '/img/folk-28.png', caption: '利市仙官神像' }
+      { key: 'folk-27', src: '/img/folk-27.webp', caption: '小五路财神方位图' },
+      { key: 'folk-28', src: '/img/folk-28.webp', caption: '利市仙官神像' }
     ],
     from: '/'
   },
@@ -319,8 +319,8 @@ const ARCHIVES = [
       { heading: '民间化表达', text: '财神信俗将"取之有道"具象化，劝人诚信经营、以德聚财，遂使儒家伦理融入民间求财心理。' }
     ],
     images: [
-      { key: 'folk-29', src: '/img/folk-29.png', caption: '《论语》富与贵书页' },
-      { key: 'folk-30', src: '/img/folk-30.png', caption: '诚信经营商训匾额' }
+      { key: 'folk-29', src: '/img/folk-29.webp', caption: '《论语》富与贵书页' },
+      { key: 'folk-30', src: '/img/folk-30.webp', caption: '诚信经营商训匾额' }
     ],
     from: '/'
   },
@@ -336,8 +336,42 @@ const ARCHIVES = [
       { heading: '以财济世', text: '致富之后当回报乡里、兴学济贫，使财富发挥最大社会价值，是为"仁者以财发身"。' }
     ],
     images: [
-      { key: 'folk-31', src: '/img/folk-31.png', caption: '商号捐资义举碑记' },
-      { key: 'folk-32', src: '/img/folk-32.png', caption: '富而好礼商人家训' }
+      { key: 'folk-31', src: '/img/folk-31.webp', caption: '商号捐资义举碑记' },
+      { key: 'folk-32', src: '/img/folk-32.webp', caption: '富而好礼商人家训' }
+    ],
+    from: '/'
+  },
+  {
+    id: 'CW-0017',
+    title: '施食台碑记考',
+    category: '近期上线',
+    type: '碑刻考释',
+    progress: '新辑',
+    intro: '以城北施食台碑记为中心，考释民间施食之俗，兼及碑文凿痕与匿名受施之伦理。',
+    sections: [
+      { heading: '碑文与形制', text: '碑额残损，碑文漫漶，唯“受施者不得自报姓名”一句清晰可辨。碑阴另有小字，拓本未录。' },
+      { heading: '凿痕之谜', text: '碑上五尊财神之名号与方位被人刮乱，捐资人一栏亦被凿空。凿痕新于拓墨，非年久磨损。' }
+    ],
+    images: [
+      { key: 'folk-11', src: '/img/folk-11.webp', caption: '施食台碑记拓片' },
+      { key: 'folk-12', src: '/img/folk-12.webp', caption: '碑阴款识摹本' }
+    ],
+    from: '/'
+  },
+  {
+    id: 'CW-0018',
+    title: '旧时商铺的“灯”与“账”',
+    category: '近期上线',
+    type: '民俗考释',
+    progress: '新辑',
+    intro: '由“点灯迎财”与“岁末结账”两俗入手，观察旧时商铺如何以灯为记、以账为凭。',
+    sections: [
+      { heading: '灯以迎财', text: '旧俗正月初五开市，点灯迎财，灯须亮到鸡鸣。灯灭，则主一年不利，故商家守灯极谨。' },
+      { heading: '账以结岁', text: '岁末结账，谓之“封账”。账封则一年之出入皆定，来年另起，故封账之日例有仪式。' }
+    ],
+    images: [
+      { key: 'folk-13', src: '/img/folk-13.webp', caption: '商铺点灯迎财' },
+      { key: 'folk-14', src: '/img/folk-14.webp', caption: '岁末封账旧影' }
     ],
     from: '/'
   }

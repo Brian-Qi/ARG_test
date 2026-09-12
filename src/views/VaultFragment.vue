@@ -14,16 +14,17 @@
       <template v-else>
         <div class="archive-panel collection-header">
           <p class="eyebrow">{{ fragment.type }} / {{ fragment.tag }}</p>
-          <h1 class="collection-title">{{ fragment.title }}</h1>
+          <h1 class="collection-title"><GlitchFlicker :text="fragment.title" /></h1>
           <p class="collection-desc">{{ fragment.summary }}</p>
         </div>
 
-        <div class="frag-body">
+        <div class="frag-body" :class="{ 'frag-body-solo': !fragment.img }">
           <div v-if="fragment.img" class="frag-art">
             <img :src="fragment.img" :alt="fragment.title" loading="lazy" />
           </div>
           <div class="frag-copy">
             <p v-for="(p, i) in fragment.content" :key="i">{{ p }}</p>
+            <p class="frag-glitch"><Glitch :n="28" /></p>
           </div>
         </div>
 
@@ -45,10 +46,10 @@
 
         <!-- 交叉引用 -->
         <section v-if="refList.length" class="frag-section">
-          <h2 class="frag-section-title">相关卷宗</h2>
+          <h2 class="frag-section-title">相关卷宗 · 文稿</h2>
           <ul class="ref-list">
-            <li v-for="r in refList" :key="r.id">
-              <RouterLink :to="'/f/' + r.id">{{ r.title }} <span class="ref-tag">{{ r.tag }}</span></RouterLink>
+            <li v-for="r in refList" :key="r.kind + r.id">
+              <RouterLink :to="r.to">{{ r.title }} <span class="ref-tag">{{ r.tag }}</span></RouterLink>
             </li>
           </ul>
         </section>
@@ -73,6 +74,9 @@ import Audio from './Audio.vue'
 import Portrait from './Portrait.vue'
 import Finale from './Finale.vue'
 import Zhaiyuan from './Zhaiyuan.vue'
+import Glitch from '../components/Glitch.vue'
+import GlitchFlicker from '../components/GlitchFlicker.vue'
+import { resolveRefs } from '../data/net'
 
 const route = useRoute()
 const fragment = computed(() => FRAGMENTS.find(f => f.id === route.params.id))
@@ -85,10 +89,7 @@ const entityList = computed(() => {
   if (!fragment.value?.entities) return []
   return fragment.value.entities.map(id => ENTITIES.find(e => e.id === id)).filter(Boolean)
 })
-const refList = computed(() => {
-  if (!fragment.value?.refs) return []
-  return fragment.value.refs.map(id => FRAGMENTS.find(f => f.id === id)).filter(Boolean)
-})
+const refList = computed(() => resolveRefs(fragment.value?.refs || []))
 
 const PUZZLES = { roads: Roads, audio: Audio, portrait: Portrait, finale: Finale, zhaiyuan: Zhaiyuan }
 const puzzleComponent = computed(() => PUZZLES[fragment.value?.puzzle] || null)
@@ -103,9 +104,11 @@ const puzzleHeading = computed(() => HEADINGS[fragment.value?.puzzle] || '此卷
 .collection-desc { color: #b09a72; }
 .frag-sealed { text-align: left; }
 .frag-body { display: grid; grid-template-columns: minmax(220px, 340px) 1fr; gap: 2rem; align-items: start; margin: 20px 0; }
+.frag-body-solo { grid-template-columns: 1fr; }
 .frag-art { border-radius: 4px; overflow: hidden; border: 1px solid rgba(157, 40, 26, 0.4); background: #0d0906; }
 .frag-art img { width: 100%; display: block; filter: sepia(0.25) contrast(1.05) brightness(0.92); }
 .frag-copy p { color: #c8b18a; line-height: 2; font-size: 1rem; margin: 0 0 1em; }
+.frag-glitch { letter-spacing: 0.16em; opacity: 0.85; }
 .frag-section, .frag-puzzle { margin-top: 30px; }
 .frag-section-title {
   font-size: 0.84rem; letter-spacing: 0.28em; color: #9c7c55; font-weight: 400; font-family: var(--serif, serif);

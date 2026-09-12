@@ -61,6 +61,12 @@ function markAllRead() {
   return list
 }
 
+function clear() {
+  save([])
+  bump()
+  return []
+}
+
 function familyUnlocked() {
   return localStorage.getItem(K_FAMILY) === '1'
 }
@@ -70,7 +76,12 @@ function unlockFamily() {
   bump()
 }
 
+// 站点锁：见过第 0 页 且 已解锁族谱 → A 面导航全部失效（无路可退）
+function siteLocked() {
+  return familyUnlocked() && localStorage.getItem('cx_seen_hidden') === '1'
+}
+
 export {
-  push, list, unreadCount, markRead, markAllRead,
-  familyUnlocked, unlockFamily
+  push, list, unreadCount, markRead, markAllRead, clear,
+  familyUnlocked, unlockFamily, siteLocked
 }

@@ -4,7 +4,7 @@
     <section class="archive-hero" aria-label="馆藏介绍">
       <span class="hero-tag">让散落在街巷里的旧物，有一条归处</span>
       <h1>杭州民俗数字档案馆</h1>
-      <p>本馆致力于杭州地区民俗文献、商号文书与民间记忆的数字化保存与公开利用。馆藏以"数字可用、公开可查"为原则，持续整理并向公众开放。</p>
+      <p>本馆致力于杭州地区民俗文献、商号文书与民间记忆的数字化保存与公开利用。馆藏以“数字可用、公开可查”为原则，持续整理并向公众开放。</p>
     </section>
 
     <!-- 数字化专题：左主卡片 + 右列表 -->
@@ -12,7 +12,7 @@
       <h2 id="digital-collections-title" class="section-title">数字化专题 <small>Digital Collections</small></h2>
       <div class="home-split">
         <RouterLink class="collection-card home-feature" to="/archives/CW-0001">
-          <span class="thumb"><img src="/img/home-ledger-project.jpg" alt="近代商号账簿数字化（第一批）" /></span>
+          <span class="thumb"><img src="/img/home-ledger-project.webp" alt="近代商号账簿数字化（第一批）" /></span>
           <div class="home-feature-copy">
             <div class="meta">专题 · 持续更新</div>
             <h3>近代商号账簿数字化（第一批）</h3>
@@ -42,10 +42,12 @@
           <li><RouterLink to="/archives/CW-0014">小五路财神与招宝纳珍考辨</RouterLink></li>
           <li><RouterLink to="/archives/CW-0015">「君子爱财，取之有道」考释</RouterLink></li>
           <li><RouterLink to="/archives/CW-0016">「以德聚财，以财济世」理念溯源</RouterLink></li>
+          <li><RouterLink to="/archives/CW-0017">施食台碑记考</RouterLink></li>
+          <li><RouterLink to="/archives/CW-0018">旧时商铺的「灯」与「账」</RouterLink></li>
         </ul>
         <h2 id="recent-collections-title" class="section-title">近期上线 <small>Recently Online</small></h2>
         <RouterLink class="collection-card home-feature" to="/archives/CW-0009">
-          <span class="thumb"><img src="/img/home-wanhe-ledger.jpg" alt="万和号商号流水账" /></span>
+          <span class="thumb"><img src="/img/home-wanhe-ledger.webp" alt="万和号商号流水账" /></span>
           <div class="home-feature-copy">
             <div class="meta">馆藏号 HZ-1927-0512 · 全文公开</div>
             <h3>万和号商号流水账</h3>

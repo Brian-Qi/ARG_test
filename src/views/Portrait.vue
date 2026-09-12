@@ -16,7 +16,7 @@
     </div>
 
     <div class="archive-panel portrait-prompt">
-      <p>三张照片里都在右下角的，是：</p>
+      <p>三张照片里都有的那一处，是：</p>
       <div class="judge-actions">
         <button class="btn-flat" @click="judge('crack')">同一道裂纹</button>
         <button class="btn-flat" @click="judge('face')">同一张脸</button>

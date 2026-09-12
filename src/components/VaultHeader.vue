@@ -7,17 +7,18 @@
       </RouterLink>
       <nav class="vault-nav" aria-label="馆藏导航">
         <RouterLink to="/story">首页</RouterLink>
-        <RouterLink to="/story">馆藏检索</RouterLink>
-        <RouterLink to="/f/ledger">近代商号账簿数字化</RouterLink>
+        <RouterLink to="/vault-search">馆藏检索</RouterLink>
+        <RouterLink to="/journal">研究辑录</RouterLink>
         <span class="vault-nav-dead" title="数据校正记录 · 权限受限">数据校正记录</span>
         <span class="vault-nav-dead" title="消息 · 无法送达">消息</span>
       </nav>
     </div>
-    <span class="vault-title" aria-hidden="true">关联档案 · Restricted</span>
+    <span class="vault-title" aria-hidden="true">关联档案 · Restricted　<Glitch :n="10" /></span>
   </header>
 </template>
 
 <script setup>
+import Glitch from './Glitch.vue'
 </script>
 
 <style scoped>

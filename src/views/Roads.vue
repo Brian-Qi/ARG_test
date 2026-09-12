@@ -49,7 +49,10 @@
 
 <script setup>
 import { computed, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import game from '../stores/game'
+
+const router = useRouter()
 
 // 五条财路：广告名 → 五路财神（大五路）
 const roads = reactive([
@@ -109,6 +112,7 @@ function solve() {
   game.state.pagesRead += 1
   game.markBranch('roads')
   game.collectKey('de-mu')
+  router.push('/f/recording')
 }
 </script>
 
