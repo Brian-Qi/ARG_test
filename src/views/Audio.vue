@@ -93,7 +93,8 @@ const clips = [
   { id: '和', bars: [40, 19, 60, 15, 36] },
   { id: '让', bars: [55, 15, 39, 18, 62] }
 ]
-const answer = ['义', '让', '信', '和', '商']   // 东→南→西→北→中
+const answer = ['义', '让', '信', '和', '商']   // 东→南→西→北→中（正确答案：见碎片方位）
+const recorded = ['让', '商', '义', '和', '信'] // 录音里的先后（一→五）——最易误选，给引导而非惊吓
 
 const chosen = ref([])
 const message = ref('')
@@ -114,6 +115,11 @@ watch(() => chosen.value.join('|'), () => {
     game.markBranch('audio')
     game.collectKey('huan-ming')
     message.value = '报数停下来了。有人在电流里低语：财从手过，别从心住。又央了一句：别删账，把名字还给他们。'
+    return
+  }
+  if (val.join('') === recorded.join('')) {
+    // 照录音先后选的——正是最容易踩的坑：给引导，不吓唬
+    message.value = '算盘重新响起。它没有说你错，只说“耳听为虚，眼见为实”。'
     return
   }
   game.triggerScare('face', '不要数到六。')
