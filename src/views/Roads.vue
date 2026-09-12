@@ -110,7 +110,6 @@ function guessEscape(e) {
 
 function solve() {
   game.state.roadSolved = true
-  game.state.pagesRead += 1
   game.markBranch('roads')
   game.collectKey('de-mu')
   router.push('/f/recording')
