@@ -11,13 +11,14 @@
         <span class="vault-dead-link">数据校正与勘误公告</span>　
         <span class="vault-dead-link">调阅指引</span>　
         <span class="vault-dead-link">首页已无法访问</span><br />
-        <span class="vault-faint">浙公网安备 3301████████ ｜ 浙ICP备████████号-2</span>
+        <span class="vault-faint">浙公网安备 3301████████ ｜ 浙ICP备████████号-2　<Glitch :n="8" /></span>
       </nav>
     </div>
   </footer>
 </template>
 
 <script setup>
+import Glitch from './Glitch.vue'
 </script>
 
 <style scoped>

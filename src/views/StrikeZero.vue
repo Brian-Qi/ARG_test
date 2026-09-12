@@ -1,7 +1,7 @@
 <template>
   <section class="page-wrap strike-page">
     <!-- 物证：倒走的钟 / 火中账页 -->
-    <div class="strike-art" aria-hidden="true"><img src="/img/strike_zero.png" alt="" /></div>
+    <div class="strike-art" aria-hidden="true"><img src="/img/strike_zero.webp" alt="" /></div>
 
     <template v-if="phase === 'rewind'">
       <p class="eyebrow">账房 / 初五 · 子正</p>
@@ -17,7 +17,7 @@
 
     <template v-else-if="phase === 'zero'">
       <div class="zero-screen">
-        <img class="zero-eye" src="/img/strike_zero.png" alt="" />
+        <img class="zero-eye" src="/img/strike_zero.webp" alt="" />
         <p class="zero-line">第零笔：谁把门锁上？</p>
         <p class="zero-sub">五个孩子不再数数。万和号的后间，还亮着。</p>
         <button @click="restart">重新调阅</button>

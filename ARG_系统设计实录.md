@@ -14,7 +14,7 @@
 ### 隐藏真相（v3 定稿）
 - 1927 年，万和号老板 **沈怀仁** 信奉虚构禁忌"**五路借财**"，以**收养名义**收下五个孩子为养子。
 - 每个孩子天生带一根**身体缺陷（六根之五）**，死因对应**五脏 × 五行 × 五路财神**——他是借这五个孩子的命来**给自己延寿**的。
-- 事变夜，孩子察觉后被锁入**后间**，火起时沈怀仁没有开门，**五人全死，无人生还**。他把账改成"米、药、衣、灯、人，金额零"，裁掉姓名与手印。
+- **五个孩子不是同时、也不是一处死的**：沈怀仁按五行方位，把他们分别安置在宅院（四合院）的**东、南、西、北、中**五处，各以对应五行的物（草木之毒 / 炭火 / 水银 / 木通 / 砒霜）使其"病"死在自己那一方——每一起都像江南孩子常见的病，谁也不会起疑。事后他把账改成"米、药、衣、灯、人，金额零"，裁掉姓名与手印。
 - 沈怀仁**借五子的命延寿至今**，为掩盖身份**改名"沈砚秋"**，一直活到当代。但这轮延寿将尽，**大限将至**——他需要仪式补上最后一步。
 - **第六根「意」（心识/魂魄）= 玩家**。前五根（眼耳鼻舌身）已由五个孩子填满，唯独"意"这个格是空的。玩家以「意」入局，**献祭自己的魂魄**，就能为沈砚秋（即沈怀仁）铸就永生。
 
@@ -39,6 +39,21 @@
 | （第六） | — | — | （意 · 玩家） | — | 意 | 玩家 |
 
 > 大五路财神考证来源：`docs/财文化网传资料/筛选前/一、道教大小五路财神_三方考证.md`（书籍《论佛教的财神文化及其财富伦理》＋快懂百科＋湟源县政府网，三方一致）。
+
+### 五子死因 · 四合院方位（已定稿）
+
+五个孩子不是同时、也不是一处死的。沈怀仁按五行方位，把他们分别安置在宅院（四合院）的东、南、西、北、中五处，各以对应五行的物使其"病"死在自己那一方——每一起都像江南孩子常见的病：
+
+| 方位 | 五行 | 取象 | 手段 | 先天六根 | 脏 | 财神 | 拟似病 |
+|---|---|---|---|---|---|---|---|
+| 东厢 | 木 | 草木 | 毒蕈（鹅膏类） | 眼 | 肝 | 比干 | 黄疸 / 肝病 |
+| 南房 | 火 | 火、热 | 密闭炭火（一氧化碳） | 耳 | 心 | 柴荣 | 心痛 / 猝死 |
+| 西厢 | 金 | 金属 | 水银蒸气吸入 | 鼻 | 肺 | 关公 | 痨病 / 咳血 |
+| 北房 | 水 | 水、药 | 关木通（利水药，马兜铃酸） | 舌 | 肾 | 赵公明 | 水肿 / 尿毒 |
+| 中堂 | 土 | 土、矿物 | 砒霜（砷，少量多次） | 身 | 脾 | 王亥 | 吐泻 / 虚脱 |
+
+- **六根（眼/耳/鼻/舌/身）是孩子先天的病症**，非毒所致；死因是五行取象之毒，伤对应之脏。
+- 每方留一样合五行的**物证**（东厢野蕈 / 南房炭盆 / 西厢汞痕 / 北房木通渣 / 中堂白粉末），供玩家在「安位」谜题里拼出五行之局。
 
 ---
 
@@ -245,7 +260,7 @@ Story 现在是**主线剧情门面**，不再是自包含的线性按钮推进�
 
 ### 6.4 Audio.vue（第5章 · /audio）
 - 标题：`不要数到六。在五时停下。`
-- 磁带视觉：`REC / 00:03:47` + 水壶眼图(`/img/kettle_eye.png`) + 血痕。
+- 磁带视觉：`REC / 00:03:47` + 水壶眼图(`/img/kettle_eye.webp`) + 血痕。
 - 交互：五个"静音"clip（id：合/施/还/信/让，各有波形 bars），点击 `choose(clip)` 依序选择（去重，最多5）。
 - 答案：`['施','信','让','还','合']`（施舍信让还——五种往来）。
 - 判定（computed `message`）：
@@ -266,7 +281,7 @@ Story 现在是**主线剧情门面**，不再是自包含的线性按钮推进�
 - 下一跳（portraitSolved 后）：`把这条旧规带回账房 →`(/finale)。
 
 ### 6.6 Finale.vue（第7章 · /finale，终局）
-- 终局艺术图 `/img/poster_crack.png`。
+- 终局艺术图 `/img/poster_crack.webp`。
 - 标题：`请结本月账。`
 - 三个按钮（`end(type)` → `game.setEnding(type)`）：
   - `签下见证人` → **bad**「第六位」：沈砚秋走出来，财签变旧合影，第六位收件人已签收。
@@ -275,7 +290,7 @@ Story 现在是**主线剧情门面**，不再是自包含的线性按钮推进�
 - `canHidden`：`roadSolved && audioSolved && portraitSolved && shortcuts===0`
 - 结局后：`重新翻开账册` → `game.reset()`。
 - **灰结局隐藏入口**：`ending==='grey'` 时，留白下方渲染一行近隐形 `.grey-hint`——`账烧不干净的那一笔，在灰里也看得见。`（hover 亮起）点击进 `/strike-zero`。
-- **`/strike-zero`**（StrikeZero.vue，第 7 章隐藏层）：路由仅 `game.state.ending==='grey'` 放行（路由守卫特判），防直接输 URL。进入后：时间倒流（章/日/子刻倒退）→ 黑屏 `第零笔：谁把门锁上？`，物证图 `/img/strike_zero.png`（倒走的钟 + 火中账页）。
+- **`/strike-zero`**（StrikeZero.vue，第 7 章隐藏层）：路由仅 `game.state.ending==='grey'` 放行（路由守卫特判），防直接输 URL。进入后：时间倒流（章/日/子刻倒退）→ 黑屏 `第零笔：谁把门锁上？`，物证图 `/img/strike_zero.webp`（倒走的钟 + 火中账页）。
 
 ---
 
@@ -286,18 +301,18 @@ Story 现在是**主线剧情门面**，不再是自包含的线性按钮推进�
 
 | id | layer | 标题 | tag | 图片 |
 |---|---|---|---|---|
-| shishitai | 1 | 施食台碑文 | 北高峰山门外 | `/img/shishitai.png` |
-| wuxin-lamp | 1 | 无芯灯 | 第五笔订单 | `/img/kettle_eye.png` |
-| xiao-xie | 1 | 五双小鞋 | 后间监控 | `/img/xiao-xie.png` |
-| hongao-shouyin | 1 | 红袄衣角 | 第三笔订单 | `/img/hongao-shouyin.png` |
-| suanpan | 1 | 算盘珠号码 | 第二笔订单 | `/img/suanpan.png` |
-| huiwen | 2 | 回纹走法 | 旧账第五页 | `/img/huiwen.png` |
-| huashu | 2 | 财神化疏仪式 | 开市旧俗 | `/img/huaguang.png` |
+| shishitai | 1 | 施食台碑文 | 北高峰山门外 | `/img/shishitai.webp` |
+| wuxin-lamp | 1 | 无芯灯 | 第五笔订单 | `/img/kettle_eye.webp` |
+| xiao-xie | 1 | 五双小鞋 | 后间监控 | `/img/xiao-xie.webp` |
+| hongao-shouyin | 1 | 红袄衣角 | 第三笔订单 | `/img/hongao-shouyin.webp` |
+| suanpan | 1 | 算盘珠号码 | 第二笔订单 | `/img/suanpan.webp` |
+| huiwen | 2 | 回纹走法 | 旧账第五页 | `/img/huiwen.webp` |
+| huashu | 2 | 财神化疏仪式 | 开市旧俗 | `/img/huaguang.webp` |
 | zhouyi | 2 | 施粥义举碑 | 碑记拓片 | 无（残页占位） |
-| dianleng | 2 | 点灯迎财旧俗 | 求财旧俗考释 | `/img/dianleng.png` |
-| yunlin-jing | 2 | 云林禅寺经卷 | 校正记录 | `/img/qianwen.png` |
-| lingshun | 2 | 灵顺寺旧影 | 校正记录 | `/img/baishi.png` |
-| shouni | 3 | 一枚红指印 | 财签 0512 | `/img/shouni.png` |
+| dianleng | 2 | 点灯迎财旧俗 | 求财旧俗考释 | `/img/dianleng.webp` |
+| yunlin-jing | 2 | 云林禅寺经卷 | 校正记录 | `/img/qianwen.webp` |
+| lingshun | 2 | 灵顺寺旧影 | 校正记录 | `/img/baishi.webp` |
+| shouni | 3 | 一枚红指印 | 财签 0512 | `/img/shouni.webp` |
 
 - 每条含：id / layer / title / tag / img / desc（卡上简介）/ body（详情正文）。
 - 无 `img` 的条目在卡片/详情显示"残页·无影像"占位。
@@ -322,8 +337,8 @@ Story 现在是**主线剧情门面**，不再是自包含的线性按钮推进�
 
 ### 8.1 ArchiveHome.vue（首页 /）
 - Hero：馆名 + 简介。
-- 数字化专题：左主卡片 `/archives/CW-0001`（缩略图 `/img/home-ledger-project.jpg`，待办：近期已接入）+ 右列表 CW-0002..CW-0008。
-- 近期上线：左列表 CW-0010..CW-0016 + 右主卡片 `/archives/CW-0009`（缩略图 `/img/home-wanhe-ledger.jpg`，馆藏号 HZ-1927-0512 · 全文公开）。
+- 数字化专题：左主卡片 `/archives/CW-0001`（缩略图 `/img/home-ledger-project.webp`，待办：近期已接入）+ 右列表 CW-0002..CW-0008。
+- 近期上线：左列表 CW-0010..CW-0016 + 右主卡片 `/archives/CW-0009`（缩略图 `/img/home-wanhe-ledger.webp`，馆藏号 HZ-1927-0512 · 全文公开）。
 - 通知公告：notice 1/2/3。
 - 服务与授权：馆藏检索/资料授权申请/展览预约/文书捐赠。
 
@@ -445,7 +460,7 @@ Story 现在是**主线剧情门面**，不再是自包含的线性按钮推进�
   - bad 第六位：玩家补位，沈砚秋成活。
   - grey 账已焚：焚尽留白，不写结局，交读者脑补。
   - hidden 五人出账（好结局）：还名 + 拒绝补位。第六位无人，沈怀仁自己坐进去——用自己的魂续自己的命，但因借财路是单行道（只能借外来者之魂），自我续命=以柴引燃自身，烧不出火只成灰，**永世不得超生**，被永远钉在第六位，年年初五都醒着。非旧版"救出被困店主"，而是"让该死的人自食其果、求死不能"。
-  - **第零笔**（灰结局专属 · 二周目隐藏层，非第四终局）：完整达成一次《账已焚》后，灰结局页隐形 `.grey-hint` → `/strike-zero`（时间倒流 → 黑屏 `第零笔：谁把门锁上？`）。语义：前五笔借五子之命、第六笔本该借玩家，而**第零笔是沈怀仁自己欠下的命债**（应死于 1927 却被自己逃掉）；玩家销毁账本恰替他藏了名，而第零笔将他永远钉在没锁的门里。物证图 `/img/strike_zero.png`（倒走的钟 + 火中账页）。
+  - **第零笔**（灰结局专属 · 二周目隐藏层，非第四终局）：完整达成一次《账已焚》后，灰结局页隐形 `.grey-hint` → `/strike-zero`（时间倒流 → 黑屏 `第零笔：谁把门锁上？`）。语义：前五笔借五子之命、第六笔本该借玩家，而**第零笔是沈怀仁自己欠下的命债**（应死于 1927 却被自己逃掉）；玩家销毁账本恰替他藏了名，而第零笔将他永远钉在没锁的门里。物证图 `/img/strike_zero.webp`（倒走的钟 + 火中账页）。
 - **13 冷启动站外种子线索**：示例文案+平台+指向站内路径。
 - **21 年龄/惊吓默认**：惊吓默认关？首屏提示？
 - **24 shortcuts 玩法**：触发方式+叙事含义，与 hidden 结局的因果。
@@ -491,3 +506,42 @@ Story 现在是**主线剧情门面**，不再是自包含的线性按钮推进�
 
 - `STORY_FLOW.md`：七章剧情 + 惊吓节点 + 结局分档（《第六位/账已焚/五人出账/第零笔》）。
 - 本文档基于当前代码实录（非设计稿），后续改动请同步更新。
+
+---
+
+## 15. 实现现状（v4，2026-09-12）
+
+> **重要**：本节之前的章节（第 3–7 节：线性章节、`Orders/Archive/Materials` 页、`materials.js`、`SiteHeader.vue`、`canVisit` 硬锁等）**已被 v4 取代**，保留作早期设计参考。以下为**当前真实结构**。
+
+### 15.1 架构
+- **B 面 = 碎片网**：`fragments.js`(33) + `journal.js`(16) + `entities.js`(11)；引用由 `net.js` 解析（137 边，`check_refs.py` 校验无悬空）。
+- **旧页已删**：`Orders.vue` / `Archive.vue` / `Materials.vue` / `MaterialDetail.vue` / `materials.js` / 旧 `SiteHeader.vue`。
+- **`game.js` 旧章节系统已清**：`CHAPTERS` / `branchDone` / `chapterOpen` / `canVisit` / `softOpen` / `advance` / `readSoft` 等全部移除；`state` 仅存 `wish/signed/roadSolved/audioSolved/portraitSolved/ending/shortcuts/pagesRead/keys/read`。
+- **路由**：A 面（`mode:'public'`）/ B 面（`mode:'vault'`，`App.vue` 切壳 `archive-shell` / `vault-shell`）。
+  B 面：`/story` `/f/:id` `/e/:id` `/journal` `/journal/:id` `/vault-search` `/strike-zero`。
+
+### 15.2 线索分级（替代旧"章节硬锁"）
+- `net.js` `LEVELS`：一级=主线10；二级=解谜素材；三级=隐藏；四级=干扰；文章默认一级。
+- `game.maxLevel()`：未取签=1，取签=2，≥1钥匙=3，≥3钥匙=4。
+- 首页只列"免锁"条目；检索按 `level ≤ maxLevel` 放开（`VaultSearch.vue`）。
+
+### 15.3 钥匙链
+`five-gods` 解五路→`de-mu`；`recording` 解录音→`huan-ming`；`photo-three` 解旧影→`di-liu-wei`；`zhaiyuan` 解安位→`zhenxiang`。（`fragments.js` 的 `requires`/`puzzle`/`key`。）
+
+### 15.4 结局门槛（按钮按前置隐藏）
+`Finale.vue`：
+- 归还姓名(good)：`roadSolved && audioSolved && portraitSolved && shortcuts===0`。
+- 销毁账簿(grey)：走完**灰线**（读 `ledger-errata` → `fenyu`《焚余》→ 集齐 4 回执 `obituary/yaozha/fortuneslip/guestbook`）。
+- 第零笔：仅 `ending==='grey'` 经 `/strike-zero` 可达。
+
+### 15.5 音频（B5 做实）
+`public/audio/rec.mp3` 单条整轨（约 17s，双声道，−16LUFS）；`Audio.vue` 单播放器 + 真波形 + 监听仪残迹兜底；生成脚本 `_audio_tmp/gen.py`（edge-tts + ffmpeg）。
+
+### 15.6 资产
+- 图片全量 **WebP**（`public/img/*.webp`，约 8.3MB）；原图备份 `_img_src_backup`。
+- 出图：`genimg.mjs`（GrsAI 中转 `/v1/draw/completions`），清单 `img_manifest.json`/`_batch2`/`_batch3`。
+- 鬼脸跳脸 `HorrorOverlay.vue` 用生成图 `scare_face.webp`。
+
+### 15.7 结项待办
+见 `结项待办.md`。
+

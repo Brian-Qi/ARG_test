@@ -1,6 +1,9 @@
 <template>
   <div class="msg-page">
-    <h2 class="section-title">消息 <small>Messages</small></h2>
+    <div class="msg-head-row">
+      <h2 class="section-title">消息 <small>Messages</small></h2>
+      <button v-if="items.length" class="btn-flat msg-clear" type="button" @click="askClear = true">清空</button>
+    </div>
     <p class="muted msg-desc">您提交的申请与馆方回复会汇集在这里。</p>
 
     <div v-if="items.length" class="msg-list">
@@ -32,7 +35,19 @@
 
     <div v-else class="archive-panel msg-empty">
       <p>暂无消息。</p>
-      <RouterLink class="back-link" to="/services/authorization">前往资料授权申请</RouterLink>
+    </div>
+
+    <!-- 清空确认 -->
+    <div v-if="askClear" class="archive-modal-mask" @click.self="askClear = false">
+      <div class="archive-modal">
+        <button class="modal-close" @click="askClear = false">关闭</button>
+        <h3>清空消息</h3>
+        <p>将删除全部消息，且不可恢复。</p>
+        <div class="msg-clear-actions">
+          <button class="btn-flat" type="button" @click="doClear">确认清空</button>
+          <button class="btn-flat" type="button" @click="askClear = false">取消</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,13 +55,14 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { list, markRead, familyUnlocked, unlockFamily, useVersion } from '../../store/archive-notify'
+import { list, markRead, familyUnlocked, unlockFamily, useVersion, clear } from '../../store/archive-notify'
 
 const router = useRouter()
 useVersion()
 
 const items = ref(list())
 const unlocked = ref(familyUnlocked())
+const askClear = ref(false)
 
 function open(m) {
   if (!m.read) {
@@ -60,6 +76,12 @@ function unlock() {
   items.value = list()
 }
 
+function doClear() {
+  clear()
+  items.value = []
+  askClear.value = false
+}
+
 function fmt(iso) {
   const d = new Date(iso)
   const p = (n) => String(n).padStart(2, '0')
@@ -68,6 +90,25 @@ function fmt(iso) {
 </script>
 
 <style scoped>
+.msg-head-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.msg-head-row .section-title {
+  margin: 0;
+}
+.msg-clear {
+  flex: none;
+  font-size: 13px;
+  padding: 3px 14px;
+}
+.msg-clear-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
 .msg-desc {
   margin-bottom: 16px;
 }

@@ -35,6 +35,23 @@ function toggleWithdrawn(id) {
 
 const corrections = [
   {
+    id: 'C-2026-0515',
+    date: '2026-09-02',
+    record: 'HZ-1927-0512',
+    status: '处理中',
+    statusClass: 'warn',
+    text: '读者复核指出，第五页金额栏“0.00”五处墨色与全册不一，疑为后人涂改。因涉原件鉴识，暂按现貌著录，另案送检。'
+  },
+  {
+    id: 'C-2026-0018',
+    date: '2026-08-20',
+    record: 'HZ-1927-0512',
+    status: '已撤回',
+    statusClass: 'revoke',
+    text: '某用户就本馆著录页码提交批注，措辞激烈，且附有无法核实的“内部编号”，依《公开数据订正规程》第三条撤回，不予公开。',
+    withdrawn: '（原批注摘要）第五页不是多一页，是少一页。原来有五页。'
+  },
+  {
     id: 'C-2026-0513',
     date: '2026-08-30',
     record: 'HZ-1927-0512',

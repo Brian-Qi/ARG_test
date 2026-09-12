@@ -180,7 +180,7 @@ html[data-mode='public'] body {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("/img/bg_paper.jpg");
+  background-image: url("/img/bg_paper.webp");
   background-size: 620px;
   opacity: 0.08;
   mix-blend-mode: overlay;
@@ -308,7 +308,7 @@ html[data-mode='public'] body {
   filter: sepia(0.35) contrast(0.96);
 }
 .collection-card .thumb.no-img {
-  background-image: url("/img/bg_paper.jpg");
+  background-image: url("/img/bg_paper.webp");
   background-size: 300px;
   font-family: "Ma Shan Zheng", serif;
   font-size: 26px;

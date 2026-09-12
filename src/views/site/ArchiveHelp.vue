@@ -1,27 +1,20 @@
 <template>
   <div>
-    <section class="archive-panel">
-      <h2>帮助 <small class="help-en">Help</small></h2>
-      <p>这里是杭州民俗数字档案馆的访客协助页，提供馆藏查阅、数据校正与个人信息服务的常见指引。</p>
-      <p class="muted">若你是在查询著录或校正流程时来到此处，可通过页脚返回各组入口，或转往馆藏检索。</p>
-      <RouterLink class="back-link" to="/">返回首页</RouterLink>
-      <span class="staff-gap" aria-hidden="true"></span>
-      <RouterLink class="back-link" to="/search">前往馆藏检索</RouterLink>
-    </section>
-
     <!-- 两件事都完成：合并后的终极确认面板 -->
     <section v-if="bothDone" class="archive-panel help-final">
+      <h2 class="help-title">{{ HELP_CN }} <small class="help-en">{{ HELP_EN }}</small></h2>
       <p class="help-kicker">回到此处，已是尽头</p>
       <p>你翻过目录之外的那一页，也看过族谱上的名字。馆藏 <b>HZ-1927-0512</b> 之外那份未列入公开目录的关联档案，此刻正等着你落一笔。</p>
       <p>沈晚：<em>“别让它开第六张。查完这五张，去落一笔账。”</em></p>
       <div class="help-final-actions">
         <RouterLink class="btn-flat" to="/collection/HZ-1927-0512/0">进入关联档案</RouterLink>
-        <button class="btn-flat btn-noway" type="button" @click="goNoReturn">返回首页</button>
+        <button v-if="!returnedOnce" class="btn-flat btn-noway" type="button" @click="goNoReturn">返回首页</button>
       </div>
     </section>
 
     <!-- 见过第 0 页（未解锁族谱）：给沈晚/进度的真实提示 -->
     <section v-else-if="seenHiddenVal" class="archive-panel help-restricted">
+      <h2 class="help-title">{{ HELP_CN }} <small class="help-en">{{ HELP_EN }}</small></h2>
       <p class="help-kicker">只为见过一张残页的人保留</p>
       <p>你翻到过目录之外的那一页。馆藏 <b>HZ-1927-0512</b> 之外还有一份未列入公开目录的关联档案。</p>
       <p>沈晚：<em>“别让它开第六张。查完这五张，去落一笔账。”</em></p>
@@ -31,24 +24,11 @@
 
     <!-- 未见过第 0 页：提示尚有事情未完成（弹窗） -->
     <section v-else class="archive-panel help-restricted">
+      <h2 class="help-title">{{ HELP_CN }} <small class="help-en">{{ HELP_EN }}</small></h2>
       <p class="help-kicker">有些地方还没去过</p>
       <p>馆藏 <b>HZ-1927-0512</b> 之外另有一份关联档案，但系统目前还不能为你调阅。</p>
       <p class="muted">尚有事情未完成，先回到目录翻完该翻的那几页。</p>
-      <button class="btn-flat" type="button" @click="showPending = true">返回馆藏目录</button>
     </section>
-
-    <!-- 未完成提示弹窗 -->
-    <div v-if="showPending" class="archive-modal-mask" @click.self="showPending = false">
-      <div class="archive-modal help-modal">
-        <button class="modal-close" type="button" @click="showPending = false">关闭</button>
-        <h3>有些地方还没去过</h3>
-        <p>馆藏 <b>HZ-1927-0512</b> 之外另有一份关联档案，但系统目前还不能为你调阅。</p>
-        <p class="muted">尚有事情未完成，先回到目录翻完该翻的那几页。</p>
-        <div class="help-modal-actions">
-          <RouterLink class="btn-flat" to="/collection/HZ-1927-0512">返回馆藏目录</RouterLink>
-        </div>
-      </div>
-    </div>
 
     <!-- 没有退路：红色 -> 乱码 -> 消失 -> 你已经没有退路了 -->
     <div v-if="noReturn" class="noway-screen" :class="{ red: phase >= 1, gone: phase >= 2 }" aria-hidden="true">
@@ -63,8 +43,12 @@ import { ref, computed, onBeforeUnmount } from 'vue'
 import { familyUnlocked } from '../../store/archive-notify'
 import { seenHidden } from '../../stores/game'
 
+// 标题删除线用 Unicode 组合长划线（U+0336），逐字叠加，避免 CSS 在不同分辨率下错位
+const HELP_CN = '\u5E2E\u0336\u52A9\u0336'
+const HELP_EN = 'H\u0336e\u0336l\u0336p\u0336'
+
 const seenHiddenVal = seenHidden()
-const showPending = ref(false)
+const returnedOnce = ref(false)
 const bothDone = computed(() => seenHiddenVal && familyUnlocked())
 
 // 没有退路的演出：0=未触发 1=红屏乱码 2=已消失显示文字
@@ -102,6 +86,7 @@ function runGarble() {
 }
 
 function goNoReturn() {
+  returnedOnce.value = true
   noReturn.value = true
   phase.value = 1
   garbled.value = BASE
@@ -118,6 +103,12 @@ onBeforeUnmount(() => {
   font-size: 13px;
   color: #8c2f24;
   font-weight: 400;
+}
+.help-title {
+  color: #b3271b;
+}
+.help-title .help-en {
+  color: inherit;
 }
 .staff-gap {
   display: inline-block;
@@ -155,9 +146,6 @@ onBeforeUnmount(() => {
 .btn-noway {
   border-color: #8c2f24;
   background: rgba(140, 47, 36, 0.05);
-}
-.help-modal-actions {
-  margin-top: 18px;
 }
 
 /* 没有退路的全屏演出 */

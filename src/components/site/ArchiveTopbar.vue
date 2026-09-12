@@ -6,14 +6,13 @@
         <span class="archive-brand-name"><b>杭州民俗数字档案馆</b><i>Hangzhou Folklore Digital Archives</i></span>
       </RouterLink>
       <nav class="archive-nav">
-        <RouterLink to="/">首页</RouterLink>
-        <RouterLink to="/search">馆藏检索</RouterLink>
-        <RouterLink to="/collection/HZ-1927-0512">近代商号账簿数字化</RouterLink>
-        <RouterLink to="/records/corrections">数据校正记录</RouterLink>
-        <RouterLink class="archive-nav-msg" to="/messages">
-          消息
-          <span v-if="unread" class="msg-badge" aria-label="未读消息">{{ unread }}</span>
-        </RouterLink>
+        <template v-for="item in items" :key="item.to">
+          <RouterLink v-if="!locked" :to="item.to" :class="item.cls">
+            {{ item.label }}
+            <span v-if="item.badge && unread" class="msg-badge" aria-label="未读消息">{{ unread }}</span>
+          </RouterLink>
+          <span v-else class="archive-nav-dead" :title="item.deadTitle || '无路可退'" aria-disabled="true">{{ item.label }}</span>
+        </template>
       </nav>
     </div>
   </header>
@@ -21,8 +20,40 @@
 
 <script setup>
 import { computed } from 'vue'
-import { unreadCount, useVersion } from '../../store/archive-notify'
+import { useRoute } from 'vue-router'
+import { unreadCount, useVersion, siteLocked } from '../../store/archive-notify'
 
-useVersion()
-const unread = computed(() => unreadCount())
+const route = useRoute()
+const version = useVersion()
+const unread = computed(() => { void version.value; return unreadCount() })
+// 仅 /help 且处于“无路可退”态时导航失效（路由限定，不污染其它页与二周目）
+const locked = computed(() => {
+  void version.value
+  return route.path === '/help' && siteLocked()
+})
+
+const items = [
+  { to: '/', label: '首页' },
+  { to: '/search', label: '馆藏检索' },
+  { to: '/collection/HZ-1927-0512', label: '近代商号账簿数字化', deadTitle: '馆藏已封' },
+  { to: '/records/corrections', label: '数据校正记录', deadTitle: '权限受限' },
+  { to: '/messages', label: '消息', badge: true, cls: 'archive-nav-msg', deadTitle: '消息 · 无法送达' }
+]
 </script>
+
+<style scoped>
+.archive-nav-dead {
+  display: inline-block;
+  padding: 8px 14px;
+  font-size: 15px;
+  color: #a4967a;
+  text-decoration: line-through;
+  opacity: 0.55;
+  cursor: default;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+@media (max-width: 800px) {
+  .archive-nav-dead { padding: var(--space-sm) var(--space-md); }
+}
+</style>
