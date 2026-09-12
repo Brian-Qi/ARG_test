@@ -85,9 +85,6 @@ const locked = computed(() => !!fragment.value && !!fragment.value.requires && !
 // 调阅即记已读（隐藏碎片由此在实体页/后续检索中稳定显现）
 watch(fragment, (f) => { if (f && !(f.requires && !game.hasKey(f.requires))) game.markRead(f.id) }, { immediate: true })
 
-// 打开加封卷宗（未持钥匙）= 走捷径
-watch(locked, (v) => { if (v) game.takeShortcut() }, { immediate: true })
-
 const entityList = computed(() => {
   if (!fragment.value?.entities) return []
   return fragment.value.entities.map(id => ENTITIES.find(e => e.id === id)).filter(Boolean)
