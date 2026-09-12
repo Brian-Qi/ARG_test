@@ -2,7 +2,7 @@
   "name": "huiwen-ledger-arg",
   "version": "0.1.0",
   "private": true,
-  "license": "Apache-2.0",
+  "license": "CC-BY-NC-ND-4.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

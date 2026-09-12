@@ -48,4 +48,5 @@ public/
 
 ## License
 
-[Apache-2.0](LICENSE)。详见 [LICENSE](LICENSE)。
+[CC BY-NC-ND 4.0](LICENSE)：署名 · 非商业性使用 · 禁止演绎（允许非商业转发，不得修改或商用）。
+详见 [LICENSE](LICENSE)。
