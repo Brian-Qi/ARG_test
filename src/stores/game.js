@@ -5,6 +5,7 @@ const PERSIST_KEYS = ['wish', 'signed', 'roadSolved', 'audioSolved', 'portraitSo
 const K_STATE = 'cx_game'
 const K_SEEN = 'cx_seen_hidden'
 const K_FAMILY = 'cx_family_unlocked'
+const K_SHEN = 'cx_shen_searched'
 const K_MSG = 'cx_messages'
 
 function snapshot() {
@@ -59,6 +60,10 @@ watch(
 const seenHidden = () => localStorage.getItem(K_SEEN) === '1'
 function markSeenHidden() { localStorage.setItem(K_SEEN, '1') }
 
+// —— 是否在馆藏检索里搜过「沈砚秋」（B 面入口前置之一）——
+const shenSearched = () => localStorage.getItem(K_SHEN) === '1'
+function markShenSearched() { localStorage.setItem(K_SHEN, '1') }
+
 // —— 碎片网：钥匙（解谜产出，解锁更多碎片）——
 const collectKey = (id) => { if (id) state.keys = { ...state.keys, [id]: true } }
 const hasKey = (id) => !!state.keys[id]
@@ -104,6 +109,7 @@ function reset() {
   localStorage.removeItem(K_STATE)
   localStorage.removeItem(K_SEEN)
   localStorage.removeItem(K_FAMILY)   // 二周目：族谱解锁态一并重置
+  localStorage.removeItem(K_SHEN)     // 二周目：沈砚秋检索标记一并重置
   localStorage.removeItem(K_MSG)      // 二周目：消息列表一并清空
   sessionStorage.removeItem(K_SEEN)
 }
@@ -116,7 +122,8 @@ const reduceMotion = () => localStorage.getItem(K_MOTION) === 'on' || (localStor
 
 export default {
   state, createFortune, markBranch, setEnding, triggerScare, reset,
-  seenHidden, markSeenHidden, collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion
+  seenHidden, markSeenHidden, shenSearched, markShenSearched,
+  collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion
 }
 
-export { markSeenHidden, seenHidden }
+export { markSeenHidden, seenHidden, shenSearched, markShenSearched }

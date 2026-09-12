@@ -55,6 +55,7 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { familyUnlocked } from '../../store/archive-notify'
+import { markShenSearched } from '../../stores/game'
 
 const route = useRoute()
 const router = useRouter()
@@ -106,13 +107,14 @@ const snippetRows = [
 function goSearch() {
   const v = kw.value.trim()
   if (!v) router.replace({ path: '/search' })
-  else if (/沈砚秋/.test(v)) router.replace('/help')
+  else if (/沈砚秋/.test(v)) { markShenSearched(); router.replace('/help') }
   else router.replace({ path: '/search', query: { q: v } })
 }
 
 function applyQuery() {
   q.value = (route.query.q || '').toString()
   if (/沈砚秋/.test(q.value)) {
+    markShenSearched()
     router.replace('/help')
     return
   }
