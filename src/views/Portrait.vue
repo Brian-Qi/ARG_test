@@ -39,8 +39,21 @@ const photos = [
   { id: 'two', year: '1916', face: '苏', caption: '东坡石像', clothes: '宽袍', },
   { id: 'three', year: '今夜', face: '空', caption: '无名石龛', clothes: '不可辨', }
 ]
+const wrongCount = ref(0)
 function mark(id) { if (!marks.value.includes(id)) marks.value.push(id) }
-  function judge(answer) { result.value = answer === 'crack' ? '那条裂纹，就是名字被刮掉后留下的。五枚红指印开始离开财签，只留下你的那一枚。' : '照片轻微闪烁。那一项在每个年代都被改过。'; if (answer === 'crack') { game.state.portraitSolved = true; game.markBranch('portrait'); game.collectKey('di-liu-wei'); game.triggerScare('blood', '第六位 · 等待回执') } }
+function judge(answer) {
+  if (answer === 'crack') {
+    result.value = '那条裂纹，就是名字被刮掉后留下的。五枚红指印开始离开财签，只留下你的那一枚。'
+    game.state.portraitSolved = true
+    game.markBranch('portrait')
+    game.collectKey('di-liu-wei')
+    game.triggerScare('blood', '第六位 · 等待回执')
+    return
+  }
+  result.value = '照片轻微闪烁。那一项在每个年代都被改过。'
+  wrongCount.value += 1
+  if (wrongCount.value === 6) game.takeShortcut()
+}
 </script>
 
 <style scoped>

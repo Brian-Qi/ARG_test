@@ -106,6 +106,7 @@ const audioEl = ref(null)
 const waveEl = ref(null)
 const native = ref(false)   // 播放被拦时，露出系统原生播放器兜底
 const hint = ref('')
+const wrongCount = ref(0)   // 反复乱排到阈值 = 走捷径
 
 watch(() => chosen.value.join('|'), () => {
   const val = chosen.value
@@ -117,6 +118,8 @@ watch(() => chosen.value.join('|'), () => {
     message.value = '报数停下来了。有人在电流里低语：财从手过，别从心住。又央了一句：别删账，把名字还给他们。'
     return
   }
+  wrongCount.value += 1
+  if (wrongCount.value === 6) game.takeShortcut()
   if (val.join('') === recorded.join('')) {
     // 照录音先后选的——最容易踩的坑：给引导，同时照跳脸
     game.triggerScare('face', '不要数到六。')

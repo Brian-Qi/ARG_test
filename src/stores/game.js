@@ -95,6 +95,9 @@ function markBranch(key) {
 
 function setEnding(e) { state.ending = e }
 
+// —— 走捷径：URL 绕过前置 / 谜题靠反复试错到提示。好结局要求 shortcuts===0 ——
+function takeShortcut() { state.shortcuts = (state.shortcuts || 0) + 1 }
+
 function triggerScare(type, text) {
   if (localStorage.getItem('cx_strong') === 'off') return
   state.scare = { type, text, id: Date.now() }
@@ -121,7 +124,7 @@ const prefersReduced = () =>
 const reduceMotion = () => localStorage.getItem(K_MOTION) === 'on' || (localStorage.getItem(K_MOTION) === null && prefersReduced())
 
 export default {
-  state, createFortune, markBranch, setEnding, triggerScare, reset,
+  state, createFortune, markBranch, setEnding, triggerScare, takeShortcut, reset,
   seenHidden, markSeenHidden, shenSearched, markShenSearched,
   collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion
 }

@@ -59,12 +59,15 @@ function setRobots(value) {
 router.beforeEach((to) => {
   if (to.meta.mode !== 'vault') return true
   const root = '/' + to.path.split('/')[1]
-  // 隐藏结局：仅完整达成一次灰结局后可达
+  // 隐藏结局：仅完整达成一次灰结局后可达（强行访问 = 走捷径）
   if (root === '/strike-zero') {
-    return game.state.ending === 'grey' ? true : { path: '/story', replace: true }
+    if (game.state.ending === 'grey') return true
+    game.takeShortcut()
+    return { path: '/story', replace: true }
   }
   // B 面入口门槛：见过第 0 页 + 解锁族谱 + 在馆藏检索里搜过「沈砚秋」
   if (seenHidden() && familyUnlocked() && shenSearched()) return true
+  game.takeShortcut()
   return { path: '/search', replace: true }
 })
 
