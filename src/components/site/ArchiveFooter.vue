@@ -12,7 +12,7 @@
         <RouterLink to="/search">检索帮助</RouterLink>　
         <button class="footer-link" type="button" @click="showAbout = true">关于本馆</button>　
         <RouterLink to="/services/feedback">意见建议</RouterLink><br />
-        <span class="faint">浙公网安备 3301XXXXXXXX ｜ 浙ICP备XXXXXXXX号-2</span>
+        <span class="faint">本馆为虚构创作 · 备案信息从略（非真实备案）</span>
       </nav>
     </div>
 

@@ -15,7 +15,10 @@
         <button v-if="canGrey" class="grey" @click="end('grey')">销毁账簿</button>
         <button v-if="canHidden" class="quiet" @click="end('hidden')">归还姓名</button>
       </div>
-      <p v-if="!canHidden" class="choice-note">还有一份卷宗未调阅：先完成五条财路的原始往来。</p>
+      <p v-if="!canHidden" class="choice-note">
+        <template v-if="missingHidden.length">还有卷宗未亲手解过：{{ missingHidden.join('、') }}。</template>
+        <template v-else>已走过捷径，归还姓名一途已断。</template>
+      </p>
       <p v-else-if="!canGrey" class="choice-note faint">
         <template v-if="!game.hasRead('fenyu')">账烧得掉，也得先知道烧的是什么。</template>
         <template v-else>焚账须凭四样回执：死者之名 · 死者之药 · 死者之签 · 待收之信（{{ greyHave }} / 4）。</template>
@@ -75,6 +78,13 @@ import game from '../stores/game'
 const canHidden = computed(() =>
   game.state.roadSolved && game.state.audioSolved && game.state.portraitSolved && game.state.shortcuts === 0
 )
+const missingHidden = computed(() => {
+  const miss = []
+  if (!game.state.roadSolved) miss.push('五条财路')
+  if (!game.state.audioSolved) miss.push('算盘录音')
+  if (!game.state.portraitSolved) miss.push('旧影')
+  return miss
+})
 // 灰结局支线「焚余」：先读《著录勘误》→ 循线找到《焚余》→ 集齐四样回执，才烧得掉这本账
 const GREY_PROOF = ['obituary', 'yaozha', 'fortuneslip', 'guestbook']
 const greyHave = computed(() => GREY_PROOF.filter((id) => game.hasRead(id)).length)
