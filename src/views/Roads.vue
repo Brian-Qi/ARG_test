@@ -99,7 +99,8 @@ function guessEscape(e) {
   if (lamps.value > 0) lamps.value -= 1
   mistakes.value += 1
   if (mistakes.value >= 6) {
-    // 第 6 次起：给正确提示
+    // 第 6 次起：给正确提示（靠提示过关 = 走捷径，锁好结局）
+    if (mistakes.value === 6) game.takeShortcut()
     lastMsg.value = '灯火快灭了。' + road.direction + '这条路——' + road.truth
     lastMsgHint.value = true
   } else {
