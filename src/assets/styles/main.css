@@ -814,9 +814,10 @@ button:disabled { opacity: 0.38; cursor: not-allowed; }
 .scare-overlay.face p { position: relative; z-index: 2; text-shadow: 0 0 14px #000, 0 0 28px #000; }
 @keyframes face-jitter { 0% { transform: translate(0, 0); } 33% { transform: translate(-3px, 2px); } 66% { transform: translate(3px, -2px); } }
 .scare-overlay p {
+  position: relative; z-index: 2;
   font-family: var(--kai); font-size: clamp(1.4rem, 4vw, 2.2rem);
   color: var(--blood-bright); letter-spacing: 0.24em;
-  text-shadow: 0 0 24px rgba(209, 52, 36, 0.6);
+  text-shadow: 0 0 14px #000, 0 0 28px #000, 0 0 24px rgba(209, 52, 36, 0.6);
   animation: scare-text 0.22s steps(2) 2;
 }
 @keyframes scare-text { 0% { opacity: 0.3; transform: scale(1.04); } 100% { opacity: 1; } }

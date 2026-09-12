@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import game from '../stores/game'
+import game, { seenHidden, shenSearched } from '../stores/game'
+import { familyUnlocked } from '../store/archive-notify'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     /* ================= A 层 · 杭州民俗数字档案馆（公开站） ================= */
     { path: '/', name: 'site-home', component: () => import('../views/site/ArchiveHome.vue'), meta: { mode: 'public', title: '杭州民俗数字档案馆' } },
@@ -58,10 +59,13 @@ function setRobots(value) {
 router.beforeEach((to) => {
   if (to.meta.mode !== 'vault') return true
   const root = '/' + to.path.split('/')[1]
+  // 隐藏结局：仅完整达成一次灰结局后可达
   if (root === '/strike-zero') {
     return game.state.ending === 'grey' ? true : { path: '/story', replace: true }
   }
-  return true
+  // B 面入口门槛：见过第 0 页 + 解锁族谱 + 在馆藏检索里搜过「沈砚秋」
+  if (seenHidden() && familyUnlocked() && shenSearched()) return true
+  return { path: '/search', replace: true }
 })
 
 export default router

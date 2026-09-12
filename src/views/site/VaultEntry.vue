@@ -29,7 +29,8 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
-import game from '../../stores/game'
+import game, { seenHidden, shenSearched } from '../../stores/game'
+import { familyUnlocked } from '../../store/archive-notify'
 
 const router = useRouter()
 
@@ -94,6 +95,8 @@ function startProgress() {
 }
 
 onMounted(() => {
+  // 入口门槛：未满足不触发调阅，直接退回检索
+  if (!(seenHidden() && familyUnlocked() && shenSearched())) { router.replace('/search'); return }
   if (game.reduceMotion()) { router.replace('/story'); return }
   runRead()
 })
