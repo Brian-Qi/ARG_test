@@ -914,3 +914,17 @@ html.strike-bg body {
   background-attachment: fixed, fixed;
 }
 html.strike-bg .vault-shell { background: transparent; }
+
+/* 第零笔 · 定格结局屏（生图：从外面锁上的后间木门） */
+html.zero-bg body {
+  background-color: #050302;
+  background-image:
+    radial-gradient(120% 92% at 50% 46%, rgba(5, 3, 2, 0.34) 26%, rgba(5, 3, 2, 0.7) 72%, rgba(3, 2, 1, 0.94) 100%),
+    linear-gradient(180deg, rgba(4, 2, 1, 0.6), rgba(4, 2, 1, 0.34) 44%, rgba(4, 2, 1, 0.78)),
+    url("/img/zero-door.webp");
+  background-position: center center, center center, center center;
+  background-size: auto, auto, cover;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed, fixed, fixed;
+}
+html.zero-bg .vault-shell { background: transparent; }
