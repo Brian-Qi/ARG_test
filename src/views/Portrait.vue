@@ -8,7 +8,11 @@
         :class="{ marked: marks.includes(photo.id) }"
         @click="mark(photo.id)"
       >
-        <div class="photo-figure"><i class="crack" /><span>{{ photo.face }}</span></div>
+        <div class="photo-figure">
+          <img v-if="photo.img" class="photo-img" :src="photo.img" :alt="photo.caption" loading="lazy" />
+          <span v-else class="photo-glyph">{{ photo.face }}</span>
+          <i class="crack" />
+        </div>
         <div class="meta">{{ photo.year }}</div>
         <h3>{{ photo.caption }}</h3>
         <p class="photo-clothes">衣纹：{{ photo.clothes }}</p>
@@ -35,9 +39,9 @@ import { ref } from 'vue'
 import game from '../stores/game'
 const marks = ref([]); const result = ref('')
 const photos = [
-  { id: 'one', year: '1901', face: '财', caption: '财神石像', clothes: '披甲', },
-  { id: 'two', year: '1916', face: '苏', caption: '东坡石像', clothes: '宽袍', },
-  { id: 'three', year: '今夜', face: '空', caption: '无名石龛', clothes: '不可辨', }
+  { id: 'one', year: '1901', face: '财', img: '/img/photo-1901.webp', caption: '财神石像', clothes: '披甲', },
+  { id: 'two', year: '1916', face: '苏', img: '/img/photo-1916.webp', caption: '东坡石像', clothes: '宽袍', },
+  { id: 'three', year: '今夜', face: '空', img: '/img/photo-today.webp', caption: '无名石龛', clothes: '不可辨', }
 ]
 const wrongCount = ref(0)
 function mark(id) { if (!marks.value.includes(id)) marks.value.push(id) }
@@ -66,7 +70,8 @@ function judge(answer) {
 .old-photo.marked { border-color: var(--blood); }
 .photo-figure { height: 150px; border-radius: 3px; background: #0d0906; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin-bottom: 10px; }
 .photo-figure span { font-family: var(--kai); font-size: 40px; color: #6b5236; }
-.photo-figure .crack { position: absolute; right: 18%; bottom: 0; width: 2px; height: 65%; background: #1a120a; transform: skewX(-18deg); box-shadow: 0 0 8px rgba(0,0,0,0.6); }
+.photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2) contrast(1.06) brightness(0.9); }
+.photo-figure .crack { z-index: 2; position: absolute; right: 18%; bottom: 0; width: 2px; height: 65%; background: #1a120a; transform: skewX(-18deg); box-shadow: 0 0 8px rgba(0,0,0,0.6); }
 .photo-clothes { font-size: 0.84rem; color: #8a6f4d; }
 .judge-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .portrait-result .back-link { color: var(--gold); }
