@@ -904,6 +904,13 @@ button:disabled { opacity: 0.38; cursor: not-allowed; }
    进入 /strike-zero 时由页面给 <html> 挂 .strike-bg
    ============================================================ */
 html.strike-bg body {
-  background: #080402 url("/img/strike_bg.webp") center center / cover no-repeat fixed;
+  background-color: #080402;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)),
+    url("/img/strike_bg.webp");
+  background-position: center center, center center;
+  background-size: auto, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
 }
 html.strike-bg .vault-shell { background: transparent; }
