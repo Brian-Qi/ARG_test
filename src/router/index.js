@@ -32,6 +32,11 @@ const router = createRouter({
     { path: '/e/:id', name: 'vault-entity', component: () => import('../views/VaultEntity.vue'), meta: { mode: 'vault', title: '名号索引 - 杭州民俗数字档案馆' } },
     { path: '/strike-zero', name: 'strike-zero', component: () => import('../views/StrikeZero.vue'), meta: { mode: 'vault', title: '万和号 · 第零笔' } },
 
+    /* ================= 结局页（三档独立页面） ================= */
+    { path: '/ending/sixth', name: 'ending-sixth', component: () => import('../views/EndingSixth.vue'), meta: { mode: 'vault', title: '结账 · 第六位' } },
+    { path: '/ending/ash', name: 'ending-ash', component: () => import('../views/EndingAsh.vue'), meta: { mode: 'vault', title: '结账 · 账已焚' } },
+    { path: '/ending/out', name: 'ending-out', component: () => import('../views/EndingOut.vue'), meta: { mode: 'vault', title: '结账 · 五人出账' } },
+
     /* ================= 兜底：公开站 404 ================= */
     { path: '/:pathMatch(.*)*', name: 'site-not-found', component: () => import('../views/site/ArchiveNotFound.vue'), meta: { mode: 'public', title: '页面不存在 - 杭州民俗数字档案馆' } }
   ]
