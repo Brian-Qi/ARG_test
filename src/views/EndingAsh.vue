@@ -20,20 +20,18 @@
 
       <RouterLink class="grey-hint" to="/strike-zero">账烧不干净的那一笔，在灰里也看得见。</RouterLink>
 
-      <button class="btn-flat" @click="restart">重新调阅</button>
+      <RouterLink class="btn-flat" to="/" @click="reset">重新调阅</RouterLink>
     </div>
   </section>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import game from '../stores/game'
 
-const router = useRouter()
 const art = '/img/ending-ash.webp'
 onMounted(() => game.setEnding('grey'))   // 本页即灰结局：确立状态，保证第零笔入口可用
-function restart() { game.reset(); router.push('/') }
+function reset() { game.reset() }
 
 // 余烬：按序号散列出位置/速度/漂移，避免每次渲染乱跳
 function emberStyle(n) {

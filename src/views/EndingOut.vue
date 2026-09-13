@@ -13,20 +13,18 @@
       <p>五个零回到姓名与年龄。五双小鞋，一双一双消失了。</p>
       <p>第六位一直没有等到人——沈怀仁自己坐了进去，用他自己的魂，续他自己的命。</p>
       <p class="ep-tag">从此年年初五，他都醒着。永生，是他自己给自己的。</p>
-      <button class="btn-flat" @click="restart">重新调阅</button>
+      <RouterLink class="btn-flat" to="/" @click="reset">重新调阅</RouterLink>
     </div>
   </section>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import game from '../stores/game'
 
-const router = useRouter()
 const art = '/img/ending-out.webp'
 onMounted(() => game.setEnding('hidden'))
-function restart() { game.reset(); router.push('/') }
+function reset() { game.reset() }
 </script>
 
 <style scoped>

@@ -30,7 +30,7 @@
             <p>那一页上没有账，只有一把锁——从外面锁上的。</p>
           </div>
 
-          <button class="btn-flat" @click="restart">重新调阅</button>
+          <RouterLink class="btn-flat" to="/" @click="reset">重新调阅</RouterLink>
           <small class="zero-foot">这一页，你烧不掉了。</small>
         </div>
       </div>
@@ -94,13 +94,8 @@ function stopTimer() {
   jam = null
 }
 
-function restart() {
+function reset() {
   game.reset()
-  stopTimer()
-  phase.value = 'rewind'
-  glitch.value = false
-  absMin.value = START
-  runRewind()
 }
 
 function enter() {
