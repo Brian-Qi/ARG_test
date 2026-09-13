@@ -140,7 +140,7 @@ const FRAGMENTS = [
   },
   {
     id: 'zhaiyuan', type: '图像', title: '宅院图 · 四合院', tag: '万和号后院',
-    img: '/img/baishi.webp',
+    img: '/img/zhaiyuan.webp',
     summary: '一座四合院的平面。五个孩子不是同时死的，也死在不同的方位。',
     content: [
       '万和号后院，四合院格局：东厢、南房、西厢、北房，中为天井。',
