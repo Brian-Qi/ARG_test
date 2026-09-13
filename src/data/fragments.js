@@ -15,7 +15,7 @@ const FRAGMENTS = [
   /* ================= 一级 · 主线核心 ================= */
   {
     id: 'ledger', type: '账册', title: '万和号流水簿', tag: 'HZ-1927-0512',
-    img: '/img/home-wanhe-ledger.webp',
+    img: '/img/ledger-dark.webp',
     summary: '民国十六年至二十一年间杭州城南绸布南北货商号账册，共 86 页。',
     content: [
       '馆藏号 HZ-1927-0512。万和号，杭州城南，绸布、南北货，前店后院。经营凡五年，民国十六年至二十一年。',
@@ -79,7 +79,7 @@ const FRAGMENTS = [
   },
   {
     id: 'five-gods', type: '图像', title: '五路财神 · 方位', tag: '山门之外',
-    img: '/img/hongao-shouyin.webp',
+    img: '/img/five-gods.webp',
     summary: '东南西北中不是财路，是窗、井、柜、梁、门。五张卡片各写着一位神的名号。',
     content: [
       '城南旧岁，五条“财路”的广告招贴：东市、南码头、西巷、北峰、中街。',
@@ -94,7 +94,7 @@ const FRAGMENTS = [
   },
   {
     id: 'recording', type: '声音', title: '后间录音 · 报数', tag: '00:03:47',
-    img: '/img/kettle_eye.webp',
+    img: '/img/recording.webp',
     summary: '五个孩子的声音轮流报数，每到第六声就被一个男人的算盘打断。',
     content: [
       '磁带一盘，标“后间，00:03:47”，来源不详，与账册同批入藏。',
@@ -171,7 +171,7 @@ const FRAGMENTS = [
   /* ================= 文书 · 校正 ================= */
   {
     id: 'corrections', type: '文书', title: '数据校正记录', tag: 'C-2026 系列',
-    img: '/img/qianwen.webp',
+    img: '/img/corrections.webp',
     summary: '馆方对著录错漏的更正留痕。有一条，改的墨和原字一样旧。',
     content: [
       'C-2026-0016：云林禅寺经卷登记册“韦驮殿”误作“韦陀殿”，已更正。',
@@ -356,7 +356,7 @@ const FRAGMENTS = [
   /* ================= 四级 · 干扰项 / 正常记录（网里的冗余） ================= */
   {
     id: 'nianhua', type: '图像', title: '财神年画图档整理', tag: 'CW-0003',
-    img: '/img/huaguang.webp',
+    img: '/img/nianhua.webp',
     summary: '旧历年画中的财神题材分类著录。元宝、聚宝盆、如意、连钱逐一考源。',
     content: [
       '旧历年画，按财神题材分目：文财神、武财神、五路财神、刘海戏蟾。',
@@ -369,7 +369,7 @@ const FRAGMENTS = [
   },
   {
     id: 'noticemid', type: '文书', title: '中秋节假期开放时间安排', tag: '2026-08-19',
-    img: '/img/corrections.webp',
+    img: '/img/noticemid.webp',
     summary: '本馆中秋假期开放时间安排，闭馆一日。',
     content: [
       '中秋假期本馆照常开放，10 月 1 日闭馆一日。',
@@ -395,7 +395,7 @@ const FRAGMENTS = [
   /* ================= 三级 · 只靠检索才浮现（hidden） ================= */
   {
     id: 'obituary', type: '文书', title: '讣告 · 五童', tag: '民国十六年',
-    img: '/img/ledger_blood.webp',
+    img: '/img/obituary.webp',
     summary: '五条讣告，记着五个孩子的“病殁”。都像病，可日子对不上。',
     content: [
       '讣告五张，未编号，与账册同批入藏。落款日期前后不过一年。',
