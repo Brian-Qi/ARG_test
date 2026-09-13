@@ -1,5 +1,10 @@
 <template>
   <div class="archive-home">
+    <!-- 出馆：回到个人主页 -->
+    <div class="home-outlink">
+      <a class="btn-flat home-out-btn" href="https://briandolph.xyz/">← 返回个人主页</a>
+    </div>
+
     <!-- Hero 检索 -->
     <section class="archive-hero" aria-label="馆藏介绍">
       <span class="hero-tag">让散落在街巷里的旧物，有一条归处</span>
@@ -84,3 +89,8 @@
 
 <script setup>
 </script>
+
+<style scoped>
+.home-outlink { display: flex; justify-content: flex-end; margin: 0 0 16px; }
+.home-out-btn { font-size: 0.82rem; padding: 0.5em 1.1em; }
+</style>

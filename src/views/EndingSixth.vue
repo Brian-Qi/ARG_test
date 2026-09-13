@@ -13,20 +13,18 @@
       <p>沈砚秋走出来了。</p>
       <p>财签自动卷起，变成一张旧合影——五个孩子并排站着，旁边的空位里，是你。</p>
       <p class="ep-tag">第六位收件人已签收。</p>
-      <button class="btn-flat" @click="restart">重新调阅</button>
+      <RouterLink class="btn-flat" to="/" @click="reset">重新调阅</RouterLink>
     </div>
   </section>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import game from '../stores/game'
 
-const router = useRouter()
 const art = '/img/ending-sixth.webp'   // 绑定 src，避免构建期要求文件存在
 onMounted(() => game.setEnding('bad'))
-function restart() { game.reset(); router.push('/') }
+function reset() { game.reset() }
 </script>
 
 <style scoped>
