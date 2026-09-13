@@ -1,10 +1,6 @@
 <template>
   <section class="strike-page" :class="[phase, { glitch }]">
     <template v-if="phase === 'rewind'">
-      <!-- 背景：倒走的钟 + 烧着的账页（整页铺满） -->
-      <img class="sz-bgimg" :src="art" alt="" aria-hidden="true" />
-      <div class="sz-scrim" aria-hidden="true"></div>
-
       <div class="sz-content">
         <p class="sz-eyebrow">账房 · 倒流</p>
 
@@ -91,8 +87,17 @@ function restart() {
   runRewind()
 }
 
-onMounted(runRewind)
-onBeforeUnmount(stopTimer)
+function enter() {
+  document.documentElement.classList.add('strike-bg')
+  runRewind()
+}
+function leave() {
+  document.documentElement.classList.remove('strike-bg')
+  stopTimer()
+}
+
+onMounted(enter)
+onBeforeUnmount(leave)
 </script>
 
 <style scoped>
@@ -102,34 +107,13 @@ onBeforeUnmount(stopTimer)
   flex-direction: column;
   max-width: none;
   min-height: 78vh;
-  overflow: hidden;
-  border-radius: 6px;
-  background: #080402;
-  isolation: isolate;
+  background: transparent;
 }
 .strike-page.glitch { animation: static-jitter 0.12s steps(2) infinite; }
 @keyframes static-jitter {
   0% { transform: translateX(0); }
   50% { transform: translateX(-3px); }
   100% { transform: translateX(2px); }
-}
-
-/* ---------- 背景：生图铺满 ---------- */
-.sz-bgimg {
-  position: absolute; inset: 0; z-index: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 48%;
-  animation: ember 4s ease-in-out infinite alternate;
-}
-@keyframes ember {
-  from { filter: brightness(0.9) saturate(1.02); }
-  to { filter: brightness(1.08) saturate(1.12); }
-}
-.sz-scrim {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(118% 96% at 50% 40%, rgba(8, 4, 2, 0) 26%, rgba(8, 4, 2, 0.5) 72%, rgba(5, 2, 1, 0.9) 100%),
-    linear-gradient(180deg, rgba(5, 2, 1, 0.74), rgba(5, 2, 1, 0.12) 32%, rgba(5, 2, 1, 0.22) 60%, rgba(5, 2, 1, 0.9));
 }
 
 /* ---------- 内容 ---------- */
@@ -188,6 +172,6 @@ onBeforeUnmount(stopTimer)
 .zero-foot { display: block; margin-top: 1.1rem; color: #7a5b36; font-size: 0.74rem; letter-spacing: 0.12em; }
 
 @media (prefers-reduced-motion: reduce) {
-  .strike-page.glitch, .sz-bgimg { animation: none; }
+  .strike-page.glitch { animation: none; }
 }
 </style>

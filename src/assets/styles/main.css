@@ -898,3 +898,12 @@ button:disabled { opacity: 0.38; cursor: not-allowed; }
 @media (prefers-reduced-motion: reduce) {
   .vault-grain { animation: none; }
 }
+
+/* ============================================================
+   第零笔 · 整页背景（生图：上羊皮纸 / 下火焰）
+   进入 /strike-zero 时由页面给 <html> 挂 .strike-bg
+   ============================================================ */
+html.strike-bg body {
+  background: #080402 url("/img/strike_bg.webp") center center / cover no-repeat fixed;
+}
+html.strike-bg .vault-shell { background: transparent; }
