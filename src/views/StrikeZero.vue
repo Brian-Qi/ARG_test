@@ -17,22 +17,31 @@
     </template>
 
     <template v-else-if="phase === 'zero'">
-      <div class="zero-screen">
-        <img class="zero-eye" :src="art" alt="" />
-        <p class="zero-line">第零笔：谁把门锁上？</p>
-        <p class="zero-sub">五个孩子不再数数。万和号的后间，还亮着。</p>
-        <button @click="restart">重新调阅</button>
-        <small class="zero-foot">这一页，你烧不掉了。</small>
+      <div class="zero-stage">
+        <div class="zero-inner">
+          <span class="zero-seal">零</span>
+          <p class="zero-kicker">结账 · 第零笔</p>
+          <h2 class="zero-title">第零笔</h2>
+          <p class="zero-q">谁把门锁上？</p>
+
+          <div class="zero-lines">
+            <p>五个孩子不再数数。万和号的后间，还亮着。</p>
+            <p>火把账烧回了头一天，却烧不到头一天的前一夜。</p>
+            <p>那一页上没有账，只有一把锁——从外面锁上的。</p>
+          </div>
+
+          <button class="btn-flat" @click="restart">重新调阅</button>
+          <small class="zero-foot">这一页，你烧不掉了。</small>
+        </div>
       </div>
     </template>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import game from '../stores/game'
 
-const art = '/img/strike_zero.webp'   // 绑定 src，避免构建期要求文件存在
 const phase = ref('rewind')
 const glitch = ref(false)
 const absMin = ref(5 * 1440 + 23 * 60 + 47)   // 初五 23:47
@@ -51,6 +60,13 @@ const clock = computed(() => {
 })
 const dayLabel = computed(() => DAY_CN[Math.max(1, Math.floor(absMin.value / 1440))] || '初一')
 const chapter = computed(() => Math.max(1, Math.floor(absMin.value / 1440) + 2))
+
+// 整页背景：倒流段用「羊皮纸/火焰」，定格段换成「后间木门」
+watch(phase, (p) => {
+  const el = document.documentElement
+  el.classList.toggle('strike-bg', p === 'rewind')
+  el.classList.toggle('zero-bg', p === 'zero')
+})
 
 function runRewind() {
   const t0 = performance.now()
@@ -92,7 +108,7 @@ function enter() {
   runRewind()
 }
 function leave() {
-  document.documentElement.classList.remove('strike-bg')
+  document.documentElement.classList.remove('strike-bg', 'zero-bg')
   stopTimer()
 }
 
@@ -116,7 +132,7 @@ onBeforeUnmount(leave)
   100% { transform: translateX(2px); }
 }
 
-/* ---------- 内容 ---------- */
+/* ================= 倒流段 ================= */
 .sz-content {
   position: relative; z-index: 1;
   flex: 1; min-height: 78vh;
@@ -163,23 +179,52 @@ onBeforeUnmount(leave)
 }
 .strike-page.glitch .sz-time { color: var(--blood-bright); text-shadow: 0 0 30px rgba(209, 52, 36, 0.7); }
 
-/* ---------- 第零笔 ---------- */
-.zero-screen { position: relative; z-index: 1; text-align: center; padding: 3rem 0 2rem; }
-.zero-eye {
-  width: min(380px, 88%); border-radius: 4px;
-  filter: saturate(0.9) brightness(0.86) contrast(1.08);
-  box-shadow: 0 0 70px rgba(0, 0, 0, 0.7);
-  opacity: 0.9;
+/* ================= 第零笔 · 定格结局屏 ================= */
+.zero-stage {
+  position: relative; z-index: 1;
+  flex: 1; min-height: calc(100vh - 110px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 3rem 1.5rem;
 }
-.zero-line {
-  margin-top: 1.8rem; font-size: 1.8rem; color: var(--blood-bright);
-  font-family: var(--kai); text-shadow: 0 0 24px rgba(168, 41, 28, 0.45);
+.zero-inner { position: relative; z-index: 1; max-width: 640px; text-align: center; animation: zero-in 1.1s ease both; }
+.zero-seal {
+  position: absolute; top: -6px; right: -6px; width: 64px; height: 64px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; font-family: "Ma Shan Zheng", 'KaiTi', serif; font-size: 34px;
+  border: 2px solid var(--blood); color: var(--blood-bright); background: rgba(20, 4, 3, 0.5);
+  transform: rotate(-6deg); box-shadow: 0 0 26px rgba(168, 41, 28, 0.45);
+  animation: zero-seal-in 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) 0.5s both;
 }
-.zero-sub { margin-top: 0.5rem; color: #b09a72; font-size: 0.86rem; }
-.zero-screen button { margin-top: 1.6rem; }
-.zero-foot { display: block; margin-top: 1.1rem; color: #7a5b36; font-size: 0.74rem; letter-spacing: 0.12em; }
+.zero-kicker {
+  margin: 0 0 4px;
+  font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
+  font-size: 1rem; letter-spacing: 0.44em; color: var(--blood-bright);
+  text-shadow: 0 0 14px rgba(168, 41, 28, 0.7), 0 1px 8px rgba(0, 0, 0, 0.95);
+}
+.zero-title {
+  margin: 0 0 10px;
+  font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
+  font-weight: 400; font-size: clamp(3rem, 12vw, 6.4rem); line-height: 1.02; letter-spacing: 0.08em;
+  color: var(--blood-bright);
+  text-shadow: 0 0 52px rgba(209, 52, 36, 0.7), 0 0 16px rgba(168, 41, 28, 0.6), 0 3px 14px rgba(0, 0, 0, 0.95);
+}
+.zero-q {
+  margin: 0 0 1.6rem;
+  font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
+  font-size: clamp(1.4rem, 4.4vw, 2.2rem); letter-spacing: 0.16em; color: #ff6a4a;
+  text-shadow: 0 0 24px rgba(209, 52, 36, 0.6), 0 2px 10px rgba(0, 0, 0, 0.95);
+}
+.zero-lines { max-width: 34em; margin: 0 auto; }
+.zero-lines p { color: #dcc8a4; line-height: 2.1; font-size: 0.98rem; margin: 0 0 0.5em; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9); }
+.zero-inner .btn-flat { margin-top: 1.6rem; }
+.zero-foot { display: block; margin-top: 1.1rem; color: #9a7b52; font-size: 0.76rem; letter-spacing: 0.14em; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9); }
+
+@keyframes zero-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes zero-seal-in { from { opacity: 0; transform: rotate(-6deg) scale(0.35); } to { opacity: 1; transform: rotate(-6deg) scale(1); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .strike-page.glitch { animation: none; }
+  .strike-page.glitch, .zero-inner, .zero-seal { animation: none; }
+}
+@media (max-width: 720px) {
+  .zero-seal { width: 50px; height: 50px; font-size: 26px; top: -4px; right: -4px; }
 }
 </style>

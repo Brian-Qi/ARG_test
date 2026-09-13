@@ -18,11 +18,7 @@
       <p>万和号的后间空了。借出去的那些命，一笔一笔还了回去，只是还回来的，总比借出去时少一些。</p>
       <p>灰里还留着字痕。有些字，是烧不掉的。</p>
 
-      <RouterLink class="grey-clue" to="/strike-zero">
-        <span class="clue-tag">残页 · 未烧尽</span>
-        <span class="clue-text">账烧不干净的那一笔，在灰里也看得见。</span>
-        <span class="clue-go">翻回第一页 →</span>
-      </RouterLink>
+      <RouterLink class="grey-hint" to="/strike-zero">账烧不干净的那一笔，在灰里也看得见。</RouterLink>
 
       <button class="btn-flat" @click="restart">重新调阅</button>
     </div>
@@ -106,22 +102,11 @@ function emberStyle(n) {
 .ep-copy { max-width: 660px; margin: 34px auto 0; text-align: center; animation: ep-copy-in 1s ease 0.25s both; }
 .ep-copy p { line-height: 2.2; font-size: 1.05rem; color: #cfc9ba; margin: 0 0 0.8em; }
 
-/* 通第零笔：把残页做成一条看得见的线索 */
-.grey-clue {
-  display: flex; flex-direction: column; align-items: center; gap: 7px;
-  max-width: 470px; margin: 28px auto 4px; padding: 16px 22px;
-  border: 1px dashed rgba(154, 122, 85, 0.42);
-  background: linear-gradient(180deg, rgba(34, 25, 15, 0.5), rgba(20, 14, 9, 0.5));
-  text-decoration: none; cursor: pointer;
-  transition: border-color 0.5s ease, background 0.5s ease, box-shadow 0.5s ease;
-}
-.grey-clue:hover { border-color: rgba(224, 178, 92, 0.8); background: rgba(42, 30, 17, 0.66); box-shadow: 0 0 26px rgba(224, 178, 92, 0.2); }
-.clue-tag { font-size: 0.68rem; letter-spacing: 0.36em; color: #8a6f4d; }
-.clue-text { color: #bfa578; font-size: 0.9rem; letter-spacing: 0.06em; transition: color 0.5s ease; }
-.clue-go { font-size: 0.74rem; letter-spacing: 0.2em; color: #7a5b36; transition: color 0.5s ease; }
-.grey-clue:hover .clue-text, .grey-clue:hover .clue-go { color: #f0c884; }
+/* 通第零笔：保留原来那条几乎看不见的淡链 */
+.grey-hint { display: block; margin: 22px 0 6px; color: rgba(154, 122, 85, 0.32); font-size: 0.78rem; letter-spacing: 0.14em; text-decoration: none; cursor: pointer; transition: color 0.5s ease, text-shadow 0.5s ease; }
+.grey-hint:hover { color: rgba(224, 178, 92, 0.9); text-shadow: 0 0 14px rgba(224, 178, 92, 0.35); }
 
-.ep-copy .btn-flat { margin-top: 20px; }
+.ep-copy .btn-flat { margin-top: 14px; }
 
 @keyframes ep-in { from { opacity: 0; transform: scale(1.035); } to { opacity: 1; transform: scale(1); } }
 @keyframes ep-breathe { from { filter: grayscale(0.28) sepia(0.14) contrast(1.06) brightness(0.82); } to { filter: grayscale(0.28) sepia(0.14) contrast(1.06) brightness(0.92); } }
@@ -138,6 +123,5 @@ function emberStyle(n) {
   .ep-hero { aspect-ratio: 16 / 9; }
   .ep-cap { left: 20px; bottom: 18px; }
   .ep-seal { width: 50px; height: 50px; font-size: 26px; top: 14px; right: 14px; }
-  .grey-clue { margin: 22px 0 4px; }
 }
 </style>
