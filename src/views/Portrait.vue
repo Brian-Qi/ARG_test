@@ -69,7 +69,7 @@ function judge(answer) {
 @media (max-width: 720px) { .photo-grid { grid-template-columns: 1fr; } }
 .old-photo { cursor: pointer; }
 .old-photo.marked { border-color: var(--blood); }
-.photo-figure { aspect-ratio: 3 / 2; border-radius: 3px; background: #0d0906; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin-bottom: 10px; }
+.photo-figure { width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 3px; background: #0d0906; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin-bottom: 10px; }
 .photo-figure span { font-family: var(--kai); font-size: 40px; color: #6b5236; }
 .photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2) contrast(1.06) brightness(0.9); }
 .photo-figure .crack { z-index: 2; position: absolute; right: 18%; bottom: 0; width: 2px; height: 65%; background: #1a120a; transform: skewX(-18deg); box-shadow: 0 0 8px rgba(0,0,0,0.6); }
