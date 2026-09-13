@@ -19,11 +19,13 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import game from '../stores/game'
 
 const router = useRouter()
 const art = '/img/ending-ash.webp'
+onMounted(() => game.setEnding('grey'))   // 本页即灰结局：确立状态，保证第零笔入口可用
 function restart() { game.reset(); router.push('/') }
 </script>
 
