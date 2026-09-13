@@ -19,11 +19,13 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import game from '../stores/game'
 
 const router = useRouter()
 const art = '/img/ending-sixth.webp'   // 绑定 src，避免构建期要求文件存在
+onMounted(() => game.setEnding('bad'))
 function restart() { game.reset(); router.push('/') }
 </script>
 

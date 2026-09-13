@@ -19,11 +19,13 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import game from '../stores/game'
 
 const router = useRouter()
 const art = '/img/ending-out.webp'
+onMounted(() => game.setEnding('hidden'))
 function restart() { game.reset(); router.push('/') }
 </script>
 
