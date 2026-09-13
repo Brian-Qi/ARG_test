@@ -125,23 +125,31 @@ onBeforeUnmount(leave)
 }
 .sz-eyebrow {
   margin: 0 0 0.4rem;
-  font-size: 0.74rem; letter-spacing: 0.5em; color: var(--blood-bright);
+  font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
+  font-size: 0.9rem; letter-spacing: 0.4em; color: var(--blood-bright);
   text-shadow: 0 0 12px rgba(168, 41, 28, 0.7), 0 1px 6px rgba(0, 0, 0, 0.95);
 }
 .sz-clock { margin: 0; }
 .sz-day {
-  display: block; font-size: 1.05rem; letter-spacing: 0.5em; color: var(--blood-bright);
+  display: block;
+  font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
+  font-size: 1.4rem; letter-spacing: 0.4em; color: var(--blood-bright);
   margin-bottom: 2px; text-shadow: 0 0 14px rgba(168, 41, 28, 0.7), 0 1px 8px rgba(0, 0, 0, 0.95);
 }
 .sz-time {
-  display: block; font-family: var(--kai, var(--serif, serif));
-  font-weight: 600; line-height: 1.02;
+  display: block;
+  font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
+  font-weight: 400; line-height: 1.02;
   font-size: clamp(3.6rem, 14vw, 7.4rem); letter-spacing: 0.06em;
   color: var(--blood-bright);
   text-shadow: 0 0 46px rgba(209, 52, 36, 0.65), 0 0 14px rgba(168, 41, 28, 0.6), 0 3px 12px rgba(0, 0, 0, 0.95);
   font-variant-numeric: tabular-nums;
 }
-.sz-chap { display: block; font-size: 0.82rem; letter-spacing: 0.44em; color: var(--blood-bright); margin-top: 6px; text-shadow: 0 0 14px rgba(168, 41, 28, 0.7), 0 1px 8px rgba(0, 0, 0, 0.95); }
+.sz-chap {
+  display: block;
+  font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
+  font-size: 0.95rem; letter-spacing: 0.38em; color: var(--blood-bright); margin-top: 6px; text-shadow: 0 0 14px rgba(168, 41, 28, 0.7), 0 1px 8px rgba(0, 0, 0, 0.95);
+}
 
 .sz-title {
   margin: 30px 0 0;
