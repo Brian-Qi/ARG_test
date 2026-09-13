@@ -1,16 +1,9 @@
 <template>
   <section class="strike-page" :class="[phase, { glitch }]">
     <template v-if="phase === 'rewind'">
-      <!-- 背景：上半羊皮纸 / 下半火焰 -->
-      <div class="sz-bg" aria-hidden="true">
-        <div class="sz-parch"></div>
-        <div class="sz-burn"></div>
-        <div class="sz-fire">
-          <i v-for="n in 42" :key="n" :style="flameStyle(n)"></i>
-        </div>
-        <div class="sz-seam"></div>
-        <div class="sz-vignette"></div>
-      </div>
+      <!-- 背景：倒走的钟 + 烧着的账页（整页铺满） -->
+      <img class="sz-bgimg" :src="art" alt="" aria-hidden="true" />
+      <div class="sz-scrim" aria-hidden="true"></div>
 
       <div class="sz-content">
         <p class="sz-eyebrow">账房 · 倒流</p>
@@ -63,18 +56,6 @@ const clock = computed(() => {
 const dayLabel = computed(() => DAY_CN[Math.max(1, Math.floor(absMin.value / 1440))] || '初一')
 const chapter = computed(() => Math.max(1, Math.floor(absMin.value / 1440) + 2))
 
-// 火焰：按序号散列出色高/时长/左右，避免每次渲染乱跳
-function flameStyle(n) {
-  const r1 = Math.abs((Math.sin(n * 12.9898) * 43758.5453) % 1)
-  const r2 = Math.abs((Math.sin(n * 78.233) * 12543.21) % 1)
-  return {
-    left: (r1 * 100).toFixed(1) + '%',
-    height: (24 + r1 * 96).toFixed(0) + 'px',
-    animationDuration: (0.8 + r2 * 1.5).toFixed(2) + 's',
-    animationDelay: (-r2 * 1.6).toFixed(2) + 's',
-  }
-}
-
 function runRewind() {
   const t0 = performance.now()
   const step = (t) => {
@@ -117,10 +98,13 @@ onBeforeUnmount(stopTimer)
 <style scoped>
 .strike-page {
   position: relative;
+  display: flex;
+  flex-direction: column;
   max-width: none;
   min-height: 78vh;
   overflow: hidden;
   border-radius: 6px;
+  background: #080402;
   isolation: isolate;
 }
 .strike-page.glitch { animation: static-jitter 0.12s steps(2) infinite; }
@@ -130,91 +114,60 @@ onBeforeUnmount(stopTimer)
   100% { transform: translateX(2px); }
 }
 
-/* ---------- 背景 ---------- */
-.sz-bg { position: absolute; inset: 0; z-index: 0; }
-.sz-parch {
-  position: absolute; left: 0; right: 0; top: 0; bottom: 46%;
+/* ---------- 背景：生图铺满 ---------- */
+.sz-bgimg {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 48%;
+  animation: ember 4s ease-in-out infinite alternate;
+}
+@keyframes ember {
+  from { filter: brightness(0.9) saturate(1.02); }
+  to { filter: brightness(1.08) saturate(1.12); }
+}
+.sz-scrim {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(120% 90% at 28% 18%, rgba(122, 84, 30, 0.22), transparent 58%),
-    radial-gradient(90% 80% at 82% 72%, rgba(92, 60, 18, 0.30), transparent 68%),
-    radial-gradient(60% 40% at 50% 4%, rgba(255, 246, 214, 0.35), transparent 70%),
-    linear-gradient(180deg, #cbb387 0%, #d8c69a 52%, #b3985f 100%);
-}
-.sz-parch::after {
-  content: ""; position: absolute; inset: 0;
-  background-image: repeating-radial-gradient(circle at 22% 34%, rgba(88, 58, 18, 0.07) 0 1px, transparent 1px 6px);
-  opacity: 0.7;
-}
-.sz-burn {
-  position: absolute; left: 0; right: 0; bottom: 46%; height: 14%;
-  background: linear-gradient(0deg, rgba(38, 12, 3, 0.92), rgba(110, 54, 8, 0.45) 42%, transparent);
-}
-.sz-fire {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 50%;
-  background:
-    radial-gradient(72% 104% at 50% 104%, #ffe08a 0%, #ffb028 15%, #ff7a12 33%, #e23c08 55%, #8c1c04 79%, #240802 100%);
-  animation: fire-shift 2.2s ease-in-out infinite alternate;
-  overflow: hidden;
-}
-.sz-fire i {
-  position: absolute; bottom: -6px; width: 16px;
-  background: linear-gradient(0deg, #ffe6a0, #ff8a1e 52%, rgba(255, 70, 0, 0));
-  border-radius: 50% 50% 22% 22% / 72% 72% 28% 28%;
-  filter: blur(3px); opacity: 0.85; transform-origin: bottom center;
-  animation-name: flame-lift; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate;
-}
-@keyframes flame-lift {
-  from { transform: translateY(8px) scaleY(0.92); opacity: 0.45; }
-  to { transform: translateY(-18px) scaleY(1.18); opacity: 0.95; }
-}
-@keyframes fire-shift {
-  from { filter: brightness(0.94) saturate(1.02); }
-  to { filter: brightness(1.14) saturate(1.14); }
-}
-.sz-seam {
-  position: absolute; left: 0; right: 0; bottom: 47%; height: 3px;
-  background: linear-gradient(90deg, transparent, #ffca6a, transparent);
-  box-shadow: 0 0 26px rgba(255, 140, 40, 0.75);
-}
-.sz-vignette {
-  position: absolute; inset: 0; pointer-events: none;
-  box-shadow: inset 0 0 140px rgba(10, 4, 0, 0.6);
+    radial-gradient(118% 96% at 50% 40%, rgba(8, 4, 2, 0) 26%, rgba(8, 4, 2, 0.5) 72%, rgba(5, 2, 1, 0.9) 100%),
+    linear-gradient(180deg, rgba(5, 2, 1, 0.74), rgba(5, 2, 1, 0.12) 32%, rgba(5, 2, 1, 0.22) 60%, rgba(5, 2, 1, 0.9));
 }
 
 /* ---------- 内容 ---------- */
 .sz-content {
   position: relative; z-index: 1;
-  max-width: 820px; margin: 0 auto;
-  padding: 44px 28px 52px;
+  flex: 1; min-height: 78vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 3.4rem 1.6rem 2.6rem; text-align: center;
 }
 .sz-eyebrow {
-  margin: 0; text-align: center;
-  font-size: 0.74rem; letter-spacing: 0.5em; color: #6b4a22;
+  margin: 0 0 0.4rem;
+  font-size: 0.74rem; letter-spacing: 0.5em; color: #c08a52;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
 }
-.sz-clock { text-align: center; margin: 6px 0 4px; }
+.sz-clock { margin: 0; }
 .sz-day {
-  display: block; font-size: 1.05rem; letter-spacing: 0.5em; color: #5a3a18;
-  margin-bottom: 2px;
+  display: block; font-size: 1.05rem; letter-spacing: 0.5em; color: #d8a86a;
+  margin-bottom: 2px; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
 }
 .sz-time {
   display: block; font-family: var(--kai, var(--serif, serif));
   font-weight: 600; line-height: 1.02;
-  font-size: clamp(3.4rem, 13vw, 6.6rem); letter-spacing: 0.06em;
-  color: #33200c;
-  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.4), 0 0 34px rgba(255, 150, 50, 0.35);
+  font-size: clamp(3.6rem, 14vw, 7.4rem); letter-spacing: 0.06em;
+  color: #ffe2ad;
+  text-shadow: 0 0 44px rgba(255, 116, 24, 0.6), 0 0 12px rgba(255, 90, 10, 0.45), 0 3px 12px rgba(0, 0, 0, 0.9);
   font-variant-numeric: tabular-nums;
 }
-.sz-chap { display: block; font-size: 0.82rem; letter-spacing: 0.44em; color: #6b4a22; margin-top: 4px; }
+.sz-chap { display: block; font-size: 0.82rem; letter-spacing: 0.44em; color: #d8a86a; margin-top: 6px; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9); }
 
 .sz-title {
-  text-align: center; margin: 26px 0 0;
-  font-size: 1.5rem; color: #ffdca6;
-  text-shadow: 0 0 22px rgba(255, 120, 30, 0.5), 0 2px 6px rgba(0, 0, 0, 0.7);
+  margin: 30px 0 0;
+  font-size: 1.5rem; color: #ffe3b0;
+  text-shadow: 0 0 22px rgba(255, 120, 30, 0.5), 0 2px 8px rgba(0, 0, 0, 0.85);
 }
-.sz-intro { max-width: 34em; margin: 12px auto 0; text-align: center; color: #e7c79a; line-height: 1.9; font-size: 0.94rem; }
+.sz-intro { max-width: 32em; margin: 14px auto 0; color: #e8cca4; line-height: 1.9; font-size: 0.94rem; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.85); }
 .sz-whisper {
-  margin: 22px auto 0; text-align: center;
-  color: #ffce7a; font-size: 0.84rem; letter-spacing: 0.16em; opacity: 0.85;
+  margin: 24px auto 0; color: #ffb85c; font-size: 0.84rem; letter-spacing: 0.16em;
+  opacity: 0.92; text-shadow: 0 0 14px rgba(255, 110, 20, 0.4), 0 1px 6px rgba(0, 0, 0, 0.85);
 }
 .strike-page.glitch .sz-time { color: var(--blood-bright); text-shadow: 0 0 30px rgba(209, 52, 36, 0.7); }
 
@@ -235,6 +188,6 @@ onBeforeUnmount(stopTimer)
 .zero-foot { display: block; margin-top: 1.1rem; color: #7a5b36; font-size: 0.74rem; letter-spacing: 0.12em; }
 
 @media (prefers-reduced-motion: reduce) {
-  .strike-page.glitch, .sz-fire, .sz-fire i { animation: none; }
+  .strike-page.glitch, .sz-bgimg { animation: none; }
 }
 </style>
