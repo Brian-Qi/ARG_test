@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <section class="ending-page ending-grey">
     <figure class="ep-hero">
       <img :src="art" alt="" />
@@ -30,7 +30,7 @@ function restart() { game.reset(); router.push('/') }
 <style scoped>
 .ending-page { max-width: 1000px; margin: 0 auto; }
 .ep-hero {
-  position: relative; margin: 6px 0 0; aspect-ratio: 12 / 5; overflow: hidden; border-radius: 6px;
+  position: relative; margin: 6px 0 0; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 6px;
   border: 1px solid rgba(150, 145, 130, 0.4); background: #0d0906;
   box-shadow: 0 0 50px rgba(120, 118, 110, 0.14); animation: ep-in 0.9s ease both;
 }
