@@ -26,6 +26,7 @@
                   <span class="am-title">{{ n.title }}</span>
                   <span v-if="n.tag" class="am-tag">{{ n.tag }}</span>
                 </RouterLink>
+                <span v-if="n.state === 'solid'" class="am-read">已阅</span>
               </li>
             </ul>
           </section>
@@ -188,6 +189,7 @@ onBeforeUnmount(() => {
 .am-node.void .am-title { color: #6a5942; letter-spacing: 0.2em; }
 .am-link:hover .am-title { color: #d13424; }
 .am-tag { font-size: 0.72rem; color: #8a7250; white-space: nowrap; }
+.am-read { margin-left: auto; font-size: 0.7rem; letter-spacing: 0.12em; color: #c9a25a; white-space: nowrap; }
 
 @media (max-width: 600px) {
   .am-panel { max-height: 90vh; }
