@@ -3,7 +3,7 @@
     <div class="archive-topbar-inner">
       <RouterLink class="archive-brand" to="/">
         <span class="archive-brand-seal">档</span>
-        <span class="archive-brand-name"><b>杭州民俗数字档案馆</b><i>Hangzhou Folklore Digital Archives</i></span>
+        <span class="archive-brand-name"><b>杭州民俗数字档案馆</b><i :class="{ 'brand-back': played }">{{ played ? 'You Have Been Here Before' : 'Hangzhou Folklore Digital Archives' }}</i></span>
       </RouterLink>
       <nav class="archive-nav">
         <template v-for="item in items" :key="item.to">
@@ -22,10 +22,13 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { unreadCount, useVersion, siteLocked } from '../../store/archive-notify'
+import game from '../../stores/game'
 
 const route = useRoute()
 const version = useVersion()
 const unread = computed(() => { void version.value; return unreadCount() })
+// 非一周目：完成过任意一次结账后，馆名下的拼音会换掉
+const played = computed(() => { void version.value; return game.playedBefore() })
 // 仅 /help 且处于“无路可退”态时导航失效（路由限定，不污染其它页与二周目）
 const locked = computed(() => {
   void version.value
@@ -42,6 +45,7 @@ const items = [
 </script>
 
 <style scoped>
+.archive-brand-name .brand-back { color: var(--blood-bright, #d13424); }
 .archive-nav-dead {
   display: inline-block;
   padding: 8px 14px;

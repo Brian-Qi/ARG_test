@@ -92,7 +92,15 @@ function markBranch(key) {
   if (key === 'portrait') state.portraitSolved = true
 }
 
-function setEnding(e) { state.ending = e }
+// 完成过任意一次结账即永久标记（reset 不清）；A 面据此知道「你不是第一次来」
+const K_PLAYED = 'cx_played'
+function setEnding(e) {
+  state.ending = e
+  try { localStorage.setItem(K_PLAYED, '1') } catch (err) { /* 忽略 */ }
+}
+const playedBefore = () => {
+  try { return localStorage.getItem(K_PLAYED) === '1' } catch (err) { return false }
+}
 
 // —— 走捷径：URL 绕过前置 / 谜题靠反复试错到提示。好结局要求 shortcuts===0 ——
 function takeShortcut() { state.shortcuts = (state.shortcuts || 0) + 1 }
@@ -125,7 +133,7 @@ const reduceMotion = () => localStorage.getItem(K_MOTION) === 'on' || (localStor
 export default {
   state, createFortune, markBranch, setEnding, triggerScare, takeShortcut, reset,
   seenHidden, markSeenHidden, shenSearched, markShenSearched,
-  collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion
+  collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion, playedBefore
 }
 
 export { markSeenHidden, seenHidden, shenSearched, markShenSearched }
