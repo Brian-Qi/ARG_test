@@ -19,11 +19,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import game from '../stores/game'
 
 const art = '/img/ending-out.webp'
-onMounted(() => game.setEnding('hidden'))
 function reset() { game.reset() }
 </script>
 
