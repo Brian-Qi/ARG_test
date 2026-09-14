@@ -22,7 +22,7 @@
                 <template v-if="n.state === 'void'">
                   <span class="am-title">???</span>
                 </template>
-                <RouterLink v-else :to="n.to" class="am-link" @click="close">
+                <RouterLink v-else :to="n.to" class="am-link" @click.capture="game.allowViaMap()" @click="close">
                   <span class="am-title">{{ n.title }}</span>
                   <span v-if="n.tag" class="am-tag">{{ n.tag }}</span>
                 </RouterLink>
