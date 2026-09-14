@@ -62,20 +62,25 @@ function setRobots(value) {
 // B 层不再设线性关卡锁：馆藏档案自由调阅（ARG 非线性质）。
 // 唯一例外：第零笔是元秘密，仅完整达成灰结局后可达，防直接输 URL 绕过。
 router.beforeEach((to) => {
+  // 一次性消费「全图跳转」放行标记（每个导航都清，避免残留）
+  const viaMap = game.consumeViaMap()
   if (to.meta.mode !== 'vault') return true
+  // 从全图跳转过来：合法特判，直接放行、不计捷径
+  if (viaMap) return true
   const root = '/' + to.path.split('/')[1]
   // 隐藏结局：仅完整达成一次灰结局后可达（强行访问 = 走捷径）
   if (root === '/strike-zero') {
     if (game.state.ending === 'grey') return true
     game.takeShortcut()
-    return { path: '/story', replace: true }
+    return { path: '/', replace: true }
   }
   // 结局页为结算页：免 B 面门槛，直连可达
   if (root === '/ending') return true
   // B 面入口门槛：见过第 0 页 + 解锁族谱 + 在馆藏检索里搜过「沈砚秋」
   if (seenHidden() && familyUnlocked() && shenSearched()) return true
+  // 非法直入：判定落在 ARG 根，不在检索页停留
   game.takeShortcut()
-  return { path: '/search', replace: true }
+  return { path: '/', replace: true }
 })
 
 export default router

@@ -92,6 +92,11 @@ function markBranch(key) {
   if (key === 'portrait') state.portraitSolved = true
 }
 
+// —— 从「全图」跳转：一次性合法放行，守卫据此放行且不计捷径 ——
+let _viaMap = false
+const allowViaMap = () => { _viaMap = true }
+function consumeViaMap() { const v = _viaMap; _viaMap = false; return v }
+
 // 完成过任意一次结账即永久标记（reset 不清）；A 面据此知道「你不是第一次来」
 const K_PLAYED = 'cx_played'
 const K_ENDINGS = 'cx_endings'   // 已解锁的结局集合（reset 不清，供全图列已解锁）
@@ -144,7 +149,8 @@ const reduceMotion = () => localStorage.getItem(K_MOTION) === 'on' || (localStor
 export default {
   state, createFortune, markBranch, setEnding, triggerScare, takeShortcut, reset,
   seenHidden, markSeenHidden, shenSearched, markShenSearched,
-  collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion, playedBefore, hasEnding
+  collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion, playedBefore, hasEnding,
+  allowViaMap, consumeViaMap
 }
 
 export { markSeenHidden, seenHidden, shenSearched, markShenSearched }
