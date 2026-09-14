@@ -40,15 +40,19 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import JOURNAL from '../data/journal'
 import Glitch from '../components/Glitch.vue'
 import { resolveRefs } from '../data/net'
+import game from '../stores/game'
 
 const route = useRoute()
 const article = computed(() => JOURNAL.find(a => a.id === route.params.id))
 const refList = computed(() => resolveRefs(article.value?.refs || []))
+
+// 调阅即记已读（全图的「已探明」据此点亮）
+watch(article, (a) => { if (a) game.markRead(a.id) }, { immediate: true })
 </script>
 
 <style scoped>
