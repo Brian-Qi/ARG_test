@@ -84,7 +84,12 @@ const HOME_IDS = [
   'ledger', 'zero-page', 'order-stub', 'shishitai-rubbing', 'five-gods', 'photo-three',
   'huiwen', 'zhouyi', 'shouni', 'corrections'
 ]
-const shown = computed(() => FRAGMENTS.filter(f => HOME_IDS.includes(f.id)))
+// 三把钥匙之后：焚余浮上总目（其余三级隐藏档仍需检索）
+const keyCount = computed(() => Object.keys(game.state.keys || {}).length)
+const shown = computed(() => {
+  const ids = keyCount.value >= 3 ? [...HOME_IDS, 'fenyu'] : HOME_IDS
+  return FRAGMENTS.filter(f => ids.includes(f.id))
+})
 
 // 带限制（需钥匙）的条目：留在首页「研究辑录」栏
 const gated = computed(() => FRAGMENTS.filter(f => f.requires))
