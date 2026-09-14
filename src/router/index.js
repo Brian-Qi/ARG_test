@@ -62,11 +62,9 @@ function setRobots(value) {
 // B 层不再设线性关卡锁：馆藏档案自由调阅（ARG 非线性质）。
 // 唯一例外：第零笔是元秘密，仅完整达成灰结局后可达，防直接输 URL 绕过。
 router.beforeEach((to) => {
-  // 一次性消费「全图跳转」放行标记（每个导航都清，避免残留）
-  const viaMap = game.consumeViaMap()
   if (to.meta.mode !== 'vault') return true
-  // 从全图跳转过来：合法特判，直接放行、不计捷径
-  if (viaMap) return true
+  // 从「全图」进入的本次会话：B 面合法放行，二级跳转也不计捷径
+  if (game.mapPass()) return true
   const root = '/' + to.path.split('/')[1]
   // 隐藏结局：仅完整达成一次灰结局后可达（强行访问 = 走捷径）
   if (root === '/strike-zero') {

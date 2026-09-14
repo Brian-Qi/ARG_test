@@ -92,10 +92,10 @@ function markBranch(key) {
   if (key === 'portrait') state.portraitSolved = true
 }
 
-// —— 从「全图」跳转：一次性合法放行，守卫据此放行且不计捷径 ——
-let _viaMap = false
-const allowViaMap = () => { _viaMap = true }
-function consumeViaMap() { const v = _viaMap; _viaMap = false; return v }
+// —— 从「全图」进入 B 面：本次会话放行（之后在 B 面里的二级跳转也不被当非法）——
+const K_MAP = 'cx_map_pass'
+const allowViaMap = () => { try { sessionStorage.setItem(K_MAP, '1') } catch (err) { /* 忽略 */ } }
+const mapPass = () => { try { return sessionStorage.getItem(K_MAP) === '1' } catch (err) { return false } }
 
 // 完成过任意一次结账即永久标记（reset 不清）；A 面据此知道「你不是第一次来」
 const K_PLAYED = 'cx_played'
@@ -138,6 +138,7 @@ function reset() {
   localStorage.removeItem(K_SHEN)     // 二周目：沈砚秋检索标记一并重置
   localStorage.removeItem(K_MSG)      // 二周目：消息列表一并清空
   sessionStorage.removeItem(K_SEEN)
+  try { sessionStorage.removeItem(K_MAP) } catch (err) { /* 忽略 */ }   // 二周目：全图放行一并撤销
 }
 
 // —— 减弱动效：手动覆盖 + prefers-reduced-motion 自动适配 ——
@@ -150,7 +151,7 @@ export default {
   state, createFortune, markBranch, setEnding, triggerScare, takeShortcut, reset,
   seenHidden, markSeenHidden, shenSearched, markShenSearched,
   collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion, playedBefore, hasEnding,
-  allowViaMap, consumeViaMap
+  allowViaMap, mapPass
 }
 
 export { markSeenHidden, seenHidden, shenSearched, markShenSearched }
