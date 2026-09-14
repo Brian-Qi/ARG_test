@@ -80,17 +80,22 @@ const VAULT_PAGES = [
   { title: '馆藏检索 · 副本', to: '/vault-search' },
   { title: '研究辑录', to: '/journal' }
 ]
-const ENDINGS = [
-  { title: '第六位', to: '/ending/sixth' },
-  { title: '账已焚', to: '/ending/ash' },
-  { title: '五人出账', to: '/ending/out' },
-  { title: '第零笔', to: '/strike-zero' }
+const ENDING_NODES = [
+  { key: 'bad', title: '第六位', to: '/ending/sixth' },
+  { key: 'grey', title: '账已焚', to: '/ending/ash' },
+  { key: 'hidden', title: '五人出账', to: '/ending/out' }
 ]
+// 结局只列解锁过的：解锁几个出来几个
+function endingNodes() {
+  const out = ENDING_NODES.filter(e => game.hasEnding(e.key)).map(e => ({ ...e, state: 'solid' }))
+  if (game.hasEnding('grey')) out.push({ key: 'strike-zero', title: '第零笔', to: '/strike-zero', state: 'open' })
+  return out
+}
 
 const fragNode = (f) => ({ key: 'f-' + f.id, title: f.title, tag: f.tag, to: '/f/' + f.id, state: fragState(f) })
 const byLevel = (lv) => FRAGMENTS.filter(f => levelOf(f.id) === lv).map(fragNode)
 
-const groups = computed(() => [
+const groups = computed(() => ([
   { name: '公开站 · 杭州民俗数字档案馆', nodes: A_PAGES.map(p => ({ key: p.to, ...p, state: 'open' })) },
   { name: '异变副本 · 入口', nodes: VAULT_PAGES.map(p => ({ key: p.to, ...p, state: 'open' })) },
   { name: '卷宗 · 一级（主线）', nodes: byLevel(1) },
@@ -105,8 +110,8 @@ const groups = computed(() => [
     name: '名号索引',
     nodes: ENTITIES.map(e => ({ key: 'e-' + e.id, title: e.name, tag: e.type, to: '/e/' + e.id, state: entState(e) }))
   },
-  { name: '结账', nodes: ENDINGS.map(p => ({ key: p.to, ...p, state: 'open' })) }
-])
+  { name: '结账', nodes: endingNodes() }
+]).filter(g => g.nodes.length))
 
 function onKey(e) { if (e.key === 'Escape') close() }
 onMounted(() => {
