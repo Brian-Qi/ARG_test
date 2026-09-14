@@ -95,8 +95,8 @@ function startProgress() {
 }
 
 onMounted(() => {
-  // 入口门槛：未满足不触发调阅，直接退回检索（强行访问 = 走捷径）
-  if (!(seenHidden() && familyUnlocked() && shenSearched())) { game.takeShortcut(); router.replace('/search'); return }
+  // 入口门槛：未满足不触发调阅，直接退回 ARG 根（强行访问 = 走捷径）
+  if (!(seenHidden() && familyUnlocked() && shenSearched())) { game.takeShortcut(); router.replace('/'); return }
   if (game.reduceMotion()) { router.replace('/story'); return }
   runRead()
 })
