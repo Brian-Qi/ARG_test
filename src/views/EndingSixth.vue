@@ -19,11 +19,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import game from '../stores/game'
 
 const art = '/img/ending-sixth.webp'   // 绑定 src，避免构建期要求文件存在
-onMounted(() => game.setEnding('bad'))
 function reset() { game.reset() }
 </script>
 

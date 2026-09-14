@@ -26,11 +26,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import game from '../stores/game'
 
 const art = '/img/ending-ash.webp'
-onMounted(() => game.setEnding('grey'))   // 本页即灰结局：确立状态，保证第零笔入口可用
 function reset() { game.reset() }
 
 // 余烬：按序号散列出位置/速度/漂移，避免每次渲染乱跳

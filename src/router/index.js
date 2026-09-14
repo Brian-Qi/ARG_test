@@ -74,8 +74,6 @@ router.beforeEach((to) => {
     game.takeShortcut()
     return { path: '/', replace: true }
   }
-  // 结局页为结算页：免 B 面门槛，直连可达
-  if (root === '/ending') return true
   // B 面入口门槛：见过第 0 页 + 解锁族谱 + 在馆藏检索里搜过「沈砚秋」
   if (seenHidden() && familyUnlocked() && shenSearched()) return true
   // 非法直入：判定落在 ARG 根，不在检索页停留
