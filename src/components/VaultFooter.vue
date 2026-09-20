@@ -14,11 +14,21 @@
         <span class="vault-faint">浙公网安备 3301████████ ｜ 浙ICP备████████号-2　<Glitch :n="8" /></span>
       </nav>
     </div>
+    <div class="vault-footer-inner vault-viewopt">
+      <label class="scare-toggle">
+        <input type="checkbox" :checked="game.state.strongScare" @change="toggle" />
+        <span>强惊吓画面</span>
+        <em>{{ game.state.strongScare ? '已开 · 含突脸与血屏' : '已关 · 仅保留文字与线索' }}</em>
+      </label>
+    </div>
   </footer>
 </template>
 
 <script setup>
 import Glitch from './Glitch.vue'
+import game from '../stores/game'
+
+function toggle(e) { game.setStrongScare(e.target.checked) }
 </script>
 
 <style scoped>
@@ -45,4 +55,10 @@ import Glitch from './Glitch.vue'
 .vault-broken { color: #d13424; font-weight: 600; }
 .vault-dead-link { text-decoration: line-through; color: #5c4a34; }
 .vault-faint { color: #4c3d2b; font-size: 12px; }
+
+.vault-viewopt { margin-top: 18px; padding-top: 14px; border-top: 1px dashed rgba(157, 40, 26, 0.22); }
+.scare-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; color: #9a8262; font-size: 12.5px; letter-spacing: 0.06em; }
+.scare-toggle input { width: 15px; height: 15px; accent-color: #a8291c; cursor: pointer; }
+.scare-toggle em { font-style: normal; color: #6d5a40; }
+.scare-toggle input:focus-visible { outline: 2px solid #d13424; outline-offset: 2px; }
 </style>

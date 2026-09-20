@@ -31,6 +31,7 @@ const state = reactive({
   portraitSolved: false,  // 旧影
   ending: null,           // 结账
   scare: null,
+  strongScare: true,      // 强惊吓开关（突脸/血屏）；持久化在独立键 cx_strong
   shortcuts: 0,
   keys: {},               // 已获得钥匙（碎片网解锁用）
   read: {}                // 已调阅碎片（隐藏碎片的揭示）
@@ -122,7 +123,7 @@ const hasEnding = (e) => seenEndingList().includes(e)
 function takeShortcut() { state.shortcuts = (state.shortcuts || 0) + 1 }
 
 function triggerScare(type, text) {
-  if (localStorage.getItem('cx_strong') === 'off') return
+  if (!state.strongScare) return
   state.scare = { type, text, id: Date.now() }
   setTimeout(() => { state.scare = null }, 1300)
 }
@@ -147,10 +148,24 @@ const prefersReduced = () =>
   typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const reduceMotion = () => localStorage.getItem(K_MOTION) === 'on' || (localStorage.getItem(K_MOTION) === null && prefersReduced())
 
+// —— 强惊吓开关：写 cx_strong；未设时默认开（尊重 prefers-reduced-motion）——
+const K_STRONG = 'cx_strong'
+const readStrongScare = () => {
+  const v = localStorage.getItem(K_STRONG)
+  if (v === 'off') return false
+  if (v === 'on') return true
+  return !prefersReduced()
+}
+state.strongScare = readStrongScare()
+function setStrongScare(on) {
+  state.strongScare = !!on
+  try { localStorage.setItem(K_STRONG, on ? 'on' : 'off') } catch (err) { /* 忽略 */ }
+}
+
 export default {
   state, createFortune, markBranch, setEnding, triggerScare, takeShortcut, reset,
   seenHidden, markSeenHidden, shenSearched, markShenSearched,
-  collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion, playedBefore, hasEnding,
+  collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion, setStrongScare, playedBefore, hasEnding,
   allowViaMap, mapPass
 }
 
