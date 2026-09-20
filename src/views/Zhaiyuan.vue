@@ -52,6 +52,7 @@ const assigned = reactive({})   // { placeId: deathId }
 const selected = ref(null)
 const msg = ref('')
 const solved = ref(false)
+const wrongCount = ref(0)       // 「摆满但错」的次数；反复试错到阈值 = 走捷径
 
 const unplaced = computed(() => DEATHS.filter(d => !Object.values(assigned).includes(d.id)))
 function childOf(deathId) {
@@ -80,10 +81,16 @@ function check() {
   })
   if (all) {
     solved.value = true
+    game.state.zhaiyuanSolved = true
+    game.markBranch('zhaiyuan')
     game.collectKey('zhenxiang')
     msg.value = '五方归位：东木、南火、西金、北水、中土。不是五场病，是一场按方位布下的局。'
   } else if (unplaced.value.length === 0) {
-    msg.value = '五条都摆上了，可有一处对不上——再想想各是哪一行、哪一方。'
+    wrongCount.value += 1
+    if (wrongCount.value === 6) game.takeShortcut()   // 反复试错到阈值 = 走捷径
+    msg.value = wrongCount.value >= 6
+      ? '五条都摆上了，仍有一处对不上。以六根定脏、以脏定五行，方位自明。'
+      : '五条都摆上了，可有一处对不上——再想想各是哪一行、哪一方。'
   } else {
     msg.value = ''
   }

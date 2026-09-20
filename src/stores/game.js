@@ -1,7 +1,7 @@
 import { reactive, watch } from 'vue'
 
 // 需持久化的字段（白名单；scare 等瞬时状态不入盘）
-const PERSIST_KEYS = ['wish', 'signed', 'roadSolved', 'audioSolved', 'portraitSolved', 'ending', 'shortcuts', 'keys', 'read']
+const PERSIST_KEYS = ['wish', 'signed', 'roadSolved', 'audioSolved', 'portraitSolved', 'zhaiyuanSolved', 'ending', 'shortcuts', 'keys', 'read']
 const K_STATE = 'cx_game'
 const K_SEEN = 'cx_seen_hidden'
 const K_FAMILY = 'cx_family_unlocked'
@@ -29,6 +29,7 @@ const state = reactive({
   roadSolved: false,      // 五路
   audioSolved: false,     // 录音
   portraitSolved: false,  // 旧影
+  zhaiyuanSolved: false,  // 宅院安位
   ending: null,           // 结账
   scare: null,
   strongScare: true,      // 强惊吓开关（突脸/血屏）；持久化在独立键 cx_strong
@@ -92,6 +93,7 @@ function markBranch(key) {
   if (key === 'roads') state.roadSolved = true
   if (key === 'audio') state.audioSolved = true
   if (key === 'portrait') state.portraitSolved = true
+  if (key === 'zhaiyuan') state.zhaiyuanSolved = true
 }
 
 // —— 从「全图」进入 B 面：本次会话放行（之后在 B 面里的二级跳转也不被当非法）——
@@ -139,7 +141,7 @@ function triggerScare(type, text) {
 function reset() {
   Object.assign(state, {
     wish: '', signed: false, roadSolved: false, audioSolved: false, portraitSolved: false,
-    ending: null, scare: null, shortcuts: 0, keys: {}, read: {}
+    zhaiyuanSolved: false, ending: null, scare: null, shortcuts: 0, keys: {}, read: {}
   })
   localStorage.removeItem(K_STATE)
   localStorage.removeItem(K_SEEN)

@@ -35,15 +35,16 @@ import game from '../stores/game'
 
 const router = useRouter()
 
-// 好结局：完成三条财路、且全程未走捷径
+// 好结局：完成四条谜题线（五路/录音/旧影/宅院）、且全程未走捷径
 const canHidden = computed(() =>
-  game.state.roadSolved && game.state.audioSolved && game.state.portraitSolved && game.state.shortcuts === 0
+  game.state.roadSolved && game.state.audioSolved && game.state.portraitSolved && game.state.zhaiyuanSolved && game.state.shortcuts === 0
 )
 const missingHidden = computed(() => {
   const miss = []
   if (!game.state.roadSolved) miss.push('五条财路')
   if (!game.state.audioSolved) miss.push('算盘录音')
   if (!game.state.portraitSolved) miss.push('旧影')
+  if (!game.state.zhaiyuanSolved) miss.push('宅院安位')
   return miss
 })
 // 灰结局支线「焚余」：先读《著录勘误》→ 循线找到《焚余》→ 集齐四样回执，才烧得掉这本账
