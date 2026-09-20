@@ -28,12 +28,8 @@
             {{ playing ? '❚❚' : '▶' }}
           </button>
           <div class="deck-wave" ref="waveEl" @click="seek" :title="'拖动定位'">
-            <span
-              v-for="(b, i) in peaks" :key="i"
-              :class="{ passed: i / (peaks.length - 1) <= progress }"
-              :style="{ height: b + '%' }"
-            />
-            <i class="deck-head" :style="{ left: (progress * 100) + '%' }" />
+            <span v-for="(b, i) in peaks" :key="i" :class="{ passed: i / (peaks.length - 1) <= progress }" :style="{ height: b + '%' }" />
+            <i class="deck-head" :style="{ left: progress * 100 + '%' }" />
           </div>
           <b class="deck-time">{{ timeText }}</b>
         </div>
@@ -41,8 +37,11 @@
         <!-- 选字（打乱顺序） -->
         <div class="wave-row">
           <button
-            v-for="clip in clips" :key="clip.id" type="button"
-            class="clip" :class="{ chosen: chosen.includes(clip.id) }"
+            v-for="clip in clips"
+            :key="clip.id"
+            type="button"
+            class="clip"
+            :class="{ chosen: chosen.includes(clip.id) }"
             @click="pick(clip.id)"
           >
             <span v-for="(bar, bi) in clip.bars" :key="bi" :style="{ height: bar + '%' }" /><b>{{ clip.id }}</b>
@@ -71,11 +70,13 @@
       </div>
 
       <div class="tape" @click="toggle" title="播放 / 暂停" role="button" tabindex="0" @keydown.enter="toggle">
-        <div class="tape-window"><span>REC</span><b>{{ totalText }}</b></div>
+        <div class="tape-window">
+          <span>REC</span><b>{{ totalText }}</b>
+        </div>
         <div class="reel left"></div>
         <div class="reel right"></div>
         <div class="tape-line"></div>
-        <img class="tape-kettle" src="/img/kettle_eye.webp" alt="" />
+        <img class="tape-kettle" src="/img/kettle_eye.webp" alt="" width="1536" height="1024" />
         <span class="tape-blood" aria-hidden="true"></span>
       </div>
     </div>
@@ -83,7 +84,9 @@
     <p v-if="hint" class="deck-hint">{{ hint }}</p>
 
     <Transition name="reveal-in">
-      <div v-if="message" class="archive-panel audio-answer"><p>{{ message }}</p></div>
+      <div v-if="message" class="archive-panel audio-answer">
+        <p>{{ message }}</p>
+      </div>
     </Transition>
   </div>
 </template>
@@ -91,6 +94,7 @@
 <script setup>
 import { ref, watch, onBeforeUnmount, onMounted } from 'vue'
 import game from '../stores/game'
+import { deobfList } from '../utils/obfuscate'
 
 const BARS = 120
 const emptyBars = Array.from({ length: BARS }, () => 4)
@@ -106,16 +110,10 @@ const clips = [
 ]
 // 录音里 甲→戊 各藏一字：甲让、乙商、丙义、丁和、戊信（出处 _audio_tmp/gen.py）
 // 正解 = 按五路次序（东→南→西→北→中 = 义→让→信→和→商）排磁带位
-const answer = ['丙', '甲', '戊', '丁', '乙']
-const recorded = ['甲', '乙', '丙', '丁', '戊']  // 照录音先后排 = 陷阱，给引导而非惊吓
+const answer = deobfList('==Qm5SOfBiL58pIimznsUeOfZiL5') // 轻度混淆：正解磁带位不在明文
+const recorded = ['甲', '乙', '丙', '丁', '戊'] // 照录音先后排 = 陷阱，给引导而非惊吓
 // 监听仪残迹（非听觉兜底）：录音里五句耳语，字在句首
-const traces = [
-  '① ……让他自己走。',
-  '② ……都商量好了的。',
-  '③ ……讲义气的。',
-  '④ ……和和气气。',
-  '⑤ ……信我一次。'
-]
+const traces = ['① ……让他自己走。', '② ……都商量好了的。', '③ ……讲义气的。', '④ ……和和气气。', '⑤ ……信我一次。']
 
 const chosen = ref([])
 const message = ref('')
@@ -125,44 +123,55 @@ const timeText = ref('00:00')
 
 const audioEl = ref(null)
 const waveEl = ref(null)
-const native = ref(false)   // 播放被拦时，露出系统原生播放器兜底
+const native = ref(false) // 播放被拦时，露出系统原生播放器兜底
 const hint = ref('')
-const wrongCount = ref(0)   // 反复乱排到阈值 = 走捷径
-const showTraces = ref(false)   // 监听仪残迹（默认收起，避免剧透音频谜题）
-const totalText = ref('--:--')  // 磁带标称时长：取真实音频时长，避免与内容不符
+const wrongCount = ref(0) // 反复乱排到阈值 = 走捷径
+const showTraces = ref(false) // 监听仪残迹（默认收起，避免剧透音频谜题）
+const totalText = ref('--:--') // 磁带标称时长：取真实音频时长，避免与内容不符
 
-watch(() => chosen.value.join('|'), () => {
-  const val = chosen.value
-  if (val.length < 5) { message.value = ''; return }
-  if (val.join('') === answer.join('')) {
-    game.state.audioSolved = true
-    game.markBranch('audio')
-    game.collectKey('huan-ming')
-    message.value = '报数停下来了。有人在电流里低语：财从手过，别从心住。又央了一句：别删账，把名字还给他们。'
-    return
-  }
-  wrongCount.value += 1
-  if (wrongCount.value === 6) game.takeShortcut()
-  if (val.join('') === recorded.join('')) {
-    // 照录音先后选的——最容易踩的坑：给引导，同时照跳脸
+watch(
+  () => chosen.value.join('|'),
+  () => {
+    const val = chosen.value
+    if (val.length < 5) {
+      message.value = ''
+      return
+    }
+    if (val.join('') === answer.join('')) {
+      game.state.audioSolved = true
+      game.markBranch('audio')
+      game.collectKey('huan-ming')
+      message.value = '报数停下来了。有人在电流里低语：财从手过，别从心住。又央了一句：别删账，把名字还给他们。'
+      return
+    }
+    wrongCount.value += 1
+    if (wrongCount.value === 6) game.takeShortcut()
+    if (val.join('') === recorded.join('')) {
+      // 照录音先后选的——最容易踩的坑：给引导，同时照跳脸
+      game.triggerScare('face', '不要数到六。')
+      message.value = '算盘重新响起。它没有说你错，只说“耳听为虚，眼见为实”。'
+      return
+    }
     game.triggerScare('face', '不要数到六。')
-    message.value = '算盘重新响起。它没有说你错，只说“耳听为虚，眼见为实”。'
-    return
+    message.value = '算盘重新响起。它没有说你错，只把“欠”字多念了一遍。'
   }
-  game.triggerScare('face', '不要数到六。')
-  message.value = '算盘重新响起。它没有说你错，只把“欠”字多念了一遍。'
-})
+)
 
 function pick(c) {
   if (!chosen.value.includes(c) && chosen.value.length < 5) chosen.value.push(c)
 }
-function resetOrder() { chosen.value = [] }
+function resetOrder() {
+  chosen.value = []
+}
 
 // —— 播放 / 定位 ——
 async function toggle() {
   const a = audioEl.value
   if (!a) return
-  if (!a.paused) { a.pause(); return }
+  if (!a.paused) {
+    a.pause()
+    return
+  }
   try {
     await a.play()
     hint.value = ''
@@ -200,9 +209,15 @@ function onMeta() {
   timeText.value = fmt(0)
   if (a && a.duration && isFinite(a.duration)) totalText.value = fmt(a.duration)
 }
-function onEnd() { playing.value = false }
-function onPlay() { playing.value = true }
-function onPause() { playing.value = false }
+function onEnd() {
+  playing.value = false
+}
+function onPlay() {
+  playing.value = true
+}
+function onPause() {
+  playing.value = false
+}
 
 // —— 真波形：解码整条录音取峰值（懒加载，静默失败时用空波形兜底）——
 let actx = null
@@ -217,12 +232,18 @@ async function loadPeaks() {
     const out = []
     for (let i = 0; i < BARS; i++) {
       let m = 0
-      const start = i * step, end = Math.min(ch.length, start + step)
-      for (let j = start; j < end; j++) { const v = Math.abs(ch[j]); if (v > m) m = v }
+      const start = i * step,
+        end = Math.min(ch.length, start + step)
+      for (let j = start; j < end; j++) {
+        const v = Math.abs(ch[j])
+        if (v > m) m = v
+      }
       out.push(Math.max(6, Math.round(m * 100)))
     }
     peaks.value = out
-  } catch (e) { /* 断网/解码失败 → 保留空波形 */ }
+  } catch (e) {
+    /* 断网/解码失败 → 保留空波形 */
+  }
 }
 
 onMounted(() => {
@@ -230,51 +251,168 @@ onMounted(() => {
   const a = audioEl.value
   if (a) a.load()
 })
-onBeforeUnmount(() => { if (actx) { actx.close(); actx = null } })
+onBeforeUnmount(() => {
+  if (actx) {
+    actx.close()
+    actx = null
+  }
+})
 </script>
 
 <style scoped>
-.audio-note { color: #b09a72; margin-top: 0; }
-.audio-answer a { color: var(--gold); }
+.audio-note {
+  color: #b09a72;
+  margin-top: 0;
+}
+.audio-answer a {
+  color: var(--gold);
+}
 
 /* 录音带播放条 */
-.rec-deck { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.9rem; margin: 0.9rem 0 0.3rem; }
-.deck-play {
-  width: 46px; height: 46px; border-radius: 50%; cursor: pointer; font-size: 1rem;
-  background: rgba(240, 200, 132, 0.12); border: 1px solid rgba(240, 200, 132, 0.5); color: #f0c884;
+.rec-deck {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0.9rem 0 0.3rem;
 }
-.deck-play:hover { background: rgba(240, 200, 132, 0.22); }
+.deck-play {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  background: rgba(240, 200, 132, 0.12);
+  border: 1px solid rgba(240, 200, 132, 0.5);
+  color: #f0c884;
+}
+.deck-play:hover {
+  background: rgba(240, 200, 132, 0.22);
+}
 .deck-wave {
-  position: relative; height: 64px; display: flex; align-items: center; gap: 1px; cursor: pointer;
-  background: rgba(10, 7, 4, 0.6); border: 1px solid rgba(138, 111, 77, 0.35); padding: 0 6px;
+  position: relative;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  cursor: pointer;
+  background: rgba(10, 7, 4, 0.6);
+  border: 1px solid rgba(138, 111, 77, 0.35);
+  padding: 0 6px;
   min-width: 0;
 }
-.deck-wave span { flex: 1 1 0; min-width: 0; max-width: 3px; background: #8a6f4d; border-radius: 1px; opacity: 0.75; }
-.deck-wave span.passed { background: #d13424; opacity: 0.9; }
-.deck-head { position: absolute; top: 0; bottom: 0; width: 2px; background: #f0c884; box-shadow: 0 0 10px rgba(240, 200, 132, 0.7); }
-.deck-time { font-size: 0.8rem; color: #d8c394; letter-spacing: 0.08em; min-width: 3.4em; text-align: right; }
+.deck-wave span {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 3px;
+  background: #8a6f4d;
+  border-radius: 1px;
+  opacity: 0.75;
+}
+.deck-wave span.passed {
+  background: #d13424;
+  opacity: 0.9;
+}
+.deck-head {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #f0c884;
+  box-shadow: 0 0 10px rgba(240, 200, 132, 0.7);
+}
+.deck-time {
+  font-size: 0.8rem;
+  color: #d8c394;
+  letter-spacing: 0.08em;
+  min-width: 3.4em;
+  text-align: right;
+}
 
 /* 次序 */
-.order-line { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 0; }
-.order-label { font-size: 0.72rem; letter-spacing: 0.24em; color: #9c7c55; }
-.order-chip { font-size: 0.78rem; color: #e3cf9f; border: 1px solid rgba(240, 200, 132, 0.4); border-radius: 3px; padding: 0.15em 0.6em; }
-.order-empty { font-size: 0.78rem; color: #6f5a3d; }
-.reset-order { margin-left: auto; }
+.order-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.6rem 0 0;
+}
+.order-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  color: #9c7c55;
+}
+.order-chip {
+  font-size: 0.78rem;
+  color: #e3cf9f;
+  border: 1px solid rgba(240, 200, 132, 0.4);
+  border-radius: 3px;
+  padding: 0.15em 0.6em;
+}
+.order-empty {
+  font-size: 0.78rem;
+  color: #6f5a3d;
+}
+.reset-order {
+  margin-left: auto;
+}
 
 /* 隐式播放器：视觉隐藏（而非 display:none，避免部分浏览器不播）；被拦时露出原生控件 */
-.tape-audio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-.tape-audio.native { position: static; width: 100%; height: auto; opacity: 1; pointer-events: auto; margin: 0.8rem 0 0; }
-.deck-hint { margin: 0.6rem 0 0; font-size: 0.78rem; color: #d8a24a; }
+.tape-audio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.tape-audio.native {
+  position: static;
+  width: 100%;
+  height: auto;
+  opacity: 1;
+  pointer-events: auto;
+  margin: 0.8rem 0 0;
+}
+.deck-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.78rem;
+  color: #d8a24a;
+}
 
 /* 监听仪残迹（非听觉兜底） */
-.rec-fallback { margin-top: 0.9rem; }
-.fallback-toggle {
-  background: none; border: 1px dashed rgba(138, 111, 77, 0.45); border-radius: 3px;
-  color: #8a6f4d; font-family: inherit; font-size: 0.76rem; letter-spacing: 0.1em;
-  padding: 0.35em 0.9em; cursor: pointer;
+.rec-fallback {
+  margin-top: 0.9rem;
 }
-.fallback-toggle:hover { color: #d8c394; border-color: rgba(240, 200, 132, 0.5); }
-.fallback-body { margin-top: 0.7rem; border-left: 2px solid rgba(157, 40, 26, 0.45); padding-left: 12px; }
-.trace-line { margin: 0 0 0.25em; color: #ad9464; font-size: 0.84rem; letter-spacing: 0.08em; }
-.trace-note { margin: 0.6em 0 0; color: #6f5a3d; font-size: 0.74rem; line-height: 1.7; }
+.fallback-toggle {
+  background: none;
+  border: 1px dashed rgba(138, 111, 77, 0.45);
+  border-radius: 3px;
+  color: #8a6f4d;
+  font-family: inherit;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  padding: 0.35em 0.9em;
+  cursor: pointer;
+}
+.fallback-toggle:hover {
+  color: #d8c394;
+  border-color: rgba(240, 200, 132, 0.5);
+}
+.fallback-body {
+  margin-top: 0.7rem;
+  border-left: 2px solid rgba(157, 40, 26, 0.45);
+  padding-left: 12px;
+}
+.trace-line {
+  margin: 0 0 0.25em;
+  color: #ad9464;
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+}
+.trace-note {
+  margin: 0.6em 0 0;
+  color: #6f5a3d;
+  font-size: 0.74rem;
+  line-height: 1.7;
+}
 </style>

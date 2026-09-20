@@ -13,13 +13,16 @@ let hold = null
 
 // 每隔几秒闪一下乱码，随即恢复
 function loop() {
-  timer = setTimeout(() => {
-    display.value = glitch(Math.max(2, props.text.length))
-    hold = setTimeout(() => {
-      display.value = props.text
-      loop()
-    }, 140)
-  }, 2600 + Math.random() * 5200)
+  timer = setTimeout(
+    () => {
+      display.value = glitch(Math.max(2, props.text.length))
+      hold = setTimeout(() => {
+        display.value = props.text
+        loop()
+      }, 140)
+    },
+    2600 + Math.random() * 5200
+  )
 }
 
 onMounted(loop)
@@ -30,5 +33,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.gf { letter-spacing: inherit; }
+.gf {
+  letter-spacing: inherit;
+}
 </style>

@@ -24,9 +24,7 @@
         <p v-if="m.familyAvailable && !unlocked" class="msg-actions">
           <button class="btn-flat" type="button" @click.stop="unlock">解锁沈晚族谱</button>
         </p>
-        <p v-if="m.type === 'shen' && unlocked" class="msg-note">
-          族谱已解锁：可在「馆藏检索」输入 <b>沈砚秋</b>。
-        </p>
+        <p v-if="m.type === 'shen' && unlocked" class="msg-note">族谱已解锁：可在「馆藏检索」输入 <b>沈砚秋</b>。</p>
 
         <time class="msg-time">{{ fmt(m.time) }}</time>
       </article>
@@ -52,11 +50,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 import { list, markRead, familyUnlocked, unlockFamily, useVersion, clear } from '../../stores/archive-notify'
 
-const router = useRouter()
 useVersion()
 
 const items = ref(list())
@@ -118,7 +114,9 @@ function fmt(iso) {
 }
 .msg-card {
   cursor: pointer;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 .msg-card:hover {
   box-shadow: 0 4px 14px rgba(60, 24, 12, 0.08);

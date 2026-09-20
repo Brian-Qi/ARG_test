@@ -8,7 +8,9 @@
 
     <template v-if="!submitted">
       <h1 class="svc-title">资料授权申请</h1>
-      <p class="svc-lead">本馆数字资源以公益开放为原则。涉及第三方版权、尚未全文公开，或拟作商业使用的馆藏，请先提交使用授权申请，由工作人员评估后可告知使用范围与方式。</p>
+      <p class="svc-lead">
+        本馆数字资源以公益开放为原则。涉及第三方版权、尚未全文公开，或拟作商业使用的馆藏，请先提交使用授权申请，由工作人员评估后可告知使用范围与方式。
+      </p>
 
       <form class="svc-form" @submit.prevent="submit">
         <div class="svc-field">
@@ -26,7 +28,14 @@
 
         <div class="svc-field">
           <label class="svc-label" for="svc-title">拟使用馆藏<span class="req">*</span></label>
-          <input id="svc-title" v-model="form.title" class="svc-input" :class="{ invalid: errors.title }" type="text" placeholder="馆藏号或题名" />
+          <input
+            id="svc-title"
+            v-model="form.title"
+            class="svc-input"
+            :class="{ invalid: errors.title }"
+            type="text"
+            placeholder="馆藏号或题名"
+          />
           <p v-if="errors.title" class="svc-error">{{ errors.title }}</p>
           <p class="svc-note">可填写公开目录中的馆藏号；若未找到对应馆藏，请提供题名与大致年代。</p>
         </div>
@@ -113,9 +122,16 @@ const form = reactive({
 
 const errors = reactive({ useType: '', title: '', contact: '' })
 
-function clearUseType() { errors.useType = '' }
-function clearContact() { form.contact = ''; errors.contact = '' }
-function clearContactError() { errors.contact = '' }
+function clearUseType() {
+  errors.useType = ''
+}
+function clearContact() {
+  form.contact = ''
+  errors.contact = ''
+}
+function clearContactError() {
+  errors.contact = ''
+}
 
 function isValidContact(kind, v) {
   v = (v || '').trim()
@@ -127,10 +143,18 @@ function isValidContact(kind, v) {
 
 function validate() {
   let ok = true
-  if (!form.useType) { errors.useType = '请选择申请用途。'; ok = false } else errors.useType = ''
-  if (!form.title || form.title.trim().length < 2) { errors.title = '请填写馆藏号或题名。'; ok = false } else errors.title = ''
-  if (!form.contactKind) { errors.contact = '请选择联系方式类型。'; ok = false }
-  else if (!isValidContact(form.contactKind, form.contact)) {
+  if (!form.useType) {
+    errors.useType = '请选择申请用途。'
+    ok = false
+  } else errors.useType = ''
+  if (!form.title || form.title.trim().length < 2) {
+    errors.title = '请填写馆藏号或题名。'
+    ok = false
+  } else errors.title = ''
+  if (!form.contactKind) {
+    errors.contact = '请选择联系方式类型。'
+    ok = false
+  } else if (!isValidContact(form.contactKind, form.contact)) {
     errors.contact = form.contactKind === '电话' ? '请输入正确手机号。' : '请输入有效的邮箱地址。'
     ok = false
   } else errors.contact = ''

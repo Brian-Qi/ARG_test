@@ -71,8 +71,14 @@ const ARCHIVES = [
     progress: '持续更新',
     intro: '将民国时期民间商号流水账册进行整理、扫描与全文著录的专题项目，首批共 7 册 1200 余页。',
     sections: [
-      { heading: '项目缘起', text: '民间商号账簿保存了物价、计量、商俗与日常信用的第一手记录，但因纸墨脆弱、字体潦草，长期"有而不见"。本专题自 2023 年起征集并数字化整理。' },
-      { heading: '整理流程', text: '按征集登记、除尘修复、逐页扫描、文字著录、双人复核、分级公开的流程推进，著录馆藏号、年代、店号、经营内容、页数等字段。' }
+      {
+        heading: '项目缘起',
+        text: '民间商号账簿保存了物价、计量、商俗与日常信用的第一手记录，但因纸墨脆弱、字体潦草，长期"有而不见"。本专题自 2023 年起征集并数字化整理。'
+      },
+      {
+        heading: '整理流程',
+        text: '按征集登记、除尘修复、逐页扫描、文字著录、双人复核、分级公开的流程推进，著录馆藏号、年代、店号、经营内容、页数等字段。'
+      }
     ],
     images: [
       { key: 'folk-01', src: '/img/folk-01.webp', caption: '近代商号账簿书影' },
@@ -91,13 +97,17 @@ const ARCHIVES = [
     progress: '残本 · 限内部调阅',
     intro: '一册残缺族谱，竹纸、线装，谱系大半空白，似被水浸后又撕去数页。谱末只留一个名字。',
     sections: [
-      { heading: '著录', text: '馆藏号 SP-1927-0007。残本，存谱末数页。纸色深褐，有霉斑与水渍，边缘多处撕缺；原装线已朽，约在入藏前后重订。' },
+      {
+        heading: '著录',
+        text: '馆藏号 SP-1927-0007。残本，存谱末数页。纸色深褐，有霉斑与水渍，边缘多处撕缺；原装线已朽，约在入藏前后重订。'
+      },
       { heading: '谱末', text: '女，沈晚。生于民国十六年正月初四。父，沈砚秋。母氏一栏空白。旁注一行小字：“寄养，勿寻。”' },
-      { heading: '存疑', text: '“沈砚秋”一名，在 1927 年万和号账簿中并不存在；而本馆《馆员登记表》中另有一名“沈砚秋”，在编，入职年份早于本馆成立。' }
+      {
+        heading: '存疑',
+        text: '“沈砚秋”一名，在 1927 年万和号账簿中并不存在；而本馆《馆员登记表》中另有一名“沈砚秋”，在编，入职年份早于本馆成立。'
+      }
     ],
-    images: [
-      { key: 'family-tree', src: '/img/zupu.webp', caption: '沈晚族谱 · 谱末残页' }
-    ],
+    images: [{ key: 'family-tree', src: '/img/zupu.webp', caption: '沈晚族谱 · 谱末残页' }],
     linkedTo: '/help',
     linkLabel: '查看关联线索',
     from: '/search'
@@ -110,7 +120,10 @@ const ARCHIVES = [
     progress: '持续更新',
     intro: '本辑录汇集散见于地方志、笔记、碑刻与口述史中的财神信俗材料，依主题编次，供民俗研究与公众查阅。',
     sections: [
-      { heading: '辑录范围', text: '材料覆盖财神信仰的起源传说、祭祀仪轨、祀神祝文，以及历代笔记小说所记的求财轶事。为便于比对，各条均标注出处与年代。' },
+      {
+        heading: '辑录范围',
+        text: '材料覆盖财神信仰的起源传说、祭祀仪轨、祀神祝文，以及历代笔记小说所记的求财轶事。为便于比对，各条均标注出处与年代。'
+      },
       { heading: '整理原则', text: '按"信俗类型—地域—年代"三级分类著录，对存在异说的材料采取并列存目、注明歧异的方式，保留原始面貌。' }
     ],
     images: [
@@ -399,9 +412,13 @@ const ARCHIVES = [
 
 const item = computed(() => ARCHIVES.find((a) => a.id === id.value))
 
-watch(item, (val) => {
-  if (val) document.title = `${val.title} - 杭州民俗数字档案馆`
-}, { immediate: true })
+watch(
+  item,
+  (val) => {
+    if (val) document.title = `${val.title} - 杭州民俗数字档案馆`
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped>
@@ -441,7 +458,7 @@ watch(item, (val) => {
   margin-bottom: 14px;
 }
 .folk-head h1 {
-  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
   font-weight: 600;
   font-size: 30px;
   line-height: 1.4;
@@ -462,7 +479,7 @@ watch(item, (val) => {
   line-height: 2;
 }
 .folk-body h2 {
-  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
   font-weight: 600;
   font-size: 20px;
   color: #3c3020;
@@ -506,7 +523,7 @@ watch(item, (val) => {
   color: #a4967a;
 }
 .ph-glyph {
-  font-family: "Ma Shan Zheng", "KaiTi", serif;
+  font-family: 'Ma Shan Zheng', 'KaiTi', serif;
   font-size: 46px;
   opacity: 0.5;
   line-height: 1;

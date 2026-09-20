@@ -51,7 +51,7 @@ import Glitch from './Glitch.vue'
   height: 46px;
   border: 2px solid #a8291c;
   color: #d13424;
-  font-family: "Ma Shan Zheng", serif;
+  font-family: 'Ma Shan Zheng', serif;
   font-size: 22px;
   display: flex;
   align-items: center;
@@ -60,7 +60,9 @@ import Glitch from './Glitch.vue'
   border-radius: 4px;
   background: rgba(168, 41, 28, 0.1);
 }
-.vault-brand-name { line-height: 1.2; }
+.vault-brand-name {
+  line-height: 1.2;
+}
 .vault-brand-name b {
   display: block;
   font-size: 20px;
@@ -115,8 +117,19 @@ import Glitch from './Glitch.vue'
   padding: 0 28px 9px;
 }
 @media (max-width: 800px) {
-  .vault-header-inner { flex-wrap: wrap; gap: 12px; padding: 10px 16px; }
-  .vault-nav { width: 100%; justify-content: flex-start; overflow-x: auto; }
-  .vault-brand-name b { font-size: 16px; letter-spacing: 2px; }
+  .vault-header-inner {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 16px;
+  }
+  .vault-nav {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+  .vault-brand-name b {
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
 }
 </style>

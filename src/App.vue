@@ -104,6 +104,14 @@ html[data-mode='vault'] body {
   font-size: 13.5px;
   letter-spacing: 0.06em;
 }
-.shortcut-toast b { color: #d13424; font-weight: 600; letter-spacing: 0.2em; }
-.shortcut-toast i { font-style: normal; color: #8a6f4d; font-size: 12px; }
+.shortcut-toast b {
+  color: #d13424;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+.shortcut-toast i {
+  font-style: normal;
+  color: #8a6f4d;
+  font-size: 12px;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <Transition name="scare">
     <div v-if="game.state.scare" class="scare-overlay" :class="game.state.scare.type">
-      <img class="scare-img" :src="faceSrc" alt="" />
+      <img class="scare-img" :src="faceSrc" alt="" width="1536" height="1024" />
       <p>{{ game.state.scare.text }}</p>
       <span class="scare-grain" aria-hidden="true"></span>
     </div>

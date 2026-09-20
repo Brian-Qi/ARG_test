@@ -22,7 +22,13 @@
 
         <div class="svc-field">
           <label class="svc-label" for="fb-content">内容<span class="req">*</span></label>
-          <textarea id="fb-content" v-model="form.content" class="svc-textarea" :class="{ invalid: errors.content }" placeholder="请描述您的建议或疑问（10—200 字）"></textarea>
+          <textarea
+            id="fb-content"
+            v-model="form.content"
+            class="svc-textarea"
+            :class="{ invalid: errors.content }"
+            placeholder="请描述您的建议或疑问（10—200 字）"
+          ></textarea>
           <p v-if="errors.content" class="svc-error">{{ errors.content }}</p>
         </div>
 
@@ -56,9 +62,15 @@ const errors = reactive({ kind: '', content: '' })
 
 function submit() {
   let ok = true
-  if (!form.kind) { errors.kind = '请选择类型。'; ok = false } else errors.kind = ''
+  if (!form.kind) {
+    errors.kind = '请选择类型。'
+    ok = false
+  } else errors.kind = ''
   const c = form.content.trim()
-  if (c.length < 10) { errors.content = '请至少填写 10 字。'; ok = false } else errors.content = ''
+  if (c.length < 10) {
+    errors.content = '请至少填写 10 字。'
+    ok = false
+  } else errors.content = ''
   if (!ok) return
   submitted.value = true
 }

@@ -29,7 +29,9 @@
     </div>
 
     <Transition name="reveal-in">
-      <div v-if="result" class="archive-panel portrait-result"><p>{{ result }}</p></div>
+      <div v-if="result" class="archive-panel portrait-result">
+        <p>{{ result }}</p>
+      </div>
     </Transition>
   </div>
 </template>
@@ -37,16 +39,22 @@
 <script setup>
 import { ref } from 'vue'
 import game from '../stores/game'
-const marks = ref([]); const result = ref('')
+import { deobf } from '../utils/obfuscate'
+
+const ANSWER = deobf('=s2YhJ3Y') // 轻度混淆：正解不在明文
+const marks = ref([])
+const result = ref('')
 const photos = [
-  { id: 'one', year: '1901', face: '财', img: '/img/photo-1901.webp', caption: '财神石像', clothes: '披甲', },
-  { id: 'two', year: '1916', face: '苏', img: '/img/photo-1916.webp', caption: '东坡石像', clothes: '宽袍', },
-  { id: 'three', year: '今夜', face: '空', img: '/img/photo-today.webp', caption: '无名石龛', clothes: '不可辨', }
+  { id: 'one', year: '1901', face: '财', img: '/img/photo-1901.webp', caption: '财神石像', clothes: '披甲' },
+  { id: 'two', year: '1916', face: '苏', img: '/img/photo-1916.webp', caption: '东坡石像', clothes: '宽袍' },
+  { id: 'three', year: '今夜', face: '空', img: '/img/photo-today.webp', caption: '无名石龛', clothes: '不可辨' }
 ]
 const wrongCount = ref(0)
-function mark(id) { if (!marks.value.includes(id)) marks.value.push(id) }
+function mark(id) {
+  if (!marks.value.includes(id)) marks.value.push(id)
+}
 function judge(answer) {
-  if (answer === 'crack') {
+  if (answer === ANSWER) {
     result.value = '那条裂纹，就是名字被刮掉后留下的。五枚红指印开始离开财签，只留下你的那一枚。'
     game.state.portraitSolved = true
     game.markBranch('portrait')
@@ -61,15 +69,70 @@ function judge(answer) {
 </script>
 
 <style scoped>
-.photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 20px 0; }
-@media (max-width: 720px) { .photo-grid { grid-template-columns: 1fr; } }
-.old-photo { cursor: pointer; }
-.old-photo.marked { border-color: var(--blood); }
-.photo-figure { width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 3px; background: #0d0906; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin-bottom: 10px; }
-.photo-figure span { font-family: var(--kai); font-size: 40px; color: #6b5236; }
-.photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2) contrast(1.06) brightness(0.9); }
-.photo-figure .crack { z-index: 2; position: absolute; right: 18%; bottom: 0; width: 2px; height: 65%; background: #1a120a; transform: skewX(-18deg); box-shadow: 0 0 8px rgba(0,0,0,0.6); }
-.photo-clothes { font-size: 0.84rem; color: #8a6f4d; }
-.judge-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.portrait-result .back-link { color: var(--gold); }
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 20px 0;
+}
+@media (max-width: 720px) {
+  .photo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.old-photo {
+  cursor: pointer;
+}
+.old-photo.marked {
+  border-color: var(--blood);
+}
+.photo-figure {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  border-radius: 3px;
+  background: #0d0906;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.photo-figure span {
+  font-family: var(--kai);
+  font-size: 40px;
+  color: #6b5236;
+}
+.photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.2) contrast(1.06) brightness(0.9);
+}
+.photo-figure .crack {
+  z-index: 2;
+  position: absolute;
+  right: 18%;
+  bottom: 0;
+  width: 2px;
+  height: 65%;
+  background: #1a120a;
+  transform: skewX(-18deg);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+.photo-clothes {
+  font-size: 0.84rem;
+  color: #8a6f4d;
+}
+.judge-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.portrait-result .back-link {
+  color: var(--gold);
+}
 </style>

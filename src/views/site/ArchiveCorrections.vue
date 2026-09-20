@@ -134,9 +134,21 @@ const corrections = [
   border-radius: 999px;
   letter-spacing: 1px;
 }
-.corr-status.ok { background: rgba(74, 110, 60, 0.12); color: #46623a; border: 1px solid #46623a; }
-.corr-status.warn { background: rgba(168, 122, 32, 0.12); color: #8a6414; border: 1px solid #8a6414; }
-.corr-status.revoke { background: rgba(140, 47, 36, 0.1); color: #8c2f24; border: 1px solid #8c2f24; }
+.corr-status.ok {
+  background: rgba(74, 110, 60, 0.12);
+  color: #46623a;
+  border: 1px solid #46623a;
+}
+.corr-status.warn {
+  background: rgba(168, 122, 32, 0.12);
+  color: #8a6414;
+  border: 1px solid #8a6414;
+}
+.corr-status.revoke {
+  background: rgba(140, 47, 36, 0.1);
+  color: #8c2f24;
+  border: 1px solid #8c2f24;
+}
 .corr-text {
   font-size: 14px;
   color: #4a3d29;
@@ -167,7 +179,9 @@ const corrections = [
   padding: 0;
   text-decoration: underline;
 }
-.corr-withdrawn:hover { color: #5f1d15; }
+.corr-withdrawn:hover {
+  color: #5f1d15;
+}
 .corr-withdrawn-body {
   margin: 8px 0 0;
   font-size: 13px;

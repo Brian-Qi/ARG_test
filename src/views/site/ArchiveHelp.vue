@@ -2,7 +2,9 @@
   <div>
     <!-- 两件事都完成：合并后的终极确认面板 -->
     <section v-if="bothDone" class="archive-panel help-final">
-      <h2 class="help-title">{{ HELP_CN }} <small class="help-en">{{ HELP_EN }}</small></h2>
+      <h2 class="help-title">
+        {{ HELP_CN }} <small class="help-en">{{ HELP_EN }}</small>
+      </h2>
       <p class="help-kicker">回到此处，已是尽头</p>
       <p>你翻过目录之外的那一页，也看过族谱上的名字。馆藏 <b>HZ-1927-0512</b> 之外那份未列入公开目录的关联档案，此刻正等着你落一笔。</p>
       <p>沈晚：<em>“别让它开第六张。查完这五张，去落一笔账。”</em></p>
@@ -14,7 +16,9 @@
 
     <!-- 见过第 0 页（未解锁族谱）：给沈晚/进度的真实提示 -->
     <section v-else-if="seenHiddenVal" class="archive-panel help-restricted">
-      <h2 class="help-title">{{ HELP_CN }} <small class="help-en">{{ HELP_EN }}</small></h2>
+      <h2 class="help-title">
+        {{ HELP_CN }} <small class="help-en">{{ HELP_EN }}</small>
+      </h2>
       <p class="help-kicker">只为见过一张残页的人保留</p>
       <p>你翻到过目录之外的那一页。馆藏 <b>HZ-1927-0512</b> 之外还有一份未列入公开目录的关联档案。</p>
       <p>沈晚：<em>“别让它开第六张。查完这五张，去落一笔账。”</em></p>
@@ -24,7 +28,9 @@
 
     <!-- 未见过第 0 页：提示尚有事情未完成（弹窗） -->
     <section v-else class="archive-panel help-restricted">
-      <h2 class="help-title">{{ HELP_CN }} <small class="help-en">{{ HELP_EN }}</small></h2>
+      <h2 class="help-title">
+        {{ HELP_CN }} <small class="help-en">{{ HELP_EN }}</small>
+      </h2>
       <p class="help-kicker">有些地方还没去过</p>
       <p>馆藏 <b>HZ-1927-0512</b> 之外另有一份关联档案，但系统目前还不能为你调阅。</p>
       <p class="muted">尚有事情未完成，先回到目录翻完该翻的那几页。</p>
@@ -64,7 +70,10 @@ function garble(text, t) {
   let out = ''
   for (let i = 0; i < text.length; i++) {
     const c = text[i]
-    if (/\s/.test(c)) { out += c; continue }
+    if (/\s/.test(c)) {
+      out += c
+      continue
+    }
     if (Math.random() < t) out += GLITCH[Math.floor(Math.random() * GLITCH.length)]
     else out += c
   }
@@ -79,7 +88,11 @@ function runGarble() {
     if (t >= 1) {
       clearInterval(iv)
       phase.value = 2
-      timers.push(setTimeout(() => { noReturn.value = false }, 3400))
+      timers.push(
+        setTimeout(() => {
+          noReturn.value = false
+        }, 3400)
+      )
     }
   }, 60)
   timers.push(iv)
@@ -94,7 +107,10 @@ function goNoReturn() {
 }
 
 onBeforeUnmount(() => {
-  timers.forEach(t => { clearTimeout(t); clearInterval(t) })
+  timers.forEach((t) => {
+    clearTimeout(t)
+    clearInterval(t)
+  })
 })
 </script>
 
@@ -173,7 +189,7 @@ onBeforeUnmount(() => {
   letter-spacing: 3px;
   text-align: center;
   word-break: break-all;
-  font-family: "KaiTi", serif;
+  font-family: 'KaiTi', serif;
   max-width: 640px;
 }
 .noway-dead {
@@ -185,10 +201,23 @@ onBeforeUnmount(() => {
   animation: noway-pulse 3.4s ease forwards;
 }
 @keyframes noway-pulse {
-  0% { opacity: 0; transform: scale(0.9); }
-  15% { opacity: 1; transform: scale(1.04); }
-  35% { transform: scale(1); opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  35% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 </style>

@@ -48,7 +48,16 @@
 
         <div class="svc-field">
           <label class="svc-label" for="svc-visit-people">参观人数<span class="req">*</span></label>
-          <input id="svc-visit-people" v-model="form.people" class="svc-input" :class="{ invalid: errors.people }" type="number" min="1" placeholder="请输入人数" @input="onPeople" />
+          <input
+            id="svc-visit-people"
+            v-model="form.people"
+            class="svc-input"
+            :class="{ invalid: errors.people }"
+            type="number"
+            min="1"
+            placeholder="请输入人数"
+            @input="onPeople"
+          />
           <p v-if="errors.people" class="svc-error">{{ errors.people }}</p>
         </div>
 
@@ -237,8 +246,13 @@ function closeOver() {
   overLimit.value = false
 }
 
-function clearContact() { form.contact = ''; errors.contact = '' }
-function clearContactError() { errors.contact = '' }
+function clearContact() {
+  form.contact = ''
+  errors.contact = ''
+}
+function clearContactError() {
+  errors.contact = ''
+}
 
 function isValidContact(kind, v) {
   v = (v || '').trim()
@@ -257,13 +271,23 @@ function validate() {
   } else if (dateError.value) {
     ok = false
   }
-  if (!form.time) { errors.time = '请选择预约时段。'; ok = false } else errors.time = ''
+  if (!form.time) {
+    errors.time = '请选择预约时段。'
+    ok = false
+  } else errors.time = ''
   const n = parseInt(form.people)
-  if (!form.people || isNaN(n) || n < 1) { errors.people = '人数至少为 1。'; ok = false }
-  else if (n > 20) { errors.people = ''; overLimit.value = true; ok = false }
-  else errors.people = ''
-  if (!form.contactKind) { errors.contact = '请选择联系方式类型。'; ok = false }
-  else if (!isValidContact(form.contactKind, form.contact)) {
+  if (!form.people || isNaN(n) || n < 1) {
+    errors.people = '人数至少为 1。'
+    ok = false
+  } else if (n > 20) {
+    errors.people = ''
+    overLimit.value = true
+    ok = false
+  } else errors.people = ''
+  if (!form.contactKind) {
+    errors.contact = '请选择联系方式类型。'
+    ok = false
+  } else if (!isValidContact(form.contactKind, form.contact)) {
     errors.contact = form.contactKind === '电话' ? '请输入正确手机号。' : '请输入有效的邮箱地址。'
     ok = false
   } else errors.contact = ''

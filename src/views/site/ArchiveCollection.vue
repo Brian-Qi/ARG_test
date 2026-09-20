@@ -15,13 +15,34 @@
       <div class="table-wrapper">
         <table class="archive-table collection-table">
           <tbody>
-            <tr><th class="table-key-col">馆藏号</th><td>HZ-1927-0512</td></tr>
-            <tr><th>题名</th><td>万和号流水账（民国十六年至二十一年）</td></tr>
-            <tr><th>年代</th><td>民国十六年（1927）— 民国二十一年（1932）</td></tr>
-            <tr><th>载体</th><td>毛边纸线装，墨笔，页角部分缺损</td></tr>
-            <tr><th>数量</th><td>共 86 页，含每月小计与年终汇算</td></tr>
-            <tr><th>来源</th><td>万和号后人捐赠，2024 年入藏</td></tr>
-            <tr><th>数字化</th><td>逐页扫描 · 全文著录 · 双人复核</td></tr>
+            <tr>
+              <th class="table-key-col">馆藏号</th>
+              <td>HZ-1927-0512</td>
+            </tr>
+            <tr>
+              <th>题名</th>
+              <td>万和号流水账（民国十六年至二十一年）</td>
+            </tr>
+            <tr>
+              <th>年代</th>
+              <td>民国十六年（1927）— 民国二十一年（1932）</td>
+            </tr>
+            <tr>
+              <th>载体</th>
+              <td>毛边纸线装，墨笔，页角部分缺损</td>
+            </tr>
+            <tr>
+              <th>数量</th>
+              <td>共 86 页，含每月小计与年终汇算</td>
+            </tr>
+            <tr>
+              <th>来源</th>
+              <td>万和号后人捐赠，2024 年入藏</td>
+            </tr>
+            <tr>
+              <th>数字化</th>
+              <td>逐页扫描 · 全文著录 · 双人复核</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -34,7 +55,7 @@
     <!-- 影像缩略 -->
     <section class="collection-section">
       <h2 class="section-title collection-section-title">影像浏览 <small>Page Images</small></h2>
-      <p class="muted collection-section-title">以列表形式逐页查看该册影像（演示站以文本替图），每页 10 条。</p>
+      <p class="muted collection-section-title">以列表形式逐页查看该册影像，每页 10 条；点击任一页可调阅扫描件与著录。</p>
 
       <!-- 花屏层：多条细竖带错开循环闪，进入瞬间 + 第 0 页期间持续 -->
       <!-- 转场闪屏：进出切换时闪现的横向裂纹花屏 -->
@@ -52,13 +73,7 @@
           <span>摘要</span>
           <span>金额</span>
         </div>
-        <button
-          v-for="p in currentPageItems"
-          :key="p.idx"
-          type="button"
-          class="pg-row"
-          @click="openPage(p.idx)"
-        >
+        <button v-for="p in currentPageItems" :key="p.idx" type="button" class="pg-row" @click="openPage(p.idx)">
           <span class="pg-col-word">{{ p.char }}</span>
           <span class="pg-col-note">{{ p.note }}</span>
           <span class="pg-col-amt">{{ p.amount }}</span>
@@ -67,12 +82,33 @@
 
       <!-- 第 0 页：无页码残页（隐藏内容） -->
       <div v-else ref="hiddenPageRef" class="pg-sheet pg-hidden-page">
-        <div class="pg-glitch" :class="{ collapse: collapseActive, shaking }" aria-hidden="true"><span>{{ text }}</span><span class="typing-caret"></span></div>
+        <div class="pg-glitch" :class="{ collapse: collapseActive, shaking }" aria-hidden="true">
+          <span>{{ text }}</span
+          ><span class="typing-caret"></span>
+        </div>
       </div>
 
       <nav class="pg-nav" aria-label="影像翻页">
-        <button v-if="page > 0" :key="'nav-prev'" type="button" class="pg-nav-btn" :class="{ 'pg-nav-hide': showHidden }" @click="goPage(page - 1)" aria-label="上一页">‹</button>
-        <button v-else :key="'nav-secret-' + tapFeedback" type="button" class="pg-nav-btn pg-secret" :class="{ 'pg-nav-hide': showHidden, 'pg-secret-hot': secretTaps === 5, 'pg-secret-tap': secretTaps > 0 && secretTaps < 5 }" @click="onSecretTap" aria-label="隐藏入口"></button>
+        <button
+          v-if="page > 0"
+          :key="'nav-prev'"
+          type="button"
+          class="pg-nav-btn"
+          :class="{ 'pg-nav-hide': showHidden }"
+          @click="goPage(page - 1)"
+          aria-label="上一页"
+        >
+          ‹
+        </button>
+        <button
+          v-else
+          :key="'nav-secret-' + tapFeedback"
+          type="button"
+          class="pg-nav-btn pg-secret"
+          :class="{ 'pg-nav-hide': showHidden, 'pg-secret-hot': secretTaps === 5, 'pg-secret-tap': secretTaps > 0 && secretTaps < 5 }"
+          @click="onSecretTap"
+          aria-label="隐藏入口"
+        ></button>
         <span class="pg-nav-info">{{ showHidden ? '第 0 页' : '第 ' + (page + 1) + ' / ' + totalPages + ' 页' }}</span>
         <button type="button" class="pg-nav-btn" :class="{ 'pg-nav-hide': showHidden || page >= totalPages - 1 }" @click="onNext">›</button>
       </nav>
@@ -81,18 +117,14 @@
     <!-- 血红色调遮罩：第 0 页时覆盖全屏 -->
     <div v-if="bloodMode" class="blood-veil" aria-hidden="true"></div>
 
-    <!-- 著录目录下载 -->
-    <section class="collection-section">
-      <h2 class="section-title collection-section-title">著录目录 <small>Catalog CSV</small></h2>
-      <div class="archive-panel">
-        <p class="collection-notice-text">按页著录的目录数据，含页码、日期、摘要与金额，可直接用于书目整理与统计。演示环境以预览方式展示，可复制。</p>
-        <button class="btn-flat" type="button" @click="showCsv = true">下载著录目录（CSV）</button>
-      </div>
-    </section>
+    <!-- 著录目录下载 + 预览/残页弹层（子组件） -->
+    <CollectionCatalog :pages="visiblePages" />
 
     <!-- 关联公告 -->
     <section class="archive-panel collection-notice">
-      <p class="collection-notice-text">关联公告：<RouterLink to="/notice/3" class="collection-link">关于"近代商号账簿数字化（第一批）"全文开放的说明</RouterLink></p>
+      <p class="collection-notice-text">
+        关联公告：<RouterLink to="/notice/3" class="collection-link">关于"近代商号账簿数字化（第一批）"全文开放的说明</RouterLink>
+      </p>
     </section>
 
     <!-- 影像弹层 -->
@@ -101,55 +133,39 @@
         <button class="modal-close" @click="cur = null">关闭</button>
         <h3>{{ cur.label || '影像预览' }}</h3>
         <p v-if="cur.caption" class="muted modal-caption">{{ cur.caption }}</p>
+        <div v-if="cur.img" class="page-scan">
+          <img :src="cur.img" :alt="(cur.label || '账页') + ' 影像'" width="1536" height="1024" />
+        </div>
         <div v-if="cur.lines" class="page-sim">
           <p v-for="(l, li) in cur.lines" :key="li">{{ l }}</p>
         </div>
-        <pre v-else class="glitch-sim" aria-hidden="true">{{ cur.glitch }}</pre>
+        <pre v-if="cur.glitch" class="glitch-sim" aria-hidden="true">{{ cur.glitch }}</pre>
       </div>
     </div>
 
-    <!-- CSV 预览弹层 -->
-    <div v-if="showCsv" class="archive-modal-mask" @click.self="showCsv = false">
-      <div class="archive-modal">
-        <button class="modal-close" @click="showCsv = false">关闭</button>
-        <h3>著录目录预览（HZ-1927-0512.csv）</h3>
-        <p class="muted modal-label">页码, 日期, 摘要, 金额</p>
-        <button class="btn-flat modal-btn" type="button" @click="copyCsv">复制 CSV</button>
-        <div class="csv-view">
-          <div
-            v-for="(line, i) in csvLines"
-            :key="i"
-            class="csv-line"
-            :class="{ 'csv-corrupt': i === csvLines.length - 1 }"
-            @click="onCsvLine(i)"
-          >{{ line }}</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 残页 P000 提示弹层 -->
-    <div v-if="zeroHint" class="archive-modal-mask" @click.self="zeroHint = false">
-      <div class="archive-modal zero-hint">
-        <button class="modal-close" @click="zeroHint = false">关闭</button>
-        <h3>残页 · P000</h3>
-        <p class="zero-hint-tip">{{ zeroHintText }}</p>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onBeforeUnmount, nextTick } from 'vue'
 import { markSeenHidden } from '../../stores/game'
-
-const pad = (n) => String(n).padStart(3, '0')
+import CollectionCatalog from '../../components/site/CollectionCatalog.vue'
 
 const CHARS = ['香', '烛', '米', '布', '药', '茶', '纸', '油', '钱', '衣', '灯', '炭', '糖', '盐', '酒', '绒', '绸', '线']
 const YEARS = ['民国十六年', '民国十七年', '民国十八年', '民国十九年', '民国二十年', '民国二十一年']
 const NOTES = [
-  '迎财神，香烛纸马一宗', '补米五斗，记东家账', '药铺结账，当归黄芪各若干',
-  '置布两匹，伙计各裁一件', '南货到岸，付脚力钱', '收茶叶款，洋讫',
-  '还前欠，洋讫', '修后间屋顶，瓦工钱', '付灯油钱', '年节赏伙计', '账房杂支', '车马费'
+  '迎财神，香烛纸马一宗',
+  '补米五斗，记东家账',
+  '药铺结账，当归黄芪各若干',
+  '置布两匹，伙计各裁一件',
+  '南货到岸，付脚力钱',
+  '收茶叶款，洋讫',
+  '还前欠，洋讫',
+  '修后间屋顶，瓦工钱',
+  '付灯油钱',
+  '年节赏伙计',
+  '账房杂支',
+  '车马费'
 ]
 const rnd = (arr) => arr[Math.floor(Math.random() * arr.length)]
 const monthOf = (i) => `正月 ${String((i % 28) + 1).padStart(2, '0')}`
@@ -157,7 +173,6 @@ const amt = () => (Math.floor(Math.random() * 950) / 100 + 0.05).toFixed(2)
 
 // 影像共 87 格：无页码残页置于第 0 位（隐藏待揭示），其余 86 格为正常著录页
 const TOTAL = 87
-const NORMAL = TOTAL - 1
 const pages = Array.from({ length: TOTAL }, (_, i) => {
   if (i === 0) {
     return { hidden: true, idx: 0, char: '\uFFFD', no: '', year: '', note: '', amount: '', month: '' }
@@ -208,8 +223,8 @@ function barStyle(b) {
   return {
     '--y': b.y + '%',
     '--from': b.from + '%',
-    '--mid': (b.from + b.amp * 0.5) + '%',
-    '--to': (b.from + b.amp) + '%',
+    '--mid': b.from + b.amp * 0.5 + '%',
+    '--to': b.from + b.amp + '%',
     '--dur': b.dur,
     '--delay': b.delay,
     '--o': b.o
@@ -281,9 +296,33 @@ const normalText =
   '\u4E94\u7B46 \u96F6 \u96F6 \u96F6 \u96F6 \u96F6\n' +
   '\u6C11\u56FD\u5341\u4E03\u5E74 \u6B63\u6708\u521D\u4E94'
 const glitchChars = [
-  '\uFFFD', '\u2630', '\u2631', '\u2632', '\u2633', '\u2634', '\u2635', '\u2636', '\u2637',
-  '\u4DC0', '\u4DC1', '\u4DC2', '\u4DC3', '\u4DC4', '\u4DC5', '\u4DC6', '\u4DC7',
-  '\u25A0', '\u25A1', '\u25AB', '\u2610', '\u2611', '\u262F', '\u25C9', '\u25CE', '\u25CF', '\u25CB'
+  '\uFFFD',
+  '\u2630',
+  '\u2631',
+  '\u2632',
+  '\u2633',
+  '\u2634',
+  '\u2635',
+  '\u2636',
+  '\u2637',
+  '\u4DC0',
+  '\u4DC1',
+  '\u4DC2',
+  '\u4DC3',
+  '\u4DC4',
+  '\u4DC5',
+  '\u4DC6',
+  '\u4DC7',
+  '\u25A0',
+  '\u25A1',
+  '\u25AB',
+  '\u2610',
+  '\u2611',
+  '\u262F',
+  '\u25C9',
+  '\u25CE',
+  '\u25CF',
+  '\u25CB'
 ]
 const text = ref('')
 const collapseActive = ref(false)
@@ -309,7 +348,10 @@ function startPollute() {
   polluter = setInterval(() => {
     const arr = text.value.split('')
     const idx = arr.map((c, k) => (/[\u4e00-\u9fff]/.test(c) ? k : -1)).filter((k) => k >= 0)
-    if (idx.length === 0) { startCollapse(); return }
+    if (idx.length === 0) {
+      startCollapse()
+      return
+    }
     const times = Math.min(2, idx.length)
     for (let t = 0; t < times; t++) {
       const pos = idx[Math.floor(Math.random() * idx.length)]
@@ -363,7 +405,10 @@ function stopTyping() {
 }
 
 function enterHidden() {
-  if (secretTimer) { clearTimeout(secretTimer); secretTimer = null }
+  if (secretTimer) {
+    clearTimeout(secretTimer)
+    secretTimer = null
+  }
   secretTaps.value = 0
   markSeenHidden()
   genBars()
@@ -409,6 +454,16 @@ onBeforeUnmount(() => {
   unlockScroll()
 })
 
+// 账页影像（6 张扫描件轮转铺满 86 页著录）
+const LEDGER_SCANS = [
+  '/img/ledger-p01.webp',
+  '/img/ledger-p02.webp',
+  '/img/ledger-p03.webp',
+  '/img/ledger-p04.webp',
+  '/img/ledger-p05.webp',
+  '/img/ledger-p06.webp'
+]
+
 const cur = ref(null)
 function openPage(idx) {
   const p = pages[idx]
@@ -418,59 +473,12 @@ function openPage(idx) {
   }
   cur.value = {
     label: p.no,
-    caption: `${p.year} · 账页影像（演示为文本）`,
-    lines: [
-      p.year + ' 初五 · 万和号',
-      '摘要：' + p.note,
-      '金额：' + p.amount
-    ]
+    caption: `${p.year} · 账页影像`,
+    img: LEDGER_SCANS[idx % LEDGER_SCANS.length],
+    lines: [p.year + ' 初五 · 万和号', '摘要：' + p.note, '金额：' + p.amount]
   }
 }
 
-// 著录目录 CSV：正文 86 行 + 目录外残页行（无日期、无摘要、无金额，页码以 P000 占位）
-const csvText = computed(() => {
-  const head = '页码,日期,摘要,金额'
-  const body = visiblePages.value.map((p, i) => `P${pad(i + 1)},${p.year} ${p.month},${p.note},${p.amount}`)
-  return [head, ...body, 'P000,民国\uFFFD\uFFFD\uFFFD年,\uFFFD月\uFFFD\uFFFD,\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD,\uFFFD\uFFFD\uFFFD'].join('\n')
-})
-const showCsv = ref(false)
-const zeroHint = ref(false)
-const csvLines = computed(() => csvText.value.split('\n'))
-function onCsvLine(i) {
-  if (i === csvLines.value.length - 1) zeroHint.value = true
-}
-
-// 残页提示：正文之间掺入乱码（文字恐怖谷 / 火星文 / 组合符），但保持可读
-const ZERO_HINT = '册外之页。欲观，于伊始叩左六。'
-const HINT_NOISE = [
-  '\u0334', '\u0335', '\u0336', '\u0337', '\u0338', '\u0301', '\u0303', '\u0308', '\u030A',
-  '\u25A0', '\u25A1', '\u25AB', '\u25AD', '\u25AE', '\u25C7', '\u25C8', '\u25CE', '\u25CF', '\u25EF',
-  '\u2630', '\u2631', '\u2632', '\u2633', '\u2634', '\u2635', '\u2636', '\u2637',
-  '\u4DC0', '\u4DC1', '\u4DC2', '\u4DC3', '\u4DC4', '\u4DC5', '\u4DC6', '\u4DC7',
-  '\uFFFD', '\u00A7', '\u00B6', '\u2020', '\u2021', '\u00D7', '\u00F7',
-  '\u2211', '\u221A', '\u221E', '\u222B', '\u2260', '\u2261', '\u2295', '\u2297', '\u2299',
-  '\uFF71', '\uFF72', '\uFF73', '\uFF9E', '\uFF9F'
-]
-const zeroHintText = (() => {
-  let out = ''
-  for (let i = 0; i < ZERO_HINT.length; i++) {
-    const c = ZERO_HINT[i]
-    out += c
-    if (c === '。' || c === '，') continue
-    const r = Math.random()
-    const n = r < 0.5 ? 1 : (r < 0.72 ? 2 : 0)
-    for (let k = 0; k < n; k++) out += HINT_NOISE[Math.floor(Math.random() * HINT_NOISE.length)]
-  }
-  return out
-})()
-
-async function copyCsv() {
-  try {
-    await navigator.clipboard.writeText(csvText.value)
-  } catch (e) {
-    /* 剪贴板不可用时忽略 */
-  }
-}
 </script>
 
 <style scoped>
@@ -535,7 +543,7 @@ async function copyCsv() {
   white-space: nowrap;
 }
 .pg-col-word {
-  font-family: "Ma Shan Zheng", "KaiTi", serif;
+  font-family: 'Ma Shan Zheng', 'KaiTi', serif;
   font-size: 22px;
   color: #6e5a3c;
   line-height: 1;
@@ -583,7 +591,7 @@ async function copyCsv() {
   position: relative;
 }
 .pg-secret::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: -14px;
 }
@@ -591,9 +599,15 @@ async function copyCsv() {
   animation: secret-tap 0.22s ease;
 }
 @keyframes secret-tap {
-  0% { transform: scale(0.88); }
-  60% { transform: scale(1.12); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0.88);
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 .pg-secret-hot {
   opacity: 1;
@@ -603,8 +617,13 @@ async function copyCsv() {
   animation: secret-pulse 0.5s ease;
 }
 @keyframes secret-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
 }
 .pg-nav-info {
   font-size: 13px;
@@ -634,7 +653,7 @@ async function copyCsv() {
   color: #8a4a36;
   white-space: pre-wrap;
   word-break: break-all;
-  font-family: "KaiTi", serif;
+  font-family: 'KaiTi', serif;
   border: 1px dashed rgba(138, 74, 54, 0.4);
   padding: 30px 24px;
   background: rgba(140, 47, 36, 0.05);
@@ -649,8 +668,13 @@ async function copyCsv() {
   animation: caret-blink 0.9s steps(1) infinite;
 }
 @keyframes caret-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* 崩坏：残页剧烈抖动滑动，文字隐约滑出 */
@@ -661,11 +685,21 @@ async function copyCsv() {
   display: none;
 }
 @keyframes collapse-shake {
-  0%   { transform: translate(0, 0) rotate(0deg); }
-  25%  { transform: translate(-3px, 2px) rotate(-0.6deg); }
-  50%  { transform: translate(3px, -2px) rotate(0.5deg); }
-  75%  { transform: translate(-2px, -3px) rotate(-0.4deg); }
-  100% { transform: translate(2px, 2px) rotate(0.6deg); }
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-3px, 2px) rotate(-0.6deg);
+  }
+  50% {
+    transform: translate(3px, -2px) rotate(0.5deg);
+  }
+  75% {
+    transform: translate(-2px, -3px) rotate(-0.4deg);
+  }
+  100% {
+    transform: translate(2px, 2px) rotate(0.6deg);
+  }
 }
 .pg-glitch.shaking {
   animation: collapse-shake 0.14s steps(2) infinite;
@@ -678,7 +712,7 @@ async function copyCsv() {
   z-index: 1000;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 42%, rgba(150, 12, 6, 0.30), transparent 68%),
+    radial-gradient(circle at 50% 42%, rgba(150, 12, 6, 0.3), transparent 68%),
     linear-gradient(180deg, rgba(120, 6, 4, 0.34), rgba(60, 2, 1, 0.5));
   mix-blend-mode: multiply;
 }
@@ -694,34 +728,75 @@ async function copyCsv() {
 }
 .tv-glitch::before,
 .tv-glitch::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(0deg,
-      rgba(255, 130, 110, 0.32) 0 1px, transparent 1px 2px,
-      rgba(255, 165, 145, 0.18) 2px 3px, transparent 3px 4px,
-      rgba(226, 50, 34, 0.24) 4px 5px, transparent 5px 7px,
-      rgba(255, 120, 100, 0.20) 7px 8px, transparent 8px 11px),
-    linear-gradient(0deg,
-      transparent 0 10%, rgba(200, 28, 16, 0.52) 10% 20%,
-      transparent 20% 34%, rgba(255, 150, 128, 0.40) 34% 40%,
-      transparent 40% 56%, rgba(180, 20, 12, 0.46) 56% 64%,
-      transparent 64% 78%, rgba(255, 135, 112, 0.34) 78% 84%,
-      transparent 84% 100%);
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 130, 110, 0.32) 0 1px,
+      transparent 1px 2px,
+      rgba(255, 165, 145, 0.18) 2px 3px,
+      transparent 3px 4px,
+      rgba(226, 50, 34, 0.24) 4px 5px,
+      transparent 5px 7px,
+      rgba(255, 120, 100, 0.2) 7px 8px,
+      transparent 8px 11px
+    ),
+    linear-gradient(
+      0deg,
+      transparent 0 10%,
+      rgba(200, 28, 16, 0.52) 10% 20%,
+      transparent 20% 34%,
+      rgba(255, 150, 128, 0.4) 34% 40%,
+      transparent 40% 56%,
+      rgba(180, 20, 12, 0.46) 56% 64%,
+      transparent 64% 78%,
+      rgba(255, 135, 112, 0.34) 78% 84%,
+      transparent 84% 100%
+    );
   background-size: 100% 300%;
 }
-.tv-glitch::before { animation: glitch-a 0.5s steps(3, end) infinite; }
-.tv-glitch::after  { animation: glitch-b 0.4s steps(4, end) infinite; animation-delay: -0.2s; }
+.tv-glitch::before {
+  animation: glitch-a 0.5s steps(3, end) infinite;
+}
+.tv-glitch::after {
+  animation: glitch-b 0.4s steps(4, end) infinite;
+  animation-delay: -0.2s;
+}
 @keyframes glitch-a {
-  0%   { background-position-y: 0%;   transform: translateX(-8px); opacity: .7; }
-  50%  { background-position-y: 50%;  transform: translateX(10px); opacity: 1; }
-  100% { background-position-y: 100%; transform: translateX(-5px); opacity: .75; }
+  0% {
+    background-position-y: 0%;
+    transform: translateX(-8px);
+    opacity: 0.7;
+  }
+  50% {
+    background-position-y: 50%;
+    transform: translateX(10px);
+    opacity: 1;
+  }
+  100% {
+    background-position-y: 100%;
+    transform: translateX(-5px);
+    opacity: 0.75;
+  }
 }
 @keyframes glitch-b {
-  0%   { background-position-y: 100%; transform: translateX(9px);  opacity: .6; }
-  50%  { background-position-y: 40%;  transform: translateX(-12px); opacity: .95; }
-  100% { background-position-y: 0%;   transform: translateX(6px);  opacity: .7; }
+  0% {
+    background-position-y: 100%;
+    transform: translateX(9px);
+    opacity: 0.6;
+  }
+  50% {
+    background-position-y: 40%;
+    transform: translateX(-12px);
+    opacity: 0.95;
+  }
+  100% {
+    background-position-y: 0%;
+    transform: translateX(6px);
+    opacity: 0.7;
+  }
 }
 
 /* 第 0 页常驻花屏：枣红底 + 多条细竖带（条形码质感）错开循环闪 */
@@ -730,10 +805,7 @@ async function copyCsv() {
   inset: 0;
   z-index: 998;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 50%,
-    rgba(96, 12, 8, 0.45) 0%,
-    rgba(60, 7, 4, 0.6) 68%,
-    rgba(34, 3, 2, 0.72) 100%);
+  background: radial-gradient(circle at 50% 50%, rgba(96, 12, 8, 0.45) 0%, rgba(60, 7, 4, 0.6) 68%, rgba(34, 3, 2, 0.72) 100%);
   pointer-events: none;
 }
 .hidden-glitch .glitch-bar {
@@ -743,22 +815,54 @@ async function copyCsv() {
   height: 8px;
   top: var(--y);
   opacity: var(--o);
-  background:
-    repeating-linear-gradient(90deg,
-      rgba(232, 40, 28, 0.60) 0 2px, transparent 2px 4px,
-      rgba(250, 62, 44, 0.45) 4px 6px, transparent 6px 9px,
-      rgba(205, 30, 18, 0.55) 9px 11px, transparent 11px 16px,
-      rgba(245, 56, 40, 0.35) 16px 18px, transparent 18px 22px);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(232, 40, 28, 0.6) 0 2px,
+    transparent 2px 4px,
+    rgba(250, 62, 44, 0.45) 4px 6px,
+    transparent 6px 9px,
+    rgba(205, 30, 18, 0.55) 9px 11px,
+    transparent 11px 16px,
+    rgba(245, 56, 40, 0.35) 16px 18px,
+    transparent 18px 22px
+  );
   filter: blur(0.4px);
   animation: bar-scroll var(--dur) steps(6, end) infinite;
   animation-delay: var(--delay);
 }
 @keyframes bar-scroll {
-  0%   { transform: translateX(var(--from)); opacity: 0; }
-  12%  { opacity: var(--o); }
-  45%  { transform: translateX(var(--mid)); opacity: var(--o); }
-  78%  { opacity: calc(var(--o) * 0.5); }
-  100% { transform: translateX(var(--to)); opacity: 0; }
+  0% {
+    transform: translateX(var(--from));
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--o);
+  }
+  45% {
+    transform: translateX(var(--mid));
+    opacity: var(--o);
+  }
+  78% {
+    opacity: calc(var(--o) * 0.5);
+  }
+  100% {
+    transform: translateX(var(--to));
+    opacity: 0;
+  }
+}
+.page-scan {
+  margin: 0 0 14px;
+  border: 1px solid #e0d2b4;
+  background: #0d0906;
+  overflow: hidden;
+}
+.page-scan img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  filter: sepia(0.22) contrast(1.02) brightness(0.96);
 }
 .page-sim {
   background: #f3e9d2;
@@ -767,7 +871,7 @@ async function copyCsv() {
   font-size: 15px;
   line-height: 2.2;
   color: #4a3d29;
-  font-family: "Ma Shan Zheng", "KaiTi", serif;
+  font-family: 'Ma Shan Zheng', 'KaiTi', serif;
   letter-spacing: 1px;
 }
 .page-sim p {
@@ -783,35 +887,5 @@ async function copyCsv() {
   letter-spacing: 2px;
   white-space: pre-wrap;
   word-break: break-all;
-}
-.csv-view {
-  background: #f6efdf;
-  border: 1px solid #ded0b0;
-  padding: 14px;
-  font-size: 12px;
-  line-height: 1.8;
-  max-height: 46vh;
-  overflow: auto;
-  color: #3c3020;
-  white-space: pre-wrap;
-  word-break: break-all;
-  font-family: Consolas, "Courier New", monospace;
-}
-.csv-line {
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-.csv-corrupt {
-  cursor: pointer;
-  color: #8a4a36;
-  border-radius: 3px;
-}
-.csv-corrupt:hover {
-  background: rgba(140, 47, 36, 0.08);
-  color: #8c2f24;
-}
-.zero-hint-tip {
-  color: #8c2f24;
-  line-height: 2.4;
 }
 </style>
