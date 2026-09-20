@@ -18,8 +18,7 @@
     <div class="audio-layout">
       <div class="archive-panel">
         <p class="audio-note">
-          五盘带，甲至戊，各对应一声报数；每盘底下压着一个男人的耳语，句子头上藏着一个字。
-          先听出哪个字在哪一盘，再按五条路的次序（东、南、西、北、中）把五盘排正。别让它数到六。
+          六声报数，一声一段；每段底下压着一个男人的耳语，藏着一个字。 按五条路的次序（东、南、西、北、中）把五个字排正。别让它数到六。
         </p>
 
         <!-- 一盘整带：后间录音 -->
@@ -56,23 +55,10 @@
           <span v-else class="order-empty">（尚未记入）</span>
           <button class="reset-order" type="button" @click="resetOrder">清除所选</button>
         </div>
-
-        <!-- 兜底：听不见/静音时的非听觉通路 -->
-        <div class="rec-fallback">
-          <button class="fallback-toggle" type="button" :aria-expanded="showTraces" @click="showTraces = !showTraces">
-            {{ showTraces ? '收起监听仪残迹' : '听不见？调取监听仪残迹' }}
-          </button>
-          <div v-if="showTraces" class="fallback-body">
-            <p v-for="(t, i) in traces" :key="i" class="trace-line">{{ t }}</p>
-            <p class="trace-note">残迹只给录音里的先后（甲→戊），字在句首——方位次序，仍须自己去底档里对。</p>
-          </div>
-        </div>
       </div>
 
       <div class="tape" @click="toggle" title="播放 / 暂停" role="button" tabindex="0" @keydown.enter="toggle">
-        <div class="tape-window">
-          <span>REC</span><b>{{ totalText }}</b>
-        </div>
+        <div class="tape-window"><span>REC</span><b>00:03:47</b></div>
         <div class="reel left"></div>
         <div class="reel right"></div>
         <div class="tape-line"></div>
@@ -94,26 +80,21 @@
 <script setup>
 import { ref, watch, onBeforeUnmount, onMounted } from 'vue'
 import game from '../stores/game'
-import { deobfList } from '../utils/obfuscate'
 
 const BARS = 120
 const emptyBars = Array.from({ length: BARS }, () => 4)
 const peaks = ref(emptyBars)
 
-// 五盘磁带：不标字，只标 甲/乙/丙/丁/戊（对应报数 一→五）；字藏在耳语里，靠听
+// 五个字按键，故意打乱顺序（不放原文/原声顺序）
 const clips = [
-  { id: '甲', bars: [23, 65, 28, 45, 16] },
-  { id: '乙', bars: [18, 48, 17, 69, 29] },
-  { id: '丙', bars: [17, 38, 20, 65, 32] },
-  { id: '丁', bars: [40, 19, 60, 15, 36] },
-  { id: '戊', bars: [55, 15, 39, 18, 62] }
+  { id: '信', bars: [23, 65, 28, 45, 16] },
+  { id: '商', bars: [18, 48, 17, 69, 29] },
+  { id: '义', bars: [17, 38, 20, 65, 32] },
+  { id: '和', bars: [40, 19, 60, 15, 36] },
+  { id: '让', bars: [55, 15, 39, 18, 62] }
 ]
-// 录音里 甲→戊 各藏一字：甲让、乙商、丙义、丁和、戊信（出处 _audio_tmp/gen.py）
-// 正解 = 按五路次序（东→南→西→北→中 = 义→让→信→和→商）排磁带位
-const answer = deobfList('==Qm5SOfBiL58pIimznsUeOfZiL5') // 轻度混淆：正解磁带位不在明文
-const recorded = ['甲', '乙', '丙', '丁', '戊'] // 照录音先后排 = 陷阱，给引导而非惊吓
-// 监听仪残迹（非听觉兜底）：录音里五句耳语，字在句首
-const traces = ['① ……让他自己走。', '② ……都商量好了的。', '③ ……讲义气的。', '④ ……和和气气。', '⑤ ……信我一次。']
+const answer = ['义', '让', '信', '和', '商'] // 东→南→西→北→中（正确答案：见碎片方位）
+const recorded = ['让', '商', '义', '和', '信'] // 录音里的先后（一→五）——最易误选，给引导而非惊吓
 
 const chosen = ref([])
 const message = ref('')
@@ -126,8 +107,6 @@ const waveEl = ref(null)
 const native = ref(false) // 播放被拦时，露出系统原生播放器兜底
 const hint = ref('')
 const wrongCount = ref(0) // 反复乱排到阈值 = 走捷径
-const showTraces = ref(false) // 监听仪残迹（默认收起，避免剧透音频谜题）
-const totalText = ref('--:--') // 磁带标称时长：取真实音频时长，避免与内容不符
 
 watch(
   () => chosen.value.join('|'),
@@ -205,9 +184,7 @@ function onTime() {
   timeText.value = fmt(a.currentTime)
 }
 function onMeta() {
-  const a = audioEl.value
   timeText.value = fmt(0)
-  if (a && a.duration && isFinite(a.duration)) totalText.value = fmt(a.duration)
 }
 function onEnd() {
   playing.value = false
@@ -377,42 +354,5 @@ onBeforeUnmount(() => {
   margin: 0.6rem 0 0;
   font-size: 0.78rem;
   color: #d8a24a;
-}
-
-/* 监听仪残迹（非听觉兜底） */
-.rec-fallback {
-  margin-top: 0.9rem;
-}
-.fallback-toggle {
-  background: none;
-  border: 1px dashed rgba(138, 111, 77, 0.45);
-  border-radius: 3px;
-  color: #8a6f4d;
-  font-family: inherit;
-  font-size: 0.76rem;
-  letter-spacing: 0.1em;
-  padding: 0.35em 0.9em;
-  cursor: pointer;
-}
-.fallback-toggle:hover {
-  color: #d8c394;
-  border-color: rgba(240, 200, 132, 0.5);
-}
-.fallback-body {
-  margin-top: 0.7rem;
-  border-left: 2px solid rgba(157, 40, 26, 0.45);
-  padding-left: 12px;
-}
-.trace-line {
-  margin: 0 0 0.25em;
-  color: #ad9464;
-  font-size: 0.84rem;
-  letter-spacing: 0.08em;
-}
-.trace-note {
-  margin: 0.6em 0 0;
-  color: #6f5a3d;
-  font-size: 0.74rem;
-  line-height: 1.7;
 }
 </style>

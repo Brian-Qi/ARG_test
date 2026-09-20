@@ -8,7 +8,6 @@ describe('轻度混淆工具', () => {
   })
 
   it('谜题内嵌常量可正确还原（防手滑改坏）', () => {
-    expect(deobfList('==Qm5SOfBiL58pIimznsUeOfZiL5')).toEqual(['丙', '甲', '戊', '丁', '乙']) // 录音正解磁带位
     expect(deobf('=s2YhJ3Y')).toBe('crack') // 旧影正解
     expect(deobfList('==wlqeOfVqL58FoomzHnfaOfoeZ6')).toEqual(['门', '柜', '梁', '井', '窗']) // 五路逃生口
     expect(deobfList('==wav9mY0NXZ1dGfwlGbzVmb1RncvZGfhhmevFWe8lnchVHdpJ2b')).toEqual(['obituary', 'yaozha', 'fortuneslip', 'guestbook']) // 灰线四样回执
