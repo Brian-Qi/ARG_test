@@ -1,0 +1,141 @@
+/* ---------- 响应式 ---------- */
+@media (max-width: 900px) {
+  .hero,
+  .audio-layout,
+  .ledger-layout {
+    grid-template-columns: 1fr;
+  }
+  .site-header {
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    padding: 0.7rem 1rem;
+  }
+  .site-nav {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .header-mark {
+    display: none;
+  }
+  .candle {
+    display: none;
+  }
+  .entry-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  body {
+    font-size: 15px;
+  }
+  .order-row {
+    grid-template-columns: 52px 1fr auto;
+  }
+  .order-status {
+    display: none;
+  }
+  .final-actions {
+    flex-direction: column;
+  }
+  .final-actions button {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   B 面壳 · 杭州民俗数字档案馆（异变副本）
+   复用 A 面 archive-shell 版式骨架，视觉全面腐败。
+   ============================================================ */
+.vault-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  background:
+    radial-gradient(1100px 700px at 14% -4%, rgba(120, 30, 20, 0.2), transparent 60%),
+    radial-gradient(900px 600px at 104% 30%, rgba(90, 20, 14, 0.16), transparent 55%),
+    linear-gradient(180deg, #120b07 0%, #0a0705 52%, #050302 100%);
+  background-attachment: fixed;
+}
+.vault-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 34px 28px 60px;
+  position: relative;
+  z-index: 2;
+}
+/* 血渍 / 腐蚀底纹：覆盖全屏、极低透明度 */
+.vault-blood {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url('/img/ink_stains.webp');
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+/* 翻页噪点 */
+.vault-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: repeating-radial-gradient(circle at 23% 28%, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 3px);
+  background-size: 220px 220px;
+  mix-blend-mode: overlay;
+  animation: grain-shift 0.9s steps(4) infinite;
+}
+/* 暗角 */
+.vault-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 50%, rgba(4, 2, 1, 0.55) 82%, rgba(2, 1, 0, 0.88) 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vault-grain {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   第零笔 · 整页背景（生图：上羊皮纸 / 下火焰）
+   进入 /strike-zero 时由页面给 <html> 挂 .strike-bg
+   ============================================================ */
+html.strike-bg body {
+  background-color: #080402;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url('/img/strike_bg.webp');
+  background-position:
+    center center,
+    center center;
+  background-size: auto, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
+}
+html.strike-bg .vault-shell {
+  background: transparent;
+}
+
+/* 第零笔 · 定格结局屏（生图：从外面锁上的后间木门） */
+html.zero-bg body {
+  background-color: #050302;
+  background-image:
+    radial-gradient(120% 92% at 50% 46%, rgba(5, 3, 2, 0.34) 26%, rgba(5, 3, 2, 0.7) 72%, rgba(3, 2, 1, 0.94) 100%),
+    linear-gradient(180deg, rgba(4, 2, 1, 0.6), rgba(4, 2, 1, 0.34) 44%, rgba(4, 2, 1, 0.78)), url('/img/zero-door.webp');
+  background-position:
+    center center,
+    center center,
+    center center;
+  background-size: auto, auto, cover;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed, fixed, fixed;
+}
+html.zero-bg .vault-shell {
+  background: transparent;
+}

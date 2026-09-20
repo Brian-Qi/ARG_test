@@ -3,7 +3,12 @@
     <div class="archive-topbar-inner">
       <RouterLink class="archive-brand" to="/">
         <span class="archive-brand-seal">档</span>
-        <span class="archive-brand-name"><b>杭州民俗数字档案馆</b><i :class="{ 'brand-back': played }" @click="onSub">{{ played ? 'You Have Been Here Before' : 'Hangzhou Folklore Digital Archives' }}</i></span>
+        <span class="archive-brand-name"
+          ><b>杭州民俗数字档案馆</b
+          ><i :class="{ 'brand-back': played }" @click="onSub">{{
+            played ? 'You Have Been Here Before' : 'Hangzhou Folklore Digital Archives'
+          }}</i></span
+        >
       </RouterLink>
       <nav class="archive-nav">
         <template v-for="item in items" :key="item.to">
@@ -29,9 +34,15 @@ import ArchiveMap from './ArchiveMap.vue'
 
 const route = useRoute()
 const version = useVersion()
-const unread = computed(() => { void version.value; return unreadCount() })
+const unread = computed(() => {
+  void version.value
+  return unreadCount()
+})
 // 非一周目：完成过任意一次结账后，馆名下的拼音会换掉
-const played = computed(() => { void version.value; return game.playedBefore() })
+const played = computed(() => {
+  void version.value
+  return game.playedBefore()
+})
 
 // 点那行英文 → 弹出馆藏脉络全图（仅非一周目）
 const mapOpen = ref(false)
@@ -57,7 +68,10 @@ const items = [
 </script>
 
 <style scoped>
-.archive-brand-name .brand-back { color: var(--blood-bright, #d13424); cursor: pointer; }
+.archive-brand-name .brand-back {
+  color: var(--blood-bright, #d13424);
+  cursor: pointer;
+}
 .archive-nav-dead {
   display: inline-block;
   padding: 8px 14px;
@@ -70,6 +84,8 @@ const items = [
   white-space: nowrap;
 }
 @media (max-width: 800px) {
-  .archive-nav-dead { padding: var(--space-sm) var(--space-md); }
+  .archive-nav-dead {
+    padding: var(--space-sm) var(--space-md);
+  }
 }
 </style>

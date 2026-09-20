@@ -14,7 +14,10 @@
 const FRAGMENTS = [
   /* ================= 一级 · 主线核心 ================= */
   {
-    id: 'ledger', type: '账册', title: '万和号流水簿', tag: 'HZ-1927-0512',
+    id: 'ledger',
+    type: '账册',
+    title: '万和号流水簿',
+    tag: 'HZ-1927-0512',
     img: '/img/ledger-dark.webp',
     summary: '民国十六年至二十一年间杭州城南绸布南北货商号账册，共 86 页。',
     content: [
@@ -30,7 +33,10 @@ const FRAGMENTS = [
     entities: ['wanhe', 'shen-huai-ren']
   },
   {
-    id: 'zero-page', type: '账册', title: '旧账第五页 · 五个零', tag: 'HZ-1927-0512 / P05',
+    id: 'zero-page',
+    type: '账册',
+    title: '旧账第五页 · 五个零',
+    tag: 'HZ-1927-0512 / P05',
     img: '/img/huiwen.webp',
     summary: '米、药、衣、灯、人，金额全为零。每一笔零，都是被裁掉的一个名字。',
     content: [
@@ -46,7 +52,10 @@ const FRAGMENTS = [
     entities: ['wanhe', 'five-children']
   },
   {
-    id: 'order-stub', type: '账册', title: '订货存根 · 五笔', tag: '初四 23:47 起',
+    id: 'order-stub',
+    type: '账册',
+    title: '订货存根 · 五笔',
+    tag: '初四 23:47 起',
     img: '/img/xiao-xie.webp',
     summary: '四笔零金额订单签收于 1927 年初五，第五笔的配送员是沈砚秋。',
     content: [
@@ -63,7 +72,10 @@ const FRAGMENTS = [
     entities: ['wanhe', 'houjian', 'shen-huai-ren']
   },
   {
-    id: 'shishitai-rubbing', type: '图像', title: '施食台碑拓', tag: '北高峰山门外',
+    id: 'shishitai-rubbing',
+    type: '图像',
+    title: '施食台碑拓',
+    tag: '北高峰山门外',
     img: '/img/shishitai.webp',
     summary: '碑额残损，碑文漫漶，唯有一句"受施者不得自报姓名"格外清晰。',
     content: [
@@ -78,7 +90,10 @@ const FRAGMENTS = [
     entities: ['beigaofeng']
   },
   {
-    id: 'five-gods', type: '图像', title: '五路财神 · 方位', tag: '山门之外',
+    id: 'five-gods',
+    type: '图像',
+    title: '五路财神 · 方位',
+    tag: '山门之外',
     img: '/img/five-gods.webp',
     summary: '东南西北中不是财路，是窗、井、柜、梁、门。五张卡片各写着一位神的名号。',
     content: [
@@ -90,10 +105,14 @@ const FRAGMENTS = [
     ],
     refs: ['shishitai-rubbing', 'recording', 'huashu', 'dianleng'],
     entities: ['bi-gan', 'chai-rong', 'guan-gong', 'zhao-gong-ming', 'wang-hai'],
-    puzzle: 'roads', key: 'de-mu'
+    puzzle: 'roads',
+    key: 'de-mu'
   },
   {
-    id: 'recording', type: '声音', title: '后间录音 · 报数', tag: '00:03:47',
+    id: 'recording',
+    type: '声音',
+    title: '后间录音 · 报数',
+    tag: '00:03:47',
     img: '/img/recording.webp',
     summary: '五个孩子的声音轮流报数，每到第六声就被一个男人的算盘打断。',
     content: [
@@ -106,10 +125,15 @@ const FRAGMENTS = [
     ],
     refs: ['order-stub', 'family-tree', 'suanpan', 'wuxin-lamp', 'hongao-shouyin'],
     entities: ['houjian', 'five-children'],
-    requires: 'de-mu', puzzle: 'audio', key: 'huan-ming'
+    requires: 'de-mu',
+    puzzle: 'audio',
+    key: 'huan-ming'
   },
   {
-    id: 'family-tree', type: '文书', title: '沈晚族谱', tag: '馆藏号 SP-1927-0007',
+    id: 'family-tree',
+    type: '文书',
+    title: '沈晚族谱',
+    tag: '馆藏号 SP-1927-0007',
     img: '/img/qianwen.webp',
     summary: '一册残缺的族谱。只留一个名字：女，沈晚。父，沈砚秋。',
     content: [
@@ -124,7 +148,10 @@ const FRAGMENTS = [
     requires: 'huan-ming'
   },
   {
-    id: 'photo-three', type: '图像', title: '旧影 · 五张脸', tag: '影像修复',
+    id: 'photo-three',
+    type: '图像',
+    title: '旧影 · 五张脸',
+    tag: '影像修复',
     img: '/img/baishi.webp',
     summary: '三张馆藏影像，年代不同，却都留着同一道像孩子蜷背的裂纹。',
     content: [
@@ -136,10 +163,14 @@ const FRAGMENTS = [
     ],
     refs: ['family-tree', 'zhaiyuan', 'shouni'],
     entities: ['shen-huai-ren', 'five-children'],
-    puzzle: 'portrait', key: 'di-liu-wei'
+    puzzle: 'portrait',
+    key: 'di-liu-wei'
   },
   {
-    id: 'zhaiyuan', type: '图像', title: '宅院图 · 四合院', tag: '万和号后院',
+    id: 'zhaiyuan',
+    type: '图像',
+    title: '宅院图 · 四合院',
+    tag: '万和号后院',
     img: '/img/zhaiyuan.webp',
     summary: '一座四合院的平面。五个孩子不是同时死的，也死在不同的方位。',
     content: [
@@ -151,10 +182,15 @@ const FRAGMENTS = [
     ],
     refs: ['photo-three', 'finale-ledger', 'menpai'],
     entities: ['wanhe', 'five-children'],
-    requires: 'di-liu-wei', puzzle: 'zhaiyuan', key: 'zhenxiang'
+    requires: 'di-liu-wei',
+    puzzle: 'zhaiyuan',
+    key: 'zhenxiang'
   },
   {
-    id: 'finale-ledger', type: '账册', title: '封卷 · 结本月账', tag: 'HZ-1927-0512 / 末',
+    id: 'finale-ledger',
+    type: '账册',
+    title: '封卷 · 结本月账',
+    tag: 'HZ-1927-0512 / 末',
     img: '/img/poster_crack.webp',
     summary: '五个名字已经补齐。现在只等你签第六格。',
     content: [
@@ -165,12 +201,16 @@ const FRAGMENTS = [
     ],
     refs: ['zhaiyuan', 'ledger', 'houjian'],
     entities: ['wanhe', 'shen-huai-ren'],
-    requires: 'zhenxiang', puzzle: 'finale'
+    requires: 'zhenxiang',
+    puzzle: 'finale'
   },
 
   /* ================= 文书 · 校正 ================= */
   {
-    id: 'corrections', type: '文书', title: '数据校正记录', tag: 'C-2026 系列',
+    id: 'corrections',
+    type: '文书',
+    title: '数据校正记录',
+    tag: 'C-2026 系列',
     img: '/img/corrections.webp',
     summary: '馆方对著录错漏的更正留痕。有一条，改的墨和原字一样旧。',
     content: [
@@ -187,7 +227,10 @@ const FRAGMENTS = [
 
   /* ================= 二级 · 解谜素材 ================= */
   {
-    id: 'menwai', type: '底档', title: '门外 · 一斗米', tag: '第一笔订单',
+    id: 'menwai',
+    type: '底档',
+    title: '门外 · 一斗米',
+    tag: '第一笔订单',
     img: '/img/menwai.webp',
     summary: '第一笔订单：一斗米，留在门外，不要敲门。米没被取走，门也没开。',
     content: [
@@ -200,7 +243,10 @@ const FRAGMENTS = [
     entities: ['wanhe', 'houjian']
   },
   {
-    id: 'suanpan', type: '底档', title: '算盘珠号码', tag: '第二笔订单',
+    id: 'suanpan',
+    type: '底档',
+    title: '算盘珠号码',
+    tag: '第二笔订单',
     img: '/img/suanpan.webp',
     summary: '联系电话是一串算盘珠的数。拨到第五位，算盘自己又拨回了一颗。',
     content: [
@@ -213,7 +259,10 @@ const FRAGMENTS = [
     entities: ['bi-gan', 'wanhe']
   },
   {
-    id: 'wuxin-lamp', type: '底档', title: '无芯灯', tag: '第四笔订单',
+    id: 'wuxin-lamp',
+    type: '底档',
+    title: '无芯灯',
+    tag: '第四笔订单',
     img: '/img/kettle_eye.webp',
     summary: '一盏没有灯芯的灯。像一只眼睛，朝外看着。',
     content: [
@@ -227,7 +276,10 @@ const FRAGMENTS = [
     entities: ['wang-hai', 'houjian', 'shen-huai-ren']
   },
   {
-    id: 'hongao-shouyin', type: '底档', title: '红袄衣角', tag: '第三笔订单',
+    id: 'hongao-shouyin',
+    type: '底档',
+    title: '红袄衣角',
+    tag: '第三笔订单',
     img: '/img/hongao-shouyin.webp',
     summary: '一件红袄，缝着一个焦黑的小手印。',
     content: [
@@ -240,7 +292,10 @@ const FRAGMENTS = [
     entities: ['chai-rong', 'five-children']
   },
   {
-    id: 'huashu', type: '底档', title: '财神化疏仪式', tag: '开市旧俗',
+    id: 'huashu',
+    type: '底档',
+    title: '财神化疏仪式',
+    tag: '开市旧俗',
     img: '/img/huaguang.webp',
     summary: '正月初五开市，商铺点香化疏。唯独这一家的疏文末尾，多了半句没写完的话。',
     content: [
@@ -253,7 +308,10 @@ const FRAGMENTS = [
     entities: ['guan-gong']
   },
   {
-    id: 'dianleng', type: '底档', title: '点灯迎财旧俗', tag: '求财旧俗考释',
+    id: 'dianleng',
+    type: '底档',
+    title: '点灯迎财旧俗',
+    tag: '求财旧俗考释',
     img: '/img/dianleng.webp',
     summary: '旧俗点灯迎财——灯要亮到鸡鸣，灭了就不吉利。',
     content: [
@@ -267,7 +325,10 @@ const FRAGMENTS = [
     entities: ['zhao-gong-ming']
   },
   {
-    id: 'huiwen', type: '底档', title: '回纹走法', tag: '旧账第五页',
+    id: 'huiwen',
+    type: '底档',
+    title: '回纹走法',
+    tag: '旧账第五页',
     img: '/img/huiwen.webp',
     summary: '回形纹路。顺时针读是吉祥如意，逆时针读却是一行小字。',
     content: [
@@ -281,7 +342,10 @@ const FRAGMENTS = [
     entities: ['wanhe']
   },
   {
-    id: 'zhouyi', type: '底档', title: '施粥义举碑', tag: '碑记拓片',
+    id: 'zhouyi',
+    type: '底档',
+    title: '施粥义举碑',
+    tag: '碑记拓片',
     img: '/img/zhouyi.webp',
     summary: '"施粥义举"碑的石拓。捐资人的名字被凿去过，只留一行空。',
     content: [
@@ -295,7 +359,10 @@ const FRAGMENTS = [
     entities: ['beigaofeng']
   },
   {
-    id: 'shouni', type: '底档', title: '一枚红指印', tag: '财签 0512',
+    id: 'shouni',
+    type: '底档',
+    title: '一枚红指印',
+    tag: '财签 0512',
     img: '/img/shouni.webp',
     summary: '第五枚红指印。纹路清楚，像是刚按上去的。',
     content: [
@@ -309,7 +376,10 @@ const FRAGMENTS = [
     entities: ['five-children']
   },
   {
-    id: 'koushu', type: '文书', title: '店伙口供 · 录副', tag: '民国十七年',
+    id: 'koushu',
+    type: '文书',
+    title: '店伙口供 · 录副',
+    tag: '民国十七年',
     img: '/img/koushu.webp',
     summary: '一份店伙的口供录副。他只肯说，初五夜里后间亮着灯，孩子一个接一个进去。',
     content: [
@@ -327,7 +397,10 @@ const FRAGMENTS = [
     entities: ['wanhe', 'houjian', 'five-children']
   },
   {
-    id: 'menpai', type: '图像', title: '五门门牌 · 拓存', tag: '后院五门',
+    id: 'menpai',
+    type: '图像',
+    title: '五门门牌 · 拓存',
+    tag: '后院五门',
     img: '/img/menpai.webp',
     summary: '后院五门各有一块门牌，牌上的字号被凿去，只留方位。',
     content: [
@@ -340,7 +413,10 @@ const FRAGMENTS = [
     entities: ['five-children', 'wanhe']
   },
   {
-    id: 'houjian', type: '图像', title: '后间 · 门后', tag: '万和号后进',
+    id: 'houjian',
+    type: '图像',
+    title: '后间 · 门后',
+    tag: '万和号后进',
     img: '/img/houjian.webp',
     summary: '后间的平面。门后不是墙，是一口柜。柜里放着一本账。',
     content: [
@@ -355,7 +431,10 @@ const FRAGMENTS = [
 
   /* ================= 四级 · 干扰项 / 正常记录（网里的冗余） ================= */
   {
-    id: 'nianhua', type: '图像', title: '财神年画图档整理', tag: 'CW-0003',
+    id: 'nianhua',
+    type: '图像',
+    title: '财神年画图档整理',
+    tag: 'CW-0003',
     img: '/img/nianhua.webp',
     summary: '旧历年画中的财神题材分类著录。元宝、聚宝盆、如意、连钱逐一考源。',
     content: [
@@ -368,19 +447,21 @@ const FRAGMENTS = [
     entities: []
   },
   {
-    id: 'noticemid', type: '文书', title: '中秋节假期开放时间安排', tag: '2026-08-19',
+    id: 'noticemid',
+    type: '文书',
+    title: '中秋节假期开放时间安排',
+    tag: '2026-08-19',
     img: '/img/noticemid.webp',
     summary: '本馆中秋假期开放时间安排，闭馆一日。',
-    content: [
-      '中秋假期本馆照常开放，10 月 1 日闭馆一日。',
-      '特藏室照常预约，每日限二十名。',
-      '闭馆期间，线上检索照常。'
-    ],
+    content: ['中秋假期本馆照常开放，10 月 1 日闭馆一日。', '特藏室照常预约，每日限二十名。', '闭馆期间，线上检索照常。'],
     refs: [],
     entities: []
   },
   {
-    id: 'donation', type: '文书', title: '民间文书捐赠征集公告', tag: '长期有效',
+    id: 'donation',
+    type: '文书',
+    title: '民间文书捐赠征集公告',
+    tag: '长期有效',
     img: '',
     summary: '面向社会征集民间文书。附历年受赠清单。',
     content: [
@@ -394,7 +475,10 @@ const FRAGMENTS = [
 
   /* ================= 三级 · 只靠检索才浮现（hidden） ================= */
   {
-    id: 'obituary', type: '文书', title: '讣告 · 五童', tag: '民国十六年',
+    id: 'obituary',
+    type: '文书',
+    title: '讣告 · 五童',
+    tag: '民国十六年',
     img: '/img/obituary.webp',
     summary: '五条讣告，记着五个孩子的“病殁”。都像病，可日子对不上。',
     content: [
@@ -412,7 +496,10 @@ const FRAGMENTS = [
     hidden: true
   },
   {
-    id: 'staff-shen', type: '文书', title: '馆员登记表 · 沈砚秋', tag: '在编',
+    id: 'staff-shen',
+    type: '文书',
+    title: '馆员登记表 · 沈砚秋',
+    tag: '在编',
     img: '/img/staff-shen.webp',
     summary: '一名馆员的登记表。入职年份一栏，写着一个早于本馆成立的年份。',
     content: [
@@ -427,7 +514,10 @@ const FRAGMENTS = [
     hidden: true
   },
   {
-    id: 'guestbook', type: '文书', title: '留言墙存档', tag: '待清理',
+    id: 'guestbook',
+    type: '文书',
+    title: '留言墙存档',
+    tag: '待清理',
     img: '/img/guestbook.webp',
     summary: '网页留言墙的存档。所有留言来自同一时间、同一段话。',
     content: [
@@ -443,7 +533,10 @@ const FRAGMENTS = [
     hidden: true
   },
   {
-    id: 'fortuneslip', type: '文书', title: '财签 · 0512', tag: '取签记录',
+    id: 'fortuneslip',
+    type: '文书',
+    title: '财签 · 0512',
+    tag: '取签记录',
     img: '/img/shouni.webp',
     summary: '一张 1927 年的财签。六格指印位，按了五格。',
     content: [
@@ -458,7 +551,10 @@ const FRAGMENTS = [
     hidden: true
   },
   {
-    id: 'ledger-errata', type: '文书', title: '著录勘误 · 存疑', tag: '未采纳',
+    id: 'ledger-errata',
+    type: '文书',
+    title: '著录勘误 · 存疑',
+    tag: '未采纳',
     img: '/img/ledger-errata.webp',
     summary: '一份未被采纳的勘误。它说第五页的五个零，原本是五个名字。',
     content: [
@@ -472,7 +568,10 @@ const FRAGMENTS = [
     hidden: true
   },
   {
-    id: 'fenyu', type: '文书', title: '焚余', tag: '残页 · 未编号',
+    id: 'fenyu',
+    type: '文书',
+    title: '焚余',
+    tag: '残页 · 未编号',
     img: '/img/fenyu.webp',
     summary: '一页烧剩半张的登记。它记的不是账，是“如何把账烧干净”。',
     content: [
@@ -487,7 +586,10 @@ const FRAGMENTS = [
     hidden: true
   },
   {
-    id: 'yaozha', type: '底档', title: '药渣 · 检验', tag: '后院五处',
+    id: 'yaozha',
+    type: '底档',
+    title: '药渣 · 检验',
+    tag: '后院五处',
     img: '/img/yaozha.webp',
     summary: '五处药渣的检验记录。五味药，各对一味，分量都重。',
     content: [

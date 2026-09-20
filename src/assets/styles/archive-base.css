@@ -1,0 +1,335 @@
+/* ============================================================
+   A 层 · 杭州民俗数字档案馆（公开站）
+   克制 / 正式 / 机构感。与 B 层账房后台的暗黑壳完全分层。
+   ============================================================ */
+
+/* 间距系统 */
+:root {
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+}
+
+html[data-mode='public'],
+html[data-mode='public'] body {
+  background: #efe6d2;
+}
+html[data-mode='public'] body {
+  color: #2b2419;
+}
+
+.archive-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 252, 244, 0.9), transparent 55%), linear-gradient(180deg, #f6efdf 0%, #efe6d2 100%);
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 顶栏 ---------- */
+.archive-topbar {
+  background: rgba(248, 241, 226, 0.92);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid #d8c9a8;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.archive-topbar-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px 28px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.archive-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #3c3020;
+  text-decoration: none;
+}
+.archive-brand-seal {
+  width: 46px;
+  height: 46px;
+  border: 2px solid #8c2f24;
+  color: #8c2f24;
+  font-family: 'Ma Shan Zheng', serif;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-3deg);
+  border-radius: 4px;
+  background: rgba(140, 47, 36, 0.04);
+}
+.archive-brand-name {
+  line-height: 1.2;
+}
+.archive-brand-name b {
+  display: block;
+  font-size: 20px;
+  letter-spacing: 4px;
+  font-weight: 600;
+}
+.archive-brand-name i {
+  font-style: normal;
+  font-size: 12px;
+  color: #6d5d42;
+  letter-spacing: 2px;
+}
+.archive-nav {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.archive-nav a {
+  padding: 8px 14px;
+  font-size: 15px;
+  color: #4a3d29;
+  text-decoration: none;
+  border-radius: 3px;
+  letter-spacing: 1px;
+}
+.archive-nav a:hover,
+.archive-nav a.router-link-active {
+  background: #efe2c4;
+  color: #1f1810;
+}
+.archive-nav a:focus {
+  outline: 2px solid #8c2f24;
+  outline-offset: 2px;
+  background: #efe2c4;
+  color: #1f1810;
+}
+.archive-nav .archive-nav-msg {
+  position: relative;
+}
+.msg-badge {
+  display: inline-block;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  margin-left: 6px;
+  border-radius: 999px;
+  background: #b3271b;
+  color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ---------- 页脚 ---------- */
+.archive-footer {
+  margin-top: auto;
+  background: #4a3c26;
+  color: #d8c9a8;
+  padding: 26px 28px 20px;
+  font-size: 13px;
+  line-height: 1.9;
+}
+.archive-footer-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.archive-footer a {
+  color: #e6d7b4;
+  text-decoration: none;
+}
+.archive-footer a:hover {
+  text-decoration: underline;
+}
+.archive-footer .faint {
+  color: #c4b494;
+  font-size: 12px;
+}
+.archive-footer .footer-address {
+  display: inline;
+  font-style: normal;
+}
+
+/* ---------- 通栏 ---------- */
+.archive-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 34px 28px 60px;
+}
+.archive-hero {
+  background: linear-gradient(120deg, #6e4a2b 0%, #8c5a33 60%, #7a4e2c 100%);
+  color: #f4ead6;
+  border-radius: 6px;
+  padding: 46px 52px;
+  position: relative;
+  overflow: hidden;
+}
+.archive-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/img/bg_paper.webp');
+  background-size: 620px;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+}
+.archive-hero h1 {
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  margin: 0 0 10px;
+  position: relative;
+}
+.archive-hero p {
+  position: relative;
+  color: #eadfc4;
+  font-size: 15px;
+  line-height: 2;
+  margin: 0;
+}
+.archive-hero .hero-tag {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 18px;
+  font-size: 13px;
+  letter-spacing: 3px;
+  border: 1px solid rgba(244, 234, 214, 0.5);
+  padding: 4px 14px;
+  border-radius: 999px;
+}
+
+.archive-searchbar {
+  margin-top: 26px;
+  display: flex;
+  max-width: 640px;
+  background: #faf5e9;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #d8c9a8;
+  position: relative;
+}
+.archive-searchbar input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  padding: 13px 16px;
+  font-size: 15px;
+  color: #2b2419;
+  outline: none;
+  font-family: inherit;
+}
+.archive-searchbar input::placeholder {
+  color: #8a7a5e;
+}
+.archive-searchbar button {
+  border: 0;
+  background: #8c2f24;
+  color: #f6efdf;
+  padding: 0 24px;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 2px;
+}
+.archive-searchbar button:hover {
+  background: #6f241c;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #3c3020;
+  letter-spacing: 3px;
+  margin: 52px 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-title::before {
+  content: '';
+  width: 4px;
+  height: 22px;
+  background: #8c2f24;
+}
+.section-title small {
+  font-size: 13px;
+  color: #6d5d42;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+/* ---------- 卡片网格 ---------- */
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 18px;
+}
+.collection-card {
+  background: #f9f3e4;
+  border: 1px solid #e0d2b4;
+  border-radius: 4px;
+  padding: 18px;
+  color: #2b2419;
+  text-decoration: none;
+  display: block;
+  transition:
+    box-shadow 0.15s,
+    transform 0.15s;
+}
+.collection-card:hover {
+  box-shadow: 0 6px 18px rgba(74, 60, 38, 0.16);
+  transform: translateY(-2px);
+}
+.collection-card .thumb {
+  height: 130px;
+  background: #ded0b0;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  color: #6d5d42;
+}
+.collection-card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.35) contrast(0.96);
+}
+.collection-card .thumb.no-img {
+  background-image: url('/img/bg_paper.webp');
+  background-size: 300px;
+  font-family: 'Ma Shan Zheng', serif;
+  font-size: 26px;
+  color: #6e5a3c;
+}
+.collection-card .meta {
+  font-size: 12px;
+  color: #6d5d42;
+  margin-top: 12px;
+  letter-spacing: 1px;
+}
+.collection-card h3 {
+  font-size: 17px;
+  margin: 6px 0 4px;
+  font-weight: 600;
+}
+.collection-card p {
+  font-size: 13px;
+  color: #6d5f45;
+  line-height: 1.7;
+  margin: 0;
+}
+

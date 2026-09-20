@@ -24,7 +24,6 @@
         <template v-else>焚账须凭四样回执：死者之名 · 死者之药 · 死者之签 · 待收之信（{{ greyHave }} / 4）。</template>
       </p>
     </div>
-
   </div>
 </template>
 
@@ -32,12 +31,14 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import game from '../stores/game'
+import { deobfList } from '../utils/obfuscate'
 
 const router = useRouter()
 
 // 好结局：完成四条谜题线（五路/录音/旧影/宅院）、且全程未走捷径
-const canHidden = computed(() =>
-  game.state.roadSolved && game.state.audioSolved && game.state.portraitSolved && game.state.zhaiyuanSolved && game.state.shortcuts === 0
+const canHidden = computed(
+  () =>
+    game.state.roadSolved && game.state.audioSolved && game.state.portraitSolved && game.state.zhaiyuanSolved && game.state.shortcuts === 0
 )
 const missingHidden = computed(() => {
   const miss = []
@@ -48,7 +49,7 @@ const missingHidden = computed(() => {
   return miss
 })
 // 灰结局支线「焚余」：先读《著录勘误》→ 循线找到《焚余》→ 集齐四样回执，才烧得掉这本账
-const GREY_PROOF = ['obituary', 'yaozha', 'fortuneslip', 'guestbook']
+const GREY_PROOF = deobfList('==wav9mY0NXZ1dGfwlGbzVmb1RncvZGfhhmevFWe8lnchVHdpJ2b') // 轻度混淆：四样回执清单不在明文
 const greyHave = computed(() => GREY_PROOF.filter((id) => game.hasRead(id)).length)
 const canGrey = computed(() => game.hasRead('fenyu') && greyHave.value === GREY_PROOF.length)
 
@@ -61,7 +62,9 @@ function end(type) {
 </script>
 
 <style scoped>
-.finale { max-width: 860px; }
+.finale {
+  max-width: 860px;
+}
 
 /* ---------- 抉择 ---------- */
 .choice-ledger {
@@ -71,13 +74,44 @@ function end(type) {
   box-shadow: var(--shadow-soft);
   padding: 24px;
 }
-.choice-lead { color: #bfa97f; font-size: 0.9rem; margin: 0; }
-.final-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0; }
-.final-actions button { min-width: 10rem; padding: 0.8em 1.4em; font-size: 0.9rem; }
-.final-actions .danger { border-color: var(--blood); color: #ffd9a0; background: linear-gradient(180deg, rgba(168,41,28,0.55), rgba(90,18,10,0.65)); box-shadow: 0 0 22px rgba(168,41,28,0.3); }
-.final-actions .grey { border-color: rgba(150, 145, 130, 0.6); color: #cfc7b4; background: rgba(80, 78, 70, 0.18); }
-.final-actions .quiet { border-color: rgba(201,162,90,0.6); }
-.choice-note { color: #8a6f4d; font-size: 0.78rem; letter-spacing: 0.1em; margin: 0; }
-.choice-note.faint { color: #6b5236; opacity: 0.7; }
-
+.choice-lead {
+  color: #bfa97f;
+  font-size: 0.9rem;
+  margin: 0;
+}
+.final-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1.2rem 0;
+}
+.final-actions button {
+  min-width: 10rem;
+  padding: 0.8em 1.4em;
+  font-size: 0.9rem;
+}
+.final-actions .danger {
+  border-color: var(--blood);
+  color: #ffd9a0;
+  background: linear-gradient(180deg, rgba(168, 41, 28, 0.55), rgba(90, 18, 10, 0.65));
+  box-shadow: 0 0 22px rgba(168, 41, 28, 0.3);
+}
+.final-actions .grey {
+  border-color: rgba(150, 145, 130, 0.6);
+  color: #cfc7b4;
+  background: rgba(80, 78, 70, 0.18);
+}
+.final-actions .quiet {
+  border-color: rgba(201, 162, 90, 0.6);
+}
+.choice-note {
+  color: #8a6f4d;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+.choice-note.faint {
+  color: #6b5236;
+  opacity: 0.7;
+}
 </style>

@@ -8,7 +8,9 @@ import { glitch } from '../utils/glitch'
 
 const props = defineProps({ n: { type: Number, default: 6 } })
 const text = ref('')
-onMounted(() => { text.value = glitch(props.n) })
+onMounted(() => {
+  text.value = glitch(props.n)
+})
 </script>
 
 <style scoped>

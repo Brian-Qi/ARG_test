@@ -1,7 +1,18 @@
 import { reactive, watch } from 'vue'
 
 // 需持久化的字段（白名单；scare 等瞬时状态不入盘）
-const PERSIST_KEYS = ['wish', 'signed', 'roadSolved', 'audioSolved', 'portraitSolved', 'zhaiyuanSolved', 'ending', 'shortcuts', 'keys', 'read']
+const PERSIST_KEYS = [
+  'wish',
+  'signed',
+  'roadSolved',
+  'audioSolved',
+  'portraitSolved',
+  'zhaiyuanSolved',
+  'ending',
+  'shortcuts',
+  'keys',
+  'read'
+]
 const K_STATE = 'cx_game'
 const K_SEEN = 'cx_seen_hidden'
 const K_FAMILY = 'cx_family_unlocked'
@@ -10,7 +21,7 @@ const K_MSG = 'cx_messages'
 
 function snapshot() {
   const o = {}
-  PERSIST_KEYS.forEach(k => (o[k] = state[k]))
+  PERSIST_KEYS.forEach((k) => (o[k] = state[k]))
   return o
 }
 
@@ -19,24 +30,28 @@ function restore() {
   if (!raw) return
   try {
     const o = JSON.parse(raw)
-    PERSIST_KEYS.forEach(k => { if (k in o) state[k] = o[k] })
-  } catch (e) { /* 损坏则忽略，保持初始态 */ }
+    PERSIST_KEYS.forEach((k) => {
+      if (k in o) state[k] = o[k]
+    })
+  } catch (e) {
+    /* 损坏则忽略，保持初始态 */
+  }
 }
 
 const state = reactive({
   wish: '',
-  signed: false,          // 取签
-  roadSolved: false,      // 五路
-  audioSolved: false,     // 录音
-  portraitSolved: false,  // 旧影
-  zhaiyuanSolved: false,  // 宅院安位
-  ending: null,           // 结账
+  signed: false, // 取签
+  roadSolved: false, // 五路
+  audioSolved: false, // 录音
+  portraitSolved: false, // 旧影
+  zhaiyuanSolved: false, // 宅院安位
+  ending: null, // 结账
   scare: null,
-  strongScare: true,      // 强惊吓开关（突脸/血屏）；持久化在独立键 cx_strong
-  shortcutToast: null,    // 走捷径提示（瞬时，不入盘）
+  strongScare: true, // 强惊吓开关（突脸/血屏）；持久化在独立键 cx_strong
+  shortcutToast: null, // 走捷径提示（瞬时，不入盘）
   shortcuts: 0,
-  keys: {},               // 已获得钥匙（碎片网解锁用）
-  read: {}                // 已调阅碎片（隐藏碎片的揭示）
+  keys: {}, // 已获得钥匙（碎片网解锁用）
+  read: {} // 已调阅碎片（隐藏碎片的揭示）
 })
 
 // 从 sessionStorage 迁移 seenHidden 到 localStorage 统一键
@@ -44,7 +59,11 @@ function migrateSeenHidden() {
   if (localStorage.getItem(K_SEEN)) return
   const old = sessionStorage.getItem(K_SEEN)
   if (old) {
-    try { localStorage.setItem(K_SEEN, old) } catch (err) { /* 忽略 */ }
+    try {
+      localStorage.setItem(K_SEEN, old)
+    } catch (err) {
+      /* 忽略 */
+    }
     sessionStorage.removeItem(K_SEEN)
   }
 }
@@ -54,24 +73,46 @@ restore()
 // 深度 watch：把持久化白名单写回 localStorage
 watch(
   () => snapshot(),
-  (s) => { try { localStorage.setItem(K_STATE, JSON.stringify(s)) } catch (err) { /* 忽略 */ } },
+  (s) => {
+    try {
+      localStorage.setItem(K_STATE, JSON.stringify(s))
+    } catch (err) {
+      /* 忽略 */
+    }
+  },
   { deep: true }
 )
 
 // —— seenHidden 统一读写（A 层第 0 页标记）——
 const seenHidden = () => localStorage.getItem(K_SEEN) === '1'
-function markSeenHidden() { try { localStorage.setItem(K_SEEN, '1') } catch (err) { /* 忽略 */ } }
+function markSeenHidden() {
+  try {
+    localStorage.setItem(K_SEEN, '1')
+  } catch (err) {
+    /* 忽略 */
+  }
+}
 
 // —— 是否在馆藏检索里搜过「沈砚秋」（B 面入口前置之一）——
 const shenSearched = () => localStorage.getItem(K_SHEN) === '1'
-function markShenSearched() { try { localStorage.setItem(K_SHEN, '1') } catch (err) { /* 忽略 */ } }
+function markShenSearched() {
+  try {
+    localStorage.setItem(K_SHEN, '1')
+  } catch (err) {
+    /* 忽略 */
+  }
+}
 
 // —— 碎片网：钥匙（解谜产出，解锁更多碎片）——
-const collectKey = (id) => { if (id) state.keys = { ...state.keys, [id]: true } }
+const collectKey = (id) => {
+  if (id) state.keys = { ...state.keys, [id]: true }
+}
 const hasKey = (id) => !!state.keys[id]
 
 // —— 碎片网：已调阅（隐藏碎片的揭示）——
-const markRead = (id) => { if (id) state.read = { ...state.read, [id]: true } }
+const markRead = (id) => {
+  if (id) state.read = { ...state.read, [id]: true }
+}
 const hasRead = (id) => !!state.read[id]
 
 // —— 线索分级：可查等级（随进度放开；等级越高，可查文档越多）——
@@ -98,14 +139,30 @@ function markBranch(key) {
 
 // —— 从「全图」进入 B 面：本次会话放行（之后在 B 面里的二级跳转也不被当非法）——
 const K_MAP = 'cx_map_pass'
-const allowViaMap = () => { try { sessionStorage.setItem(K_MAP, '1') } catch (err) { /* 忽略 */ } }
-const mapPass = () => { try { return sessionStorage.getItem(K_MAP) === '1' } catch (err) { return false } }
+const allowViaMap = () => {
+  try {
+    sessionStorage.setItem(K_MAP, '1')
+  } catch (err) {
+    /* 忽略 */
+  }
+}
+const mapPass = () => {
+  try {
+    return sessionStorage.getItem(K_MAP) === '1'
+  } catch (err) {
+    return false
+  }
+}
 
 // 完成过任意一次结账即永久标记（reset 不清）；A 面据此知道「你不是第一次来」
 const K_PLAYED = 'cx_played'
-const K_ENDINGS = 'cx_endings'   // 已解锁的结局集合（reset 不清，供全图列已解锁）
+const K_ENDINGS = 'cx_endings' // 已解锁的结局集合（reset 不清，供全图列已解锁）
 function seenEndingList() {
-  try { return JSON.parse(localStorage.getItem(K_ENDINGS) || '[]') } catch (err) { return [] }
+  try {
+    return JSON.parse(localStorage.getItem(K_ENDINGS) || '[]')
+  } catch (err) {
+    return []
+  }
 }
 function setEnding(e) {
   state.ending = e
@@ -113,12 +170,21 @@ function setEnding(e) {
     localStorage.setItem(K_PLAYED, '1')
     if (e) {
       const arr = seenEndingList()
-      if (!arr.includes(e)) { arr.push(e); localStorage.setItem(K_ENDINGS, JSON.stringify(arr)) }
+      if (!arr.includes(e)) {
+        arr.push(e)
+        localStorage.setItem(K_ENDINGS, JSON.stringify(arr))
+      }
     }
-  } catch (err) { /* 忽略 */ }
+  } catch (err) {
+    /* 忽略 */
+  }
 }
 const playedBefore = () => {
-  try { return localStorage.getItem(K_PLAYED) === '1' } catch (err) { return false }
+  try {
+    return localStorage.getItem(K_PLAYED) === '1'
+  } catch (err) {
+    return false
+  }
 }
 const hasEnding = (e) => seenEndingList().includes(e)
 
@@ -129,27 +195,44 @@ function takeShortcut() {
   state.shortcuts = (state.shortcuts || 0) + 1
   state.shortcutToast = { n: state.shortcuts, id: Date.now() }
   if (shortcutTimer) clearTimeout(shortcutTimer)
-  shortcutTimer = setTimeout(() => { state.shortcutToast = null }, 5000)
+  shortcutTimer = setTimeout(() => {
+    state.shortcutToast = null
+  }, 5000)
 }
 
 function triggerScare(type, text) {
   if (!state.strongScare) return
   state.scare = { type, text, id: Date.now() }
-  setTimeout(() => { state.scare = null }, 1300)
+  setTimeout(() => {
+    state.scare = null
+  }, 1300)
 }
 
 function reset() {
   Object.assign(state, {
-    wish: '', signed: false, roadSolved: false, audioSolved: false, portraitSolved: false,
-    zhaiyuanSolved: false, ending: null, scare: null, shortcuts: 0, keys: {}, read: {}
+    wish: '',
+    signed: false,
+    roadSolved: false,
+    audioSolved: false,
+    portraitSolved: false,
+    zhaiyuanSolved: false,
+    ending: null,
+    scare: null,
+    shortcuts: 0,
+    keys: {},
+    read: {}
   })
   localStorage.removeItem(K_STATE)
   localStorage.removeItem(K_SEEN)
-  localStorage.removeItem(K_FAMILY)   // 二周目：族谱解锁态一并重置
-  localStorage.removeItem(K_SHEN)     // 二周目：沈砚秋检索标记一并重置
-  localStorage.removeItem(K_MSG)      // 二周目：消息列表一并清空
+  localStorage.removeItem(K_FAMILY) // 二周目：族谱解锁态一并重置
+  localStorage.removeItem(K_SHEN) // 二周目：沈砚秋检索标记一并重置
+  localStorage.removeItem(K_MSG) // 二周目：消息列表一并清空
   sessionStorage.removeItem(K_SEEN)
-  try { sessionStorage.removeItem(K_MAP) } catch (err) { /* 忽略 */ }   // 二周目：全图放行一并撤销
+  try {
+    sessionStorage.removeItem(K_MAP)
+  } catch (err) {
+    /* 忽略 */
+  } // 二周目：全图放行一并撤销
 }
 
 // —— 减弱动效：手动覆盖 + prefers-reduced-motion 自动适配 ——
@@ -169,14 +252,36 @@ const readStrongScare = () => {
 state.strongScare = readStrongScare()
 function setStrongScare(on) {
   state.strongScare = !!on
-  try { localStorage.setItem(K_STRONG, on ? 'on' : 'off') } catch (err) { /* 忽略 */ }
+  try {
+    localStorage.setItem(K_STRONG, on ? 'on' : 'off')
+  } catch (err) {
+    /* 忽略 */
+  }
 }
 
 export default {
-  state, createFortune, markBranch, setEnding, triggerScare, takeShortcut, reset,
-  seenHidden, markSeenHidden, shenSearched, markShenSearched,
-  collectKey, hasKey, markRead, hasRead, maxLevel, reduceMotion, setStrongScare, playedBefore, hasEnding,
-  allowViaMap, mapPass
+  state,
+  createFortune,
+  markBranch,
+  setEnding,
+  triggerScare,
+  takeShortcut,
+  reset,
+  seenHidden,
+  markSeenHidden,
+  shenSearched,
+  markShenSearched,
+  collectKey,
+  hasKey,
+  markRead,
+  hasRead,
+  maxLevel,
+  reduceMotion,
+  setStrongScare,
+  playedBefore,
+  hasEnding,
+  allowViaMap,
+  mapPass
 }
 
 export { markSeenHidden, seenHidden, shenSearched, markShenSearched }

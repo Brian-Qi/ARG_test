@@ -8,7 +8,9 @@
 
     <template v-if="!submitted">
       <h1 class="svc-title">文书捐赠</h1>
-      <p class="svc-lead">为保存城市记忆、充实馆藏体系，本馆常年接受民间文书无偿捐赠与寄存。范围包括商号账簿与票据、契约文书、家谱族谱、书信日记、照片底片、证章地图等。</p>
+      <p class="svc-lead">
+        为保存城市记忆、充实馆藏体系，本馆常年接受民间文书无偿捐赠与寄存。范围包括商号账簿与票据、契约文书、家谱族谱、书信日记、照片底片、证章地图等。
+      </p>
 
       <form class="svc-form" @submit.prevent="submit">
         <div class="svc-field">
@@ -22,7 +24,13 @@
 
         <div class="svc-field">
           <label class="svc-label" for="svc-doc-desc">内容简述<span class="req">*</span></label>
-          <textarea id="svc-doc-desc" v-model="form.desc" class="svc-textarea" :class="{ invalid: errors.desc }" placeholder="简述文书大致内容、年代与保存状况（10—200 字）"></textarea>
+          <textarea
+            id="svc-doc-desc"
+            v-model="form.desc"
+            class="svc-textarea"
+            :class="{ invalid: errors.desc }"
+            placeholder="简述文书大致内容、年代与保存状况（10—200 字）"
+          ></textarea>
           <p v-if="errors.desc" class="svc-error">{{ errors.desc }}</p>
         </div>
 
@@ -105,8 +113,13 @@ const form = reactive({
 
 const errors = reactive({ docType: '', desc: '', contact: '' })
 
-function clearContact() { form.contact = ''; errors.contact = '' }
-function clearContactError() { errors.contact = '' }
+function clearContact() {
+  form.contact = ''
+  errors.contact = ''
+}
+function clearContactError() {
+  errors.contact = ''
+}
 
 function isValidContact(kind, v) {
   v = (v || '').trim()
@@ -118,11 +131,19 @@ function isValidContact(kind, v) {
 
 function validate() {
   let ok = true
-  if (!form.docType) { errors.docType = '请选择文书类型。'; ok = false } else errors.docType = ''
+  if (!form.docType) {
+    errors.docType = '请选择文书类型。'
+    ok = false
+  } else errors.docType = ''
   const len = form.desc.trim().length
-  if (len < 10 || len > 200) { errors.desc = '内容简述需在 10—200 字之间。'; ok = false } else errors.desc = ''
-  if (!form.contactKind) { errors.contact = '请选择联系方式类型。'; ok = false }
-  else if (!isValidContact(form.contactKind, form.contact)) {
+  if (len < 10 || len > 200) {
+    errors.desc = '内容简述需在 10—200 字之间。'
+    ok = false
+  } else errors.desc = ''
+  if (!form.contactKind) {
+    errors.contact = '请选择联系方式类型。'
+    ok = false
+  } else if (!isValidContact(form.contactKind, form.contact)) {
     errors.contact = form.contactKind === '电话' ? '请输入正确手机号。' : '请输入有效的邮箱地址。'
     ok = false
   } else errors.contact = ''

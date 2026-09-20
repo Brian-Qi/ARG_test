@@ -7,9 +7,10 @@ const BASE = process.env.DEPLOY_BASE || '/'
 // 构建期把运行时写死的 /img/、/audio/ 前缀成 base（dev 不受影响）
 function baseAssetPlugin(base) {
   const b = base === '/' ? '' : base.replace(/\/$/, '')
-  const fix = (s) => String(s)
-    .replace(/(["'`])\/(img|audio)\//g, `$1${b}/$2/`)
-    .replace(/url\(\s*(['"]?)\/(img|audio)\//g, (m, q, d) => `url(${q}${b}/${d}/`)
+  const fix = (s) =>
+    String(s)
+      .replace(/(["'`])\/(img|audio)\//g, `$1${b}/$2/`)
+      .replace(/url\(\s*(['"]?)\/(img|audio)\//g, (m, q, d) => `url(${q}${b}/${d}/`)
   return {
     name: 'base-asset',
     apply: 'build',

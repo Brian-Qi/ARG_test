@@ -2,7 +2,9 @@
   <div>
     <section class="archive-panel">
       <h2>未检索到该成员档案</h2>
-      <p>在馆藏著录与《杭州民俗数字档案馆 · 工作人员名录》中，均未检索到名为 <b>{{ name }}</b> 的记录。</p>
+      <p>
+        在馆藏著录与《杭州民俗数字档案馆 · 工作人员名录》中，均未检索到名为 <b>{{ name }}</b> 的记录。
+      </p>
       <p class="muted">可能原因：姓名著录有误；该成员不属于本馆编制；或相关条目已在历次校正中移除。</p>
       <RouterLink class="back-link" to="/records/corrections">← 返回数据校正记录</RouterLink>
       <span class="staff-gap" aria-hidden="true"></span>

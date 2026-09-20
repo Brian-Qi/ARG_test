@@ -115,6 +115,6 @@ const ALL = [
   }
 ]
 
-const notice = computed(() => ALL.find(n => n.id === route.params.id))
-const others = computed(() => (notice.value ? ALL.filter(n => n.id !== notice.value.id) : ALL))
+const notice = computed(() => ALL.find((n) => n.id === route.params.id))
+const others = computed(() => (notice.value ? ALL.filter((n) => n.id !== notice.value.id) : ALL))
 </script>

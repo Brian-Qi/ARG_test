@@ -12,7 +12,9 @@
       <h2 id="digital-collections-title" class="section-title">数字化专题 <small>Digital Collections</small></h2>
       <div class="home-split">
         <RouterLink class="collection-card home-feature" to="/archives/CW-0001">
-          <span class="thumb"><img src="/img/home-ledger-project.webp" alt="近代商号账簿数字化（第一批）" /></span>
+          <span class="thumb"
+            ><img src="/img/home-ledger-project.webp" alt="近代商号账簿数字化（第一批）" width="1536" height="1024"
+          /></span>
           <div class="home-feature-copy">
             <div class="meta">专题 · 持续更新</div>
             <h3>近代商号账簿数字化（第一批）</h3>
@@ -47,7 +49,7 @@
         </ul>
         <h2 id="recent-collections-title" class="section-title">近期上线 <small>Recently Online</small></h2>
         <RouterLink class="collection-card home-feature" to="/archives/CW-0009">
-          <span class="thumb"><img src="/img/home-wanhe-ledger.webp" alt="万和号商号流水账" /></span>
+          <span class="thumb"><img src="/img/home-wanhe-ledger.webp" alt="万和号商号流水账" width="1536" height="1024" /></span>
           <div class="home-feature-copy">
             <div class="meta">馆藏号 HZ-1927-0512 · 全文公开</div>
             <h3>万和号商号流水账</h3>
@@ -61,7 +63,9 @@
     <section aria-labelledby="announcements-title">
       <h2 id="announcements-title" class="section-title">通知公告 <small>Announcements</small></h2>
       <div class="notice-list">
-        <div class="notice-row"><time>2026-08-27</time><RouterLink to="/notice/3">关于"近代商号账簿数字化（第一批）"全文开放的说明</RouterLink></div>
+        <div class="notice-row">
+          <time>2026-08-27</time><RouterLink to="/notice/3">关于"近代商号账簿数字化（第一批）"全文开放的说明</RouterLink>
+        </div>
         <div class="notice-row"><time>2026-08-19</time><RouterLink to="/notice/2">中秋节假期开放时间安排</RouterLink></div>
         <div class="notice-row"><time>2026-08-06</time><RouterLink to="/notice/1">民间文书捐赠征集公告（长期有效）</RouterLink></div>
       </div>
@@ -94,6 +98,13 @@ const isSubApp = import.meta.env.BASE_URL.replace(/\/+$/, '') === '/arg_01'
 </script>
 
 <style scoped>
-.home-outlink { display: flex; justify-content: flex-end; margin: 0 0 16px; }
-.home-out-btn { font-size: 0.82rem; padding: 0.5em 1.1em; }
+.home-outlink {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 16px;
+}
+.home-out-btn {
+  font-size: 0.82rem;
+  padding: 0.5em 1.1em;
+}
 </style>

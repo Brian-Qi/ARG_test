@@ -27,15 +27,54 @@ import JOURNAL from '../data/journal'
 </script>
 
 <style scoped>
-.vault-journal { max-width: 1000px; }
+.vault-journal {
+  max-width: 1000px;
+}
 
-.jr-list { list-style: none; margin: 22px 0 0; padding: 0; }
-.jr-item { border-bottom: 1px solid rgba(138, 111, 77, 0.18); }
-.jr-item a { display: block; padding: 18px 6px; text-decoration: none; color: inherit; transition: background 0.2s ease; }
-.jr-item a:hover { background: rgba(168, 41, 28, 0.08); }
-.jr-meta { display: flex; gap: 14px; font-size: 0.72rem; letter-spacing: 0.16em; color: #9c7c55; }
-.jr-title { font-size: 1.12rem; color: #e3cf9f; margin: 6px 0 4px; font-family: var(--serif, serif); font-weight: 600; }
-.jr-item a:hover .jr-title { color: #f0c884; }
-.jr-author { font-size: 0.82rem; color: #8a6f4d; margin: 0 0 6px; }
-.jr-abstract { font-size: 0.88rem; color: #b09a72; line-height: 1.8; margin: 0; }
+.jr-list {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+}
+.jr-item {
+  border-bottom: 1px solid rgba(138, 111, 77, 0.18);
+}
+.jr-item a {
+  display: block;
+  padding: 18px 6px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s ease;
+}
+.jr-item a:hover {
+  background: rgba(168, 41, 28, 0.08);
+}
+.jr-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: #9c7c55;
+}
+.jr-title {
+  font-size: 1.12rem;
+  color: #e3cf9f;
+  margin: 6px 0 4px;
+  font-family: var(--serif, serif);
+  font-weight: 600;
+}
+.jr-item a:hover .jr-title {
+  color: #f0c884;
+}
+.jr-author {
+  font-size: 0.82rem;
+  color: #8a6f4d;
+  margin: 0 0 6px;
+}
+.jr-abstract {
+  font-size: 0.88rem;
+  color: #b09a72;
+  line-height: 1.8;
+  margin: 0;
+}
 </style>

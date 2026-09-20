@@ -52,7 +52,9 @@ const isLocked = (f) => !!f.requires && !game.hasKey(f.requires)
 // 随机几条：标题显示成乱码（悬停可见真名）
 const glitchedTitles = ref({})
 onMounted(() => {
-  FRAGMENTS.forEach(f => { if (Math.random() < 0.12) glitchedTitles.value[f.id] = glitch(f.title.length) })
+  FRAGMENTS.forEach((f) => {
+    if (Math.random() < 0.12) glitchedTitles.value[f.id] = glitch(f.title.length)
+  })
 })
 
 // 检索：碎片 + 研究辑录；仅显示"可查等级"以内的文档（等级随进度放开）
@@ -60,41 +62,116 @@ const shown = computed(() => {
   const q = kw.value.trim()
   if (!q) return []
   const lv = game.maxLevel()
-  const frags = FRAGMENTS.filter(f => levelOf(f.id) <= lv).filter(f => {
-    const hay = [f.title, f.tag, f.summary, ...(f.content || []), ...(f.entities || [])].join(' ')
-    return hay.includes(q)
-  }).map(f => ({ kind: 'frag', id: f.id, ...f }))
-  const arts = JOURNAL.filter(a => levelOf(a.id) <= lv).filter(a => {
-    const hay = [a.title, a.author, a.abstract, ...(a.keywords || []), ...(a.body || []), ...(a.notes || [])].join(' ')
-    return hay.includes(q)
-  }).map(a => ({ kind: 'article', id: a.id, ...a }))
+  const frags = FRAGMENTS.filter((f) => levelOf(f.id) <= lv)
+    .filter((f) => {
+      const hay = [f.title, f.tag, f.summary, ...(f.content || []), ...(f.entities || [])].join(' ')
+      return hay.includes(q)
+    })
+    .map((f) => ({ kind: 'frag', id: f.id, ...f }))
+  const arts = JOURNAL.filter((a) => levelOf(a.id) <= lv)
+    .filter((a) => {
+      const hay = [a.title, a.author, a.abstract, ...(a.keywords || []), ...(a.body || []), ...(a.notes || [])].join(' ')
+      return hay.includes(q)
+    })
+    .map((a) => ({ kind: 'article', id: a.id, ...a }))
   return [...frags, ...arts]
 })
 </script>
 
 <style scoped>
-.vault-search { max-width: 1000px; }
-
-.vault-searchbar { display: flex; align-items: center; gap: 1rem; max-width: 620px; margin: 20px 0 22px; }
-.vault-searchbar input {
-  flex: 1; padding: 0.7em 1em; background: #120b08; border: 1px solid rgba(157, 40, 26, 0.5);
-  border-radius: 3px; color: #efe3c8; font-family: inherit; font-size: 0.95rem; letter-spacing: 0.05em;
+.vault-search {
+  max-width: 1000px;
 }
-.vault-searchbar input:focus { outline: none; border-color: #d13424; box-shadow: 0 0 16px rgba(209, 52, 36, 0.22); }
-.vault-searchbar input::placeholder { color: #6b5236; }
-.vault-search-count { font-size: 0.78rem; color: #8a6f4d; letter-spacing: 0.1em; white-space: nowrap; }
-.vault-empty { color: #8a6f4d; font-size: 0.9rem; }
 
-.frag-list { list-style: none; margin: 0; padding: 0; }
-.frag-row { border-bottom: 1px solid rgba(138, 111, 77, 0.14); }
-.frag-link, .frag-locked { display: flex; align-items: baseline; gap: 14px; padding: 12px 4px; text-decoration: none; }
-.frag-link { color: #d9c69a; }
-.frag-link:hover { background: rgba(168, 41, 28, 0.1); }
-.frag-link:hover .frag-title { color: #f0c884; }
-.frag-title { font-size: 1.02rem; letter-spacing: 0.04em; }
-.frag-tag { font-size: 0.74rem; color: #8a6f4d; letter-spacing: 0.1em; }
-.frag-key { margin-left: auto; font-size: 0.72rem; color: #d13424; letter-spacing: 0.1em; }
-.frag-locked { color: #6b5236; cursor: not-allowed; }
-.frag-locked .frag-title { text-decoration: line-through; opacity: 0.75; }
-.frag-seal { margin-left: auto; font-size: 0.72rem; color: #7a3a2a; letter-spacing: 0.12em; }
+.vault-searchbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 620px;
+  margin: 20px 0 22px;
+}
+.vault-searchbar input {
+  flex: 1;
+  padding: 0.7em 1em;
+  background: #120b08;
+  border: 1px solid rgba(157, 40, 26, 0.5);
+  border-radius: 3px;
+  color: #efe3c8;
+  font-family: inherit;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+}
+.vault-searchbar input:focus {
+  outline: none;
+  border-color: #d13424;
+  box-shadow: 0 0 16px rgba(209, 52, 36, 0.22);
+}
+.vault-searchbar input::placeholder {
+  color: #6b5236;
+}
+.vault-search-count {
+  font-size: 0.78rem;
+  color: #8a6f4d;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+.vault-empty {
+  color: #8a6f4d;
+  font-size: 0.9rem;
+}
+
+.frag-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.frag-row {
+  border-bottom: 1px solid rgba(138, 111, 77, 0.14);
+}
+.frag-link,
+.frag-locked {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 12px 4px;
+  text-decoration: none;
+}
+.frag-link {
+  color: #d9c69a;
+}
+.frag-link:hover {
+  background: rgba(168, 41, 28, 0.1);
+}
+.frag-link:hover .frag-title {
+  color: #f0c884;
+}
+.frag-title {
+  font-size: 1.02rem;
+  letter-spacing: 0.04em;
+}
+.frag-tag {
+  font-size: 0.74rem;
+  color: #8a6f4d;
+  letter-spacing: 0.1em;
+}
+.frag-key {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: #d13424;
+  letter-spacing: 0.1em;
+}
+.frag-locked {
+  color: #6b5236;
+  cursor: not-allowed;
+}
+.frag-locked .frag-title {
+  text-decoration: line-through;
+  opacity: 0.75;
+}
+.frag-seal {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: #7a3a2a;
+  letter-spacing: 0.12em;
+}
 </style>

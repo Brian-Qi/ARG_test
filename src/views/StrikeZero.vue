@@ -44,13 +44,13 @@ import game from '../stores/game'
 
 const phase = ref('rewind')
 const glitch = ref(false)
-const absMin = ref(5 * 1440 + 23 * 60 + 47)   // 初五 23:47
+const absMin = ref(5 * 1440 + 23 * 60 + 47) // 初五 23:47
 let raf = null
 let jam = null
 
 const START = 5 * 1440 + 23 * 60 + 47
-const END = 1 * 1440                            // 初一 子正
-const DURATION = 10000                          // 倒流总时长(ms)
+const END = 1 * 1440 // 初一 子正
+const DURATION = 10000 // 倒流总时长(ms)
 
 const DAY_CN = { 1: '初一', 2: '初二', 3: '初三', 4: '初四', 5: '初五', 6: '初六' }
 
@@ -72,7 +72,7 @@ function runRewind() {
   const t0 = performance.now()
   const step = (t) => {
     const p = Math.min(1, (t - t0) / DURATION)
-    const eased = p * p * p                      // 越来越快（起步慢、后段飞）
+    const eased = p * p * p // 越来越快（起步慢、后段飞）
     absMin.value = START - eased * (START - END)
     if (p < 1) {
       raf = requestAnimationFrame(step)
@@ -99,6 +99,11 @@ function reset() {
 }
 
 function enter() {
+  // 尊重「减弱动效」：跳过 10s 倒流，直接落到定格屏（phase 变化由 watcher 切换背景类）
+  if (game.reduceMotion()) {
+    phase.value = 'zero'
+    return
+  }
   document.documentElement.classList.add('strike-bg')
   runRewind()
 }
@@ -120,106 +125,243 @@ onBeforeUnmount(leave)
   min-height: 78vh;
   background: transparent;
 }
-.strike-page.glitch { animation: static-jitter 0.12s steps(2) infinite; }
+.strike-page.glitch {
+  animation: static-jitter 0.12s steps(2) infinite;
+}
 @keyframes static-jitter {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(-3px); }
-  100% { transform: translateX(2px); }
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(2px);
+  }
 }
 
 /* ================= 倒流段 ================= */
 .sz-content {
-  position: relative; z-index: 1;
-  flex: 1; min-height: 78vh;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 3.4rem 1.6rem 2.6rem; text-align: center;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.4rem 1.6rem 2.6rem;
+  text-align: center;
 }
 .sz-eyebrow {
   margin: 0 0 0.4rem;
   font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
-  font-size: 0.9rem; letter-spacing: 0.4em; color: var(--blood-bright);
-  text-shadow: 0 0 12px rgba(168, 41, 28, 0.7), 0 1px 6px rgba(0, 0, 0, 0.95);
+  font-size: 0.9rem;
+  letter-spacing: 0.4em;
+  color: var(--blood-bright);
+  text-shadow:
+    0 0 12px rgba(168, 41, 28, 0.7),
+    0 1px 6px rgba(0, 0, 0, 0.95);
 }
-.sz-clock { margin: 0; }
+.sz-clock {
+  margin: 0;
+}
 .sz-day {
   display: block;
   font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
-  font-size: 1.4rem; letter-spacing: 0.4em; color: var(--blood-bright);
-  margin-bottom: 2px; text-shadow: 0 0 14px rgba(168, 41, 28, 0.7), 0 1px 8px rgba(0, 0, 0, 0.95);
+  font-size: 1.4rem;
+  letter-spacing: 0.4em;
+  color: var(--blood-bright);
+  margin-bottom: 2px;
+  text-shadow:
+    0 0 14px rgba(168, 41, 28, 0.7),
+    0 1px 8px rgba(0, 0, 0, 0.95);
 }
 .sz-time {
   display: block;
   font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
-  font-weight: 400; line-height: 1.02;
-  font-size: clamp(3.6rem, 14vw, 7.4rem); letter-spacing: 0.06em;
+  font-weight: 400;
+  line-height: 1.02;
+  font-size: clamp(3.6rem, 14vw, 7.4rem);
+  letter-spacing: 0.06em;
   color: var(--blood-bright);
-  text-shadow: 0 0 46px rgba(209, 52, 36, 0.65), 0 0 14px rgba(168, 41, 28, 0.6), 0 3px 12px rgba(0, 0, 0, 0.95);
+  text-shadow:
+    0 0 46px rgba(209, 52, 36, 0.65),
+    0 0 14px rgba(168, 41, 28, 0.6),
+    0 3px 12px rgba(0, 0, 0, 0.95);
   font-variant-numeric: tabular-nums;
 }
 .sz-chap {
   display: block;
   font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
-  font-size: 0.95rem; letter-spacing: 0.38em; color: var(--blood-bright); margin-top: 6px; text-shadow: 0 0 14px rgba(168, 41, 28, 0.7), 0 1px 8px rgba(0, 0, 0, 0.95);
+  font-size: 0.95rem;
+  letter-spacing: 0.38em;
+  color: var(--blood-bright);
+  margin-top: 6px;
+  text-shadow:
+    0 0 14px rgba(168, 41, 28, 0.7),
+    0 1px 8px rgba(0, 0, 0, 0.95);
 }
 
 .sz-title {
   margin: 30px 0 0;
-  font-size: 1.5rem; color: #ffe3b0;
-  text-shadow: 0 0 22px rgba(255, 120, 30, 0.5), 0 2px 8px rgba(0, 0, 0, 0.85);
+  font-size: 1.5rem;
+  color: #ffe3b0;
+  text-shadow:
+    0 0 22px rgba(255, 120, 30, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.85);
 }
-.sz-intro { max-width: 32em; margin: 14px auto 0; color: #e8cca4; line-height: 1.9; font-size: 0.94rem; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.85); }
+.sz-intro {
+  max-width: 32em;
+  margin: 14px auto 0;
+  color: #e8cca4;
+  line-height: 1.9;
+  font-size: 0.94rem;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.85);
+}
 .sz-whisper {
-  margin: 24px auto 0; color: #ffb85c; font-size: 0.84rem; letter-spacing: 0.16em;
-  opacity: 0.92; text-shadow: 0 0 14px rgba(255, 110, 20, 0.4), 0 1px 6px rgba(0, 0, 0, 0.85);
+  margin: 24px auto 0;
+  color: #ffb85c;
+  font-size: 0.84rem;
+  letter-spacing: 0.16em;
+  opacity: 0.92;
+  text-shadow:
+    0 0 14px rgba(255, 110, 20, 0.4),
+    0 1px 6px rgba(0, 0, 0, 0.85);
 }
-.strike-page.glitch .sz-time { color: var(--blood-bright); text-shadow: 0 0 30px rgba(209, 52, 36, 0.7); }
+.strike-page.glitch .sz-time {
+  color: var(--blood-bright);
+  text-shadow: 0 0 30px rgba(209, 52, 36, 0.7);
+}
 
 /* ================= 第零笔 · 定格结局屏 ================= */
 .zero-stage {
-  position: relative; z-index: 1;
-  flex: 1; min-height: calc(100vh - 110px);
-  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: calc(100vh - 110px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 3rem 1.5rem;
 }
-.zero-inner { position: relative; z-index: 1; max-width: 640px; text-align: center; animation: zero-in 1.1s ease both; }
+.zero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  text-align: center;
+  animation: zero-in 1.1s ease both;
+}
 .zero-seal {
-  position: absolute; top: -6px; right: -6px; width: 64px; height: 64px; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center; font-family: "Ma Shan Zheng", 'KaiTi', serif; font-size: 34px;
-  border: 2px solid var(--blood); color: var(--blood-bright); background: rgba(20, 4, 3, 0.5);
-  transform: rotate(-6deg); box-shadow: 0 0 26px rgba(168, 41, 28, 0.45);
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 64px;
+  height: 64px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Ma Shan Zheng', 'KaiTi', serif;
+  font-size: 34px;
+  border: 2px solid var(--blood);
+  color: var(--blood-bright);
+  background: rgba(20, 4, 3, 0.5);
+  transform: rotate(-6deg);
+  box-shadow: 0 0 26px rgba(168, 41, 28, 0.45);
   animation: zero-seal-in 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) 0.5s both;
 }
 .zero-kicker {
   margin: 0 0 4px;
   font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
-  font-size: 1rem; letter-spacing: 0.44em; color: var(--blood-bright);
-  text-shadow: 0 0 14px rgba(168, 41, 28, 0.7), 0 1px 8px rgba(0, 0, 0, 0.95);
+  font-size: 1rem;
+  letter-spacing: 0.44em;
+  color: var(--blood-bright);
+  text-shadow:
+    0 0 14px rgba(168, 41, 28, 0.7),
+    0 1px 8px rgba(0, 0, 0, 0.95);
 }
 .zero-title {
   margin: 0 0 10px;
   font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
-  font-weight: 400; font-size: clamp(3rem, 12vw, 6.4rem); line-height: 1.02; letter-spacing: 0.08em;
+  font-weight: 400;
+  font-size: clamp(3rem, 12vw, 6.4rem);
+  line-height: 1.02;
+  letter-spacing: 0.08em;
   color: var(--blood-bright);
-  text-shadow: 0 0 52px rgba(209, 52, 36, 0.7), 0 0 16px rgba(168, 41, 28, 0.6), 0 3px 14px rgba(0, 0, 0, 0.95);
+  text-shadow:
+    0 0 52px rgba(209, 52, 36, 0.7),
+    0 0 16px rgba(168, 41, 28, 0.6),
+    0 3px 14px rgba(0, 0, 0, 0.95);
 }
 .zero-q {
   margin: 0 0 1.6rem;
   font-family: 'Zhi Mang Xing', 'Liu Jian Mao Cao', 'Ma Shan Zheng', 'KaiTi', serif;
-  font-size: clamp(1.4rem, 4.4vw, 2.2rem); letter-spacing: 0.16em; color: #ff6a4a;
-  text-shadow: 0 0 24px rgba(209, 52, 36, 0.6), 0 2px 10px rgba(0, 0, 0, 0.95);
+  font-size: clamp(1.4rem, 4.4vw, 2.2rem);
+  letter-spacing: 0.16em;
+  color: #ff6a4a;
+  text-shadow:
+    0 0 24px rgba(209, 52, 36, 0.6),
+    0 2px 10px rgba(0, 0, 0, 0.95);
 }
-.zero-lines { max-width: 34em; margin: 0 auto; }
-.zero-lines p { color: #dcc8a4; line-height: 2.1; font-size: 0.98rem; margin: 0 0 0.5em; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9); }
-.zero-inner .btn-flat { margin-top: 1.6rem; }
-.zero-foot { display: block; margin-top: 1.1rem; color: #9a7b52; font-size: 0.76rem; letter-spacing: 0.14em; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9); }
+.zero-lines {
+  max-width: 34em;
+  margin: 0 auto;
+}
+.zero-lines p {
+  color: #dcc8a4;
+  line-height: 2.1;
+  font-size: 0.98rem;
+  margin: 0 0 0.5em;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+}
+.zero-inner .btn-flat {
+  margin-top: 1.6rem;
+}
+.zero-foot {
+  display: block;
+  margin-top: 1.1rem;
+  color: #9a7b52;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+}
 
-@keyframes zero-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes zero-seal-in { from { opacity: 0; transform: rotate(-6deg) scale(0.35); } to { opacity: 1; transform: rotate(-6deg) scale(1); } }
+@keyframes zero-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes zero-seal-in {
+  from {
+    opacity: 0;
+    transform: rotate(-6deg) scale(0.35);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-6deg) scale(1);
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .strike-page.glitch, .zero-inner, .zero-seal { animation: none; }
+  .strike-page.glitch,
+  .zero-inner,
+  .zero-seal {
+    animation: none;
+  }
 }
 @media (max-width: 720px) {
-  .zero-seal { width: 50px; height: 50px; font-size: 26px; top: -4px; right: -4px; }
+  .zero-seal {
+    width: 50px;
+    height: 50px;
+    font-size: 26px;
+    top: -4px;
+    right: -4px;
+  }
 }
 </style>
