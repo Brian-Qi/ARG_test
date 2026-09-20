@@ -15,7 +15,7 @@
         <p class="sign-lead">万和号线上迎财 · 初五。提笔写下一件你求的事，取得馆藏编号 0512。</p>
         <form class="wish-form" @submit.prevent="issueSlip">
           <div class="wish-input">
-            <input id="vault-wish" v-model="wish" maxlength="24" placeholder="例如：让这间小店撑过这个冬天" autocomplete="off" />
+            <input id="vault-wish" v-model="wish" maxlength="24" placeholder="例如：让这间小店撑过这个冬天" autocomplete="off" aria-label="写下你要求的事" />
             <button>取一签</button>
           </div>
         </form>

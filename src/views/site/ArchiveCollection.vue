@@ -9,7 +9,7 @@
         <span class="pill">全文公开</span>
         <span class="pill muted pill-faded">民国十六年至二十一年</span>
       </div>
-      <h2 class="collection-title">万和号商号流水账</h2>
+      <h1 class="collection-title">万和号商号流水账</h1>
       <p class="muted collection-desc">杭州城南绸布南北货商号 · 日记流水体 · 毛笔书写</p>
       <hr class="collection-divider" />
       <div class="table-wrapper">
@@ -474,6 +474,14 @@ async function copyCsv() {
 </script>
 
 <style scoped>
+/* 记录题名作页面 h1：外观对齐原 .archive-panel h2，避免 h1 默认大字/金字 */
+.archive-panel h1.collection-title {
+  font-size: 21px;
+  color: #3c3020;
+  letter-spacing: 0.08em;
+  line-height: normal;
+  text-shadow: none;
+}
 .pg-sheet {
   border: 1px solid #e0d2b4;
   border-radius: 4px;
