@@ -605,6 +605,11 @@ button:disabled { opacity: 0.38; cursor: not-allowed; }
 /* ---------- 录音页 ---------- */
 .audio-layout { display: grid; grid-template-columns: 1fr 260px; gap: 1.6rem; align-items: start; }
 .audio-layout h1 { margin-bottom: 0.3em; }
+/* 窄屏塌缩为单栏，避免磁带/面板把页面撑出横向滚动 */
+@media (max-width: 720px) {
+  .audio-layout { grid-template-columns: 1fr; gap: 1.2rem; }
+  .tape { max-width: 320px; margin: 0 auto; }
+}
 .audio-layout > div:first-child p { color: #b09a72; max-width: 34em; }
 .tape {
   position: relative;

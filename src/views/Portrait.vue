@@ -61,10 +61,6 @@ function judge(answer) {
 </script>
 
 <style scoped>
-.vault-page { max-width: 1000px; }
-.collection-title { font-size: 26px; line-height: 1.4; color: #ece0c0; }
-.collection-desc { color: #b09a72; }
-.vault-em { color: var(--blood-bright); font-style: normal; text-shadow: 0 0 18px rgba(190, 40, 26, 0.35); }
 .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 20px 0; }
 @media (max-width: 720px) { .photo-grid { grid-template-columns: 1fr; } }
 .old-photo { cursor: pointer; }

@@ -1,0 +1,29 @@
+/* 自托管字体（按实际用字子集化，OFL；原为 Google Fonts 外链，境内直连会拖垮首屏） */
+@font-face {
+  font-family: 'Ma Shan Zheng';
+  src: url('../fonts/mashanzheng.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Liu Jian Mao Cao';
+  src: url('../fonts/liujianmaocao.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Zhi Mang Xing';
+  src: url('../fonts/zhimangxing.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Serif SC';
+  src: url('../fonts/notoserifsc.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

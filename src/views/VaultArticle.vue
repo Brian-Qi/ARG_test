@@ -57,8 +57,6 @@ watch(article, (a) => { if (a) game.markRead(a.id) }, { immediate: true })
 
 <style scoped>
 .vault-article { max-width: 820px; }
-.collection-title { font-size: 26px; line-height: 1.5; color: #ece0c0; }
-.collection-desc { color: #b09a72; }
 .ar-body { margin-top: 18px; }
 .ar-body p { color: #c8b18a; line-height: 2; font-size: 1rem; margin: 0 0 1em; }
 .ar-abstract { color: #d9c69a; }

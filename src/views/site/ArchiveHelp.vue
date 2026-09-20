@@ -40,7 +40,7 @@
 
 <script setup>
 import { ref, computed, onBeforeUnmount } from 'vue'
-import { familyUnlocked } from '../../store/archive-notify'
+import { familyUnlocked } from '../../stores/archive-notify'
 import { seenHidden } from '../../stores/game'
 
 // 标题删除线用 Unicode 组合长划线（U+0336），逐字叠加，避免 CSS 在不同分辨率下错位

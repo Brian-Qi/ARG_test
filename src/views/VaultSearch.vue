@@ -74,8 +74,6 @@ const shown = computed(() => {
 
 <style scoped>
 .vault-search { max-width: 1000px; }
-.collection-title { font-size: 24px; color: #ece0c0; }
-.collection-desc { color: #b09a72; }
 
 .vault-searchbar { display: flex; align-items: center; gap: 1rem; max-width: 620px; margin: 20px 0 22px; }
 .vault-searchbar input {

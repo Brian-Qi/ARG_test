@@ -30,7 +30,7 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import game, { seenHidden, shenSearched } from '../../stores/game'
-import { familyUnlocked } from '../../store/archive-notify'
+import { familyUnlocked } from '../../stores/archive-notify'
 
 const router = useRouter()
 

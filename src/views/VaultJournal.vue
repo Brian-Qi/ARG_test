@@ -28,8 +28,6 @@ import JOURNAL from '../data/journal'
 
 <style scoped>
 .vault-journal { max-width: 1000px; }
-.collection-title { font-size: 24px; color: #ece0c0; }
-.collection-desc { color: #b09a72; }
 
 .jr-list { list-style: none; margin: 22px 0 0; padding: 0; }
 .jr-item { border-bottom: 1px solid rgba(138, 111, 77, 0.18); }

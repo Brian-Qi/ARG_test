@@ -32,6 +32,7 @@ const state = reactive({
   ending: null,           // 结账
   scare: null,
   strongScare: true,      // 强惊吓开关（突脸/血屏）；持久化在独立键 cx_strong
+  shortcutToast: null,    // 走捷径提示（瞬时，不入盘）
   shortcuts: 0,
   keys: {},               // 已获得钥匙（碎片网解锁用）
   read: {}                // 已调阅碎片（隐藏碎片的揭示）
@@ -42,7 +43,7 @@ function migrateSeenHidden() {
   if (localStorage.getItem(K_SEEN)) return
   const old = sessionStorage.getItem(K_SEEN)
   if (old) {
-    localStorage.setItem(K_SEEN, old)
+    try { localStorage.setItem(K_SEEN, old) } catch (err) { /* 忽略 */ }
     sessionStorage.removeItem(K_SEEN)
   }
 }
@@ -52,17 +53,17 @@ restore()
 // 深度 watch：把持久化白名单写回 localStorage
 watch(
   () => snapshot(),
-  (s) => localStorage.setItem(K_STATE, JSON.stringify(s)),
+  (s) => { try { localStorage.setItem(K_STATE, JSON.stringify(s)) } catch (err) { /* 忽略 */ } },
   { deep: true }
 )
 
 // —— seenHidden 统一读写（A 层第 0 页标记）——
 const seenHidden = () => localStorage.getItem(K_SEEN) === '1'
-function markSeenHidden() { localStorage.setItem(K_SEEN, '1') }
+function markSeenHidden() { try { localStorage.setItem(K_SEEN, '1') } catch (err) { /* 忽略 */ } }
 
 // —— 是否在馆藏检索里搜过「沈砚秋」（B 面入口前置之一）——
 const shenSearched = () => localStorage.getItem(K_SHEN) === '1'
-function markShenSearched() { localStorage.setItem(K_SHEN, '1') }
+function markShenSearched() { try { localStorage.setItem(K_SHEN, '1') } catch (err) { /* 忽略 */ } }
 
 // —— 碎片网：钥匙（解谜产出，解锁更多碎片）——
 const collectKey = (id) => { if (id) state.keys = { ...state.keys, [id]: true } }
@@ -120,7 +121,14 @@ const playedBefore = () => {
 const hasEnding = (e) => seenEndingList().includes(e)
 
 // —— 走捷径：URL 绕过前置 / 谜题靠反复试错到提示。好结局要求 shortcuts===0 ——
-function takeShortcut() { state.shortcuts = (state.shortcuts || 0) + 1 }
+// 走捷径必须有可见反馈，否则玩家会毫无察觉地永久失去好结局（公平性）。
+let shortcutTimer = null
+function takeShortcut() {
+  state.shortcuts = (state.shortcuts || 0) + 1
+  state.shortcutToast = { n: state.shortcuts, id: Date.now() }
+  if (shortcutTimer) clearTimeout(shortcutTimer)
+  shortcutTimer = setTimeout(() => { state.shortcutToast = null }, 5000)
+}
 
 function triggerScare(type, text) {
   if (!state.strongScare) return
