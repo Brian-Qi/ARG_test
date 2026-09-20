@@ -6,8 +6,3 @@ export function glitch(n = 6) {
   for (let i = 0; i < n; i++) s += CHARS[Math.floor(Math.random() * CHARS.length)]
   return s
 }
-
-// 把一段文字随机打坏（ratio 为被替换的比例）
-export function corrupt(text = '', ratio = 0.12) {
-  return text.split('').map(ch => (Math.random() < ratio ? glitch(1) : ch)).join('')
-}

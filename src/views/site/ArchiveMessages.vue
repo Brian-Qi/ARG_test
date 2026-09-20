@@ -54,7 +54,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { list, markRead, familyUnlocked, unlockFamily, useVersion, clear } from '../../store/archive-notify'
+import { list, markRead, familyUnlocked, unlockFamily, useVersion, clear } from '../../stores/archive-notify'
 
 const router = useRouter()
 useVersion()

@@ -19,7 +19,8 @@ function load() {
 }
 
 function save(list) {
-  localStorage.setItem(K_MSG, JSON.stringify(list))
+  // 隐私模式/配额超限下 setItem 会抛错，消息功能不应因此中断
+  try { localStorage.setItem(K_MSG, JSON.stringify(list)) } catch (e) { /* 忽略 */ }
 }
 
 function push({ type = 'normal', title, body, familyAvailable = false }) {
@@ -72,7 +73,7 @@ function familyUnlocked() {
 }
 
 function unlockFamily() {
-  localStorage.setItem(K_FAMILY, '1')
+  try { localStorage.setItem(K_FAMILY, '1') } catch (e) { /* 忽略 */ }
   bump()
 }
 

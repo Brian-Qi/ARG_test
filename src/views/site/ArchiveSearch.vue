@@ -54,7 +54,7 @@
 <script setup>
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { familyUnlocked } from '../../store/archive-notify'
+import { familyUnlocked } from '../../stores/archive-notify'
 import { markShenSearched } from '../../stores/game'
 
 const route = useRoute()

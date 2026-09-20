@@ -100,8 +100,6 @@ const puzzleHeading = computed(() => HEADINGS[fragment.value?.puzzle] || '此卷
 
 <style scoped>
 .vault-fragment { max-width: 1000px; }
-.collection-title { font-size: 26px; line-height: 1.4; color: #ece0c0; }
-.collection-desc { color: #b09a72; }
 .frag-sealed { text-align: left; }
 .frag-body { display: grid; grid-template-columns: minmax(220px, 340px) 1fr; gap: 2rem; align-items: start; margin: 20px 0; }
 .frag-body-solo { grid-template-columns: 1fr; }
@@ -109,11 +107,6 @@ const puzzleHeading = computed(() => HEADINGS[fragment.value?.puzzle] || '此卷
 .frag-art img { width: 100%; display: block; filter: sepia(0.25) contrast(1.05) brightness(0.92); }
 .frag-copy p { color: #c8b18a; line-height: 2; font-size: 1rem; margin: 0 0 1em; }
 .frag-glitch { letter-spacing: 0.16em; opacity: 0.85; }
-.frag-section, .frag-puzzle { margin-top: 30px; }
-.frag-section-title {
-  font-size: 0.84rem; letter-spacing: 0.28em; color: #9c7c55; font-weight: 400; font-family: var(--serif, serif);
-  border-bottom: 1px dashed rgba(138, 111, 77, 0.3); padding-bottom: 8px; margin: 0 0 14px;
-}
 .entity-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .entity-chip {
   display: inline-flex; align-items: baseline; gap: 8px; padding: 6px 14px; text-decoration: none;
@@ -121,10 +114,5 @@ const puzzleHeading = computed(() => HEADINGS[fragment.value?.puzzle] || '此卷
 }
 .entity-chip:hover { background: #a8291c; color: #f6efdf; }
 .entity-chip i { font-style: normal; font-size: 0.7rem; color: #8a6f4d; }
-.ref-list { list-style: none; margin: 0; padding: 0; }
-.ref-list li { border-bottom: 1px solid rgba(138, 111, 77, 0.14); }
-.ref-list a { display: flex; align-items: baseline; gap: 12px; padding: 11px 4px; color: #d9c69a; text-decoration: none; }
-.ref-list a:hover { background: rgba(168, 41, 28, 0.1); color: #f0c884; }
-.ref-tag { font-size: 0.74rem; color: #8a6f4d; }
 @media (max-width: 720px) { .frag-body { grid-template-columns: 1fr; } }
 </style>

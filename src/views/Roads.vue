@@ -117,9 +117,6 @@ function solve() {
 </script>
 
 <style scoped>
-.vault-page { max-width: 1080px; }
-.collection-title { font-size: 24px; color: #ece0c0; }
-.collection-desc { color: #b09a72; }
 .roads-lamps { display: flex; align-items: center; gap: 0.5rem; margin: 1.2rem 0; }
 .lamp { width: 14px; height: 14px; border-radius: 50%; background: #f0c884; box-shadow: 0 0 10px rgba(240, 200, 132, 0.7); transition: background 0.3s ease, box-shadow 0.3s ease; }
 .lamp.off { background: #3a2c1c; box-shadow: none; }

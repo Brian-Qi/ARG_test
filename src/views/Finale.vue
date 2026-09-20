@@ -61,8 +61,6 @@ function end(type) {
 
 <style scoped>
 .finale { max-width: 860px; }
-.collection-title { font-size: 24px; color: #ece0c0; }
-.collection-desc { color: #b09a72; }
 
 /* ---------- 抉择 ---------- */
 .choice-ledger {

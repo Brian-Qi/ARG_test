@@ -23,7 +23,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { unreadCount, useVersion, siteLocked } from '../../store/archive-notify'
+import { unreadCount, useVersion, siteLocked } from '../../stores/archive-notify'
 import game from '../../stores/game'
 import ArchiveMap from './ArchiveMap.vue'
 

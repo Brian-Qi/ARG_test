@@ -97,7 +97,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
-import { push } from '../../store/archive-notify'
+import { push } from '../../stores/archive-notify'
 
 const submitted = ref(false)
 const showAlert = ref(false)

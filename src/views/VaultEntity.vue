@@ -52,18 +52,6 @@ const related = computed(() => {
 
 <style scoped>
 .vault-entity { max-width: 1000px; }
-.collection-title { font-size: 26px; line-height: 1.4; color: #ece0c0; }
 .ent-alias { font-size: 0.9rem; color: #8a6f4d; margin-left: 10px; }
-.collection-desc { color: #b09a72; }
-.frag-section { margin-top: 30px; }
-.frag-section-title {
-  font-size: 0.84rem; letter-spacing: 0.28em; color: #9c7c55; font-weight: 400; font-family: var(--serif, serif);
-  border-bottom: 1px dashed rgba(138, 111, 77, 0.3); padding-bottom: 8px; margin: 0 0 14px;
-}
-.ref-list { list-style: none; margin: 0; padding: 0; }
-.ref-list li { border-bottom: 1px solid rgba(138, 111, 77, 0.14); }
-.ref-list a { display: flex; align-items: baseline; gap: 12px; padding: 11px 4px; color: #d9c69a; text-decoration: none; }
-.ref-list a:hover { background: rgba(168, 41, 28, 0.1); color: #f0c884; }
-.ref-tag { font-size: 0.74rem; color: #8a6f4d; }
 .muted { color: #8a6f4d; }
 </style>

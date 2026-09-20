@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import game, { seenHidden, shenSearched } from '../stores/game'
-import { familyUnlocked } from '../store/archive-notify'
+import { familyUnlocked } from '../stores/archive-notify'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
