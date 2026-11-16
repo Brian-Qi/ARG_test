@@ -83,28 +83,6 @@
       </div>
       <p class="muted service-note">授权与预约请通过页面底部联系方式咨询；涉及第三方版权内容，按原件权属另行约定。</p>
     </section>
-
-    <!-- 出馆：回到个人主页（仅当本站在个人站点的 /arg_01 子路径下时显示） -->
-    <div v-if="isSubApp" class="home-outlink">
-      <a class="btn-flat home-out-btn" href="/">← 返回个人主页</a>
-    </div>
   </div>
 </template>
 
-<script setup>
-// 只有当本站挂在个人站点的 /arg_01 子路径下时，才提供「返回个人主页」出口；
-// 从仓库单独部署在根路径时会隐藏，免得点了只在本站里打转。
-const isSubApp = import.meta.env.BASE_URL.replace(/\/+$/, '') === '/arg_01'
-</script>
-
-<style scoped>
-.home-outlink {
-  display: flex;
-  justify-content: flex-end;
-  margin: 0 0 16px;
-}
-.home-out-btn {
-  font-size: 0.82rem;
-  padding: 0.5em 1.1em;
-}
-</style>
