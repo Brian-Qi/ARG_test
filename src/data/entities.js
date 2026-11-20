@@ -5,7 +5,6 @@ const ENTITIES = [
   { id: 'houjian', name: '后间', type: '地点', note: '万和号店铺后的一间房。多笔订单的目的地，门从里面锁。' },
   { id: 'beigaofeng', name: '北高峰', type: '地点', note: '山门外有一处施食台，碑额残损。' },
   { id: 'shen-huai-ren', name: '沈怀仁', type: '人物', alias: ['沈砚秋'], note: '万和号老板。1927 年后改名"沈砚秋"，一直活到当代。' },
-  { id: 'shen-wan', name: '沈晚', type: '人物', note: '沈怀仁名义养女。族谱只留一个名字。' },
   { id: 'five-children', name: '五个孩子', type: '人物', note: '1927 年以收养名义收下的五个孩子。账上只剩"米、药、衣、灯、人"。' },
   { id: 'bi-gan', name: '比干', type: '财神', note: '东路。文财神，剖心而死，民间取其"无心故无私"。' },
   { id: 'chai-rong', name: '柴荣', type: '财神', note: '南路。少年贩茶，后为帝，民间奉为南路财神。' },

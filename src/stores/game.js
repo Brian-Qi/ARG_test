@@ -8,6 +8,7 @@ const PERSIST_KEYS = [
   'audioSolved',
   'portraitSolved',
   'zhaiyuanSolved',
+  'namesSolved',
   'ending',
   'shortcuts',
   'keys',
@@ -45,6 +46,7 @@ const state = reactive({
   audioSolved: false, // 录音
   portraitSolved: false, // 旧影
   zhaiyuanSolved: false, // 宅院安位
+  namesSolved: false, // 五方归名（把五个正名写回五个零）
   ending: null, // 结账
   scare: null,
   strongScare: true, // 强惊吓开关（突脸/血屏）；持久化在独立键 cx_strong
@@ -200,12 +202,18 @@ function takeShortcut() {
   }, 5000)
 }
 
+// 突脸停留时长：scare_face.webp 约 215KB，图是异步解码的。
+// 太短会出现「文字先弹、脸后到、刚到就撤」的残缺观感，所以给足 1.8s。
+const SCARE_MS = 1800
+let scareTimer = null
 function triggerScare(type, text) {
   if (!state.strongScare) return
   state.scare = { type, text, id: Date.now() }
-  setTimeout(() => {
+  if (scareTimer) clearTimeout(scareTimer)
+  scareTimer = setTimeout(() => {
     state.scare = null
-  }, 1300)
+    scareTimer = null
+  }, SCARE_MS)
 }
 
 function reset() {
@@ -216,6 +224,7 @@ function reset() {
     audioSolved: false,
     portraitSolved: false,
     zhaiyuanSolved: false,
+    namesSolved: false,
     ending: null,
     scare: null,
     shortcuts: 0,

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <section class="ending-page ending-good">
     <figure class="ep-hero">
       <img :src="art" alt="" width="1672" height="940" />
@@ -10,6 +10,12 @@
     </figure>
 
     <div class="ep-copy">
+      <ul class="ep-names">
+        <li v-for="d in names" :key="d.id">
+          <span>{{ placeOf(d.place) }}</span>
+          <b>{{ d.name }}</b>
+        </li>
+      </ul>
       <p>五个零回到姓名与年龄。五双小鞋，一双一双消失了。</p>
       <p>第六位一直没有等到人——沈怀仁自己坐了进去，用他自己的魂，续他自己的命。</p>
       <p class="ep-tag">从此年年初五，他都醒着。永生，是他自己给自己的。</p>
@@ -20,8 +26,13 @@
 
 <script setup>
 import game from '../stores/game'
+import { DEATHS } from '../data/courtyard'
 
 const art = '/img/ending-out.webp'
+const names = DEATHS
+const PLACE_CN = { east: '东厢', south: '南房', west: '西厢', north: '北房', center: '中堂' }
+const placeOf = (id) => PLACE_CN[id] || id
+
 function reset() {
   game.reset()
 }
@@ -123,6 +134,33 @@ function reset() {
 }
 .ep-copy .btn-flat {
   margin-top: 18px;
+}
+.ep-names {
+  list-style: none;
+  margin: 0 0 26px;
+  padding: 16px 22px;
+  border: 1px solid rgba(201, 162, 90, 0.4);
+  background: rgba(20, 14, 8, 0.55);
+  display: grid;
+  gap: 7px;
+  text-align: left;
+}
+.ep-names li {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.ep-names span {
+  flex: 0 0 3.4em;
+  color: #9c7c55;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+}
+.ep-names b {
+  font-family: var(--kai, serif);
+  font-size: 1.14rem;
+  letter-spacing: 0.24em;
+  color: #f0c884;
 }
 @keyframes ep-in {
   from {

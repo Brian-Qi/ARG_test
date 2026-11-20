@@ -12,7 +12,7 @@
     </section>
 
     <!-- 极淡提示：公开页脚同色系、几乎不可见，仅高对比模式可读 -->
-    <p class="faint-hint" aria-hidden="true">若为沈晚，去 /help 看看。</p>
+    <p class="faint-hint" aria-hidden="true">若为沈晚，去「帮助」页看看。</p>
   </div>
 </template>
 

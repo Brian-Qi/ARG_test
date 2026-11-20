@@ -132,19 +132,19 @@ const FRAGMENTS = [
   {
     id: 'family-tree',
     type: '文书',
-    title: '沈晚族谱',
+    title: '西位旧名残页',
     tag: '馆藏号 SP-1927-0007',
     img: '/img/qianwen.webp',
-    summary: '一册残缺的族谱。只留一个名字：女，沈晚。父，沈砚秋。',
+    summary: '一册残缺的族谱残页。西位一栏仍在，姓名与父母栏却被整行刮空。',
     content: [
       '一册残缺族谱，竹纸，线装，谱系大半空白，似被水浸后又撕去数页。',
-      '谱末只留一名：女，沈晚。生于民国十六年正月初四。',
-      '“父，沈砚秋。”——可“沈砚秋”这个名字，在 1927 年的账上并不存在。',
-      '母氏一栏空白。旁注一行小字：“寄养，勿寻。”',
-      '馆员登记表里另有一个“沈砚秋”，在编，入职年份早于本馆成立。'
+      '谱末只留一栏：女，生于民国十六年正月初四；姓名处整行刮空。',
+      '西位旁注仍可辨：“寄养，勿寻。”墨色比正文深，像是后来补写。',
+      '刮痕从姓名栏一直拖到父母栏，纸纤维翻起，和账页上的五处旧刮痕相似。',
+      '页背另有一行小字：“名从账外漏回，镇势已松。”'
     ],
     refs: ['recording', 'photo-three', 'ledger'],
-    entities: ['shen-wan', 'shen-huai-ren'],
+    entities: ['five-children', 'shen-huai-ren'],
     requires: 'huan-ming'
   },
   {
@@ -185,6 +185,80 @@ const FRAGMENTS = [
     requires: 'di-liu-wei',
     puzzle: 'zhaiyuan',
     key: 'zhenxiang'
+  },
+  {
+    id: 'yaopu-zhang',
+    type: '文书',
+    title: '药铺赊账条',
+    tag: '东厢 · 未入账',
+    img: '/img/yaozha.webp',
+    summary: '一张城南药铺的赊账条。写的是病症与一句闲话。',
+    content: [
+      '赊账条一张，纸角有水渍，字迹草。',
+      '“沈家东厢，眼疾又发。前账未清，仍照方抓。”',
+      '旁有一行小字，像伙计随手记的：“荣伢儿今日还认得我。”',
+      '条上无姓无名，只写“东厢”。',
+      '药铺后来倒闭，账都散了，这一张不知怎么夹进了馆藏。'
+    ],
+    refs: ['zhaiyuan', 'obituary', 'j-child-names'],
+    entities: ['five-children', 'wanhe'],
+    hidden: true,
+    requires: 'zhenxiang'
+  },
+  {
+    id: 'tanpu-dan',
+    type: '文书',
+    title: '炭铺送货单',
+    tag: '南房 · 未入账',
+    img: '/img/fenyu.webp',
+    summary: '一张炭铺送货单。收货处一栏，写着南房。',
+    content: [
+      '送货单一张，蓝印，字是炭铺伙计的。',
+      '“南房炭一担，旧例记沈家账上。”',
+      '背面另有一行，墨色浅，像是后来补的：“明儿说胸口闷，不肯出来。夜里听见有人喊，明儿，别睡。”',
+      '送货人签名处画了个圈，无名。'
+    ],
+    refs: ['zhaiyuan', 'obituary', 'j-child-names'],
+    entities: ['five-children', 'wanhe'],
+    hidden: true,
+    requires: 'zhenxiang'
+  },
+  {
+    id: 'zhuayao-bu',
+    type: '文书',
+    title: '抓药簿',
+    tag: '北房 · 未入账',
+    img: '/img/yaozha.webp',
+    summary: '药铺的抓药簿一页。方子后面的批注，比方子本身更要紧。',
+    content: [
+      '抓药簿一页，列关木通一帖，分量比常方重。',
+      '取药人一栏写“沈家北房”。',
+      '批注：“海伢舌肿，不能言，只摇头。问他要不要请郎中，摇头。”',
+      '下方另有一笔，被划掉，只余“不”字与一个墨点。'
+    ],
+    refs: ['zhaiyuan', 'obituary', 'j-child-names'],
+    entities: ['five-children', 'wanhe'],
+    hidden: true,
+    requires: 'zhenxiang'
+  },
+  {
+    id: 'zaofang',
+    type: '文书',
+    title: '灶房口供',
+    tag: '中堂 · 未入账',
+    img: '/img/koushu.webp',
+    summary: '一份短口供。问的是饭食，答的却是中堂那个孩子。',
+    content: [
+      '口供录副，问者为巡警，答者为万和号灶下妇人。',
+      '问：中堂那个孩子，平日吃什么？',
+      '答：吃不得荤腥，一沾就吐。根儿夜里吐泻，沈家只说身子弱，不许请郎中。',
+      '问：他叫什么？',
+      '答：我们都叫根儿。名字……名字我没听过。'
+    ],
+    refs: ['zhaiyuan', 'obituary', 'j-child-names', 'koushu'],
+    entities: ['five-children', 'wanhe'],
+    hidden: true,
+    requires: 'zhenxiang'
   },
   {
     id: 'finale-ledger',

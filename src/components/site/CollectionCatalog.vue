@@ -36,13 +36,20 @@
     <div class="archive-modal zero-hint">
       <button class="modal-close" @click="zeroHint = false">关闭</button>
       <h3>残页 · P000</h3>
-      <p class="zero-hint-tip">{{ zeroHintText }}</p>
+      <p class="zero-hint-tip" :aria-label="ZERO_HINT">
+        <span class="sr-only">{{ ZERO_HINT }}</span>
+        <span aria-hidden="true">
+          <span v-for="(ch, i) in frame" :key="i" class="zc" :class="{ nz: ch.noisy }">{{ ch.c }}</span>
+        </span>
+      </p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { glitchFrame } from '../../utils/glitchText'
+import game from '../../stores/game'
 
 // 可见著录页（由父级传入），CSV 正文据此生成
 const props = defineProps({ pages: { type: Array, default: () => [] } })
@@ -66,29 +73,45 @@ function onCsvLine(i) {
   if (i === csvLines.value.length - 1) zeroHint.value = true
 }
 
-// 残页提示：正文之间掺入乱码（文字恐怖谷 / 火星文 / 组合符），但保持可读
+// 残页提示：同一句话在可读与崩坏之间逐帧跳。
+// 乱码不是贴在字上的装饰，而是每秒都在抢这句话；隔一阵给一个干净窗口，让人刚好能读完。
+// 话只有一句，不给台阶：看不懂就再看一遍。
 const ZERO_HINT = '册外之页。欲观，于伊始叩左六。'
-const HINT_NOISE = [
-  '\u0334', '\u0335', '\u0336', '\u0337', '\u0338', '\u0301', '\u0303', '\u0308', '\u030A',
-  '\u25A0', '\u25A1', '\u25AB', '\u25AD', '\u25AE', '\u25C7', '\u25C8', '\u25CE', '\u25CF', '\u25EF',
-  '\u2630', '\u2631', '\u2632', '\u2633', '\u2634', '\u2635', '\u2636', '\u2637',
-  '\u4DC0', '\u4DC1', '\u4DC2', '\u4DC3', '\u4DC4', '\u4DC5', '\u4DC6', '\u4DC7',
-  '\uFFFD', '\u00A7', '\u00B6', '\u2020', '\u2021', '\u00D7', '\u00F7',
-  '\u2211', '\u221A', '\u221E', '\u222B', '\u2260', '\u2261', '\u2295', '\u2297', '\u2299',
-  '\uFF71', '\uFF72', '\uFF73', '\uFF9E', '\uFF9F'
-]
-const zeroHintText = (() => {
-  let out = ''
-  for (let i = 0; i < ZERO_HINT.length; i++) {
-    const c = ZERO_HINT[i]
-    out += c
-    if (c === '。' || c === '，') continue
-    const r = Math.random()
-    const n = r < 0.5 ? 1 : r < 0.72 ? 2 : 0
-    for (let k = 0; k < n; k++) out += HINT_NOISE[Math.floor(Math.random() * HINT_NOISE.length)]
+
+const frame = ref(glitchFrame(ZERO_HINT, { quiet: true }))
+let ticker = null
+let ticks = 0
+
+function startTicker() {
+  stopTicker()
+  if (game.reduceMotion()) {
+    frame.value = glitchFrame(ZERO_HINT, { quiet: true })
+    return
   }
-  return out
-})()
+  ticks = 0
+  ticker = setInterval(() => {
+    ticks += 1
+    // 每 26 帧（约 2.3s）给 7 帧（约 0.6s）干净窗口，其余帧按 0.32 概率咬字
+    const quiet = ticks % 26 < 7
+    frame.value = glitchFrame(ZERO_HINT, { quiet, rate: 0.32 })
+  }, 90)
+}
+
+function stopTicker() {
+  if (ticker) clearInterval(ticker)
+  ticker = null
+}
+
+watch(zeroHint, (open) => {
+  if (open) {
+    frame.value = glitchFrame(ZERO_HINT, { quiet: false, rate: 0.55 })
+    startTicker()
+  } else {
+    stopTicker()
+  }
+})
+
+onBeforeUnmount(stopTicker)
 
 async function copyCsv() {
   try {
@@ -129,5 +152,42 @@ async function copyCsv() {
 .zero-hint-tip {
   color: #8c2f24;
   line-height: 2.4;
+  letter-spacing: 0.08em;
 }
-</style>
+.zc {
+  transition:
+    color 90ms steps(2),
+    opacity 90ms steps(2);
+}
+.zc.nz {
+  color: rgba(140, 47, 36, 0.55);
+  text-shadow: 0 0 6px rgba(140, 47, 36, 0.35);
+  animation: zc-jitter 0.18s steps(2) infinite;
+}
+@keyframes zc-jitter {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-1px, 1px);
+  }
+  100% {
+    transform: translate(1px, -1px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zc.nz {
+    animation: none;
+  }
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}</style>
