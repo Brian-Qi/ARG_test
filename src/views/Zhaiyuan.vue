@@ -34,12 +34,36 @@
         >（{{ p.wuxing }} · {{ p.organ }} · {{ p.god }}）：{{ p.trace }}
       </li>
     </ul>
+
+    <!-- 归名：五方归位之后才谈得上把名字写回去。写的是正名，不是平时喊的。 -->
+    <section v-if="solved" class="zy-names">
+      <h3 class="zy-names-title">归名</h3>
+      <p class="zy-names-lead">
+        账上五个零，要落回五个名字。名字不在账里，在这些人的纸上；纸上写的是正名，不是平时喊的那个。
+      </p>
+      <div v-for="p in PLACES" :key="'n-' + p.id" class="zy-name-row">
+        <span class="zy-name-place">{{ p.name }}</span>
+        <input
+          v-model="inputs[p.id]"
+          class="zy-name-input"
+          type="text"
+          maxlength="6"
+          :disabled="!canWrite(p.id) || !!done[p.id]"
+          :placeholder="canWrite(p.id) ? '写下正名' : '凭据不足'"
+          :aria-label="p.name + ' 归名'"
+          @keyup.enter="submit(p.id)"
+        />
+        <span class="zy-name-state">{{ done[p.id] ? '已归名' : '' }}</span>
+      </div>
+      <p v-if="nameMsg" class="zy-msg" :class="{ ok: namesSolved }">{{ nameMsg }}</p>
+    </section>
   </div>
 </template>
 
 <script setup>
 import { reactive, ref, computed } from 'vue'
 import game from '../stores/game'
+import { familyUnlocked } from '../stores/archive-notify'
 import { PLACES, DEATHS } from '../data/courtyard'
 
 const assigned = reactive({}) // { placeId: deathId }
@@ -92,6 +116,52 @@ function check() {
   } else {
     msg.value = ''
   }
+}
+
+/* ---------------- 归名 ---------------- */
+const inputs = reactive({})
+const done = reactive({})
+const nameMsg = ref('')
+const namesSolved = ref(game.state.namesSolved)
+
+const deathOf = (placeId) => DEATHS.find((d) => d.place === placeId)
+
+// 落笔的门槛：证明这一位是谁的那张纸，必须已经读过。
+// 西厢没有口头记录，只能靠 A 面族谱——那里有她的正名。
+function canWrite(placeId) {
+  const d = deathOf(placeId)
+  if (!d) return false
+  if (placeId === 'west') return familyUnlocked()
+  return !!d.clueId && game.hasRead(d.clueId)
+}
+
+// 抄录只认字，不认空格与全角。
+function normalize(s) {
+  return String(s || '')
+    .replace(/\s+/g, '')
+    .replace(/[\uFF01-\uFF5E]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0))
+}
+
+function submit(placeId) {
+  if (namesSolved.value || done[placeId]) return
+  const d = deathOf(placeId)
+  if (!d) return
+  if (!canWrite(placeId)) {
+    nameMsg.value = '这一格还不该落笔。'
+    return
+  }
+  if (normalize(inputs[placeId]) === d.name) {
+    done[placeId] = true
+    inputs[placeId] = d.name
+    nameMsg.value = ''
+    if (PLACES.every((p) => done[p.id])) {
+      namesSolved.value = true
+      game.state.namesSolved = true
+      nameMsg.value = '五方归名。账上的零，开始有主。'
+    }
+    return
+  }
+  nameMsg.value = '抄错了。纸上不是这么写的。'
 }
 </script>
 
@@ -236,5 +306,64 @@ function check() {
 .zy-traces b {
   color: #e3cf9f;
   margin-right: 4px;
+}
+
+/* ---------- 归名 ---------- */
+.zy-names {
+  margin-top: 26px;
+  border-top: 1px solid rgba(157, 40, 26, 0.4);
+  padding-top: 18px;
+}
+.zy-names-title {
+  font-family: var(--kai);
+  font-size: 1.15rem;
+  letter-spacing: 0.4em;
+  color: #e3cf9f;
+  margin: 0 0 8px;
+}
+.zy-names-lead {
+  color: #9c7c55;
+  font-size: 0.86rem;
+  line-height: 1.9;
+  margin: 0 0 16px;
+}
+.zy-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px dashed rgba(138, 111, 77, 0.22);
+}
+.zy-name-place {
+  flex: 0 0 4.2em;
+  font-size: 0.82rem;
+  letter-spacing: 0.2em;
+  color: #9c7c55;
+}
+.zy-name-input {
+  flex: 1 1 auto;
+  max-width: 12em;
+  background: #120b08;
+  border: 1px solid rgba(157, 40, 26, 0.4);
+  color: #e3cf9f;
+  font-family: var(--kai);
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  padding: 6px 10px;
+}
+.zy-name-input:focus {
+  outline: none;
+  border-color: #d13424;
+}
+.zy-name-input:disabled {
+  color: #6b5a44;
+  border-color: rgba(138, 111, 77, 0.25);
+  background: rgba(18, 11, 8, 0.5);
+}
+.zy-name-state {
+  flex: 0 0 4em;
+  font-size: 0.76rem;
+  color: #d13424;
+  letter-spacing: 0.16em;
 }
 </style>

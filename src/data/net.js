@@ -37,6 +37,10 @@ export const LEVELS = {
   'ledger-errata': 3,
   yaozha: 3,
   fenyu: 3,
+  'yaopu-zhang': 3,
+  'tanpu-dan': 3,
+  'zhuayao-bu': 3,
+  zaofang: 3,
   // 四级 · 干扰项
   nianhua: 4,
   noticemid: 4,
