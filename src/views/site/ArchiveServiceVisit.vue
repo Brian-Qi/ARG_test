@@ -32,7 +32,7 @@
               @input="checkDate"
             />
           </div>
-          <p v-if="dateError" class="svc-error">{{ dateError }}</p>
+          <p v-if="dateError" class="svc-error" role="alert">{{ dateError }}</p>
         </div>
 
         <div class="svc-field">
@@ -43,7 +43,7 @@
             <option value="下午 13:00—15:00">下午 13:00—15:00</option>
             <option value="下午 15:00—17:00">下午 15:00—17:00</option>
           </select>
-          <p v-if="errors.time" class="svc-error">请选择预约时段。</p>
+          <p v-if="errors.time" class="svc-error" role="alert">请选择预约时段。</p>
         </div>
 
         <div class="svc-field">
@@ -55,10 +55,10 @@
             :class="{ invalid: errors.people }"
             type="number"
             min="1"
-            placeholder="请输入人数"
+            placeholder="1"
             @input="onPeople"
           />
-          <p v-if="errors.people" class="svc-error">{{ errors.people }}</p>
+          <p v-if="errors.people" class="svc-error" role="alert">{{ errors.people }}</p>
         </div>
 
         <div class="svc-field">
@@ -83,7 +83,7 @@
             v-model="form.contact"
             class="svc-input"
             type="tel"
-            placeholder="请输入手机号"
+            placeholder="138 0000 0000"
             @input="clearContactError"
           />
           <input
@@ -91,10 +91,10 @@
             v-model="form.contact"
             class="svc-input"
             type="email"
-            placeholder="请输入邮箱地址"
+            placeholder="name@example.com"
             @input="clearContactError"
           />
-          <p v-if="errors.contact" class="svc-error">{{ errors.contact }}</p>
+          <p v-if="errors.contact" class="svc-error" role="alert">{{ errors.contact }}</p>
         </div>
 
         <div class="svc-footer">

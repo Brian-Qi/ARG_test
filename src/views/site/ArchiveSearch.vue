@@ -1,7 +1,7 @@
 <template>
   <div class="search-page" :class="{ landing: !q }">
     <div v-if="!q" class="search-landing-head">
-      <p class="search-landing-kicker">杭州民俗数字档案馆</p>
+      
       <h1>馆藏检索</h1>
     </div>
 
@@ -56,8 +56,11 @@
     </template>
 
     <div v-else-if="q" class="archive-panel search-fail">
-      <h2>检索失败</h2>
-      <p>没有检索到与「{{ q }}」匹配的馆藏。</p>
+      <p role="status">没有检索到与「{{ q }}」匹配的馆藏。</p>
+      <div class="search-actions">
+        <RouterLink class="back-link" to="/collection/HZ-1927-0512">浏览全部馆藏</RouterLink>
+        <button type="button" class="back-link" @click="focusSearch">换个关键词</button>
+      </div>
     </div>
   </div>
 </template>
@@ -223,6 +226,15 @@ function goSearch() {
   }
   if (/沈砚秋/.test(v)) markShenSearched()
   router.replace({ path: '/search', query: { q: v } })
+}
+
+/** 空结果时的「换个关键词」动作：回到检索框并全选，让玩家直接改字 */
+function focusSearch() {
+  const el = document.getElementById('search-input')
+  if (el) {
+    el.focus()
+    if (typeof el.select === 'function') el.select()
+  }
 }
 
 function applyQuery() {

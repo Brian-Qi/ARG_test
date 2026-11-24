@@ -1,7 +1,7 @@
 <template>
   <div class="vault-journal">
     <div class="archive-panel collection-header">
-      <p class="eyebrow">馆刊 / Journal</p>
+      
       <h1 class="collection-title">研究辑录</h1>
       <p class="collection-desc">《杭州民俗数字档案馆馆刊》辑录。所收文字，仅代表作者个人整理所见，不代表本馆立场。</p>
     </div>

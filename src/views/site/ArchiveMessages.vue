@@ -4,7 +4,7 @@
       <h2 class="section-title">消息 <small>Messages</small></h2>
       <button v-if="items.length" class="btn-flat msg-clear" type="button" @click="askClear = true">清空</button>
     </div>
-    <p class="muted msg-desc">您提交的申请与馆方回复会汇集在这里。</p>
+    
 
     <div v-if="items.length" class="msg-list">
       <article
@@ -31,7 +31,8 @@
     </div>
 
     <div v-else class="archive-panel msg-empty">
-      <p>暂无消息。</p>
+      <p role="status">暂无消息。</p>
+      <RouterLink class="back-link" to="/services/feedback">去提交申请</RouterLink>
     </div>
 
     <!-- 清空确认 -->

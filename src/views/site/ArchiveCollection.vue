@@ -55,7 +55,7 @@
     <!-- 影像缩略 -->
     <section class="collection-section">
       <h2 class="section-title collection-section-title">影像浏览 <small>Page Images</small></h2>
-      <p class="muted collection-section-title">以列表形式逐页查看该册影像，每页 10 条；点击任一页可调阅扫描件与著录。</p>
+      <p class="muted collection-section-title"></p>
 
       <!-- 花屏层：多条细竖带错开循环闪，进入瞬间 + 第 0 页期间持续 -->
       <!-- 转场闪屏：进出切换时闪现的横向裂纹花屏 -->

@@ -1,7 +1,7 @@
 <template>
   <div class="vault-search">
     <div class="archive-panel collection-header">
-      <p class="eyebrow">馆藏检索 / Index</p>
+      
       <h1 class="collection-title">馆藏检索</h1>
       <p class="collection-desc">按题名、正文、人名、地名检索馆藏卷宗。</p>
     </div>

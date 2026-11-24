@@ -19,7 +19,7 @@
             <option value="" disabled>请选择</option>
             <option v-for="t in types" :key="t" :value="t">{{ t }}</option>
           </select>
-          <p v-if="errors.docType" class="svc-error">{{ errors.docType }}</p>
+          <p v-if="errors.docType" class="svc-error" role="alert">{{ errors.docType }}</p>
         </div>
 
         <div class="svc-field">
@@ -31,7 +31,7 @@
             :class="{ invalid: errors.desc }"
             placeholder="简述文书大致内容、年代与保存状况（10—200 字）"
           ></textarea>
-          <p v-if="errors.desc" class="svc-error">{{ errors.desc }}</p>
+          <p v-if="errors.desc" class="svc-error" role="alert">{{ errors.desc }}</p>
         </div>
 
         <div class="svc-field">
@@ -54,7 +54,7 @@
             class="svc-input"
             :class="{ invalid: errors.contact }"
             type="tel"
-            placeholder="请输入手机号"
+            placeholder="138 0000 0000"
             @input="clearContactError"
           />
           <input
@@ -63,10 +63,10 @@
             class="svc-input"
             :class="{ invalid: errors.contact }"
             type="email"
-            placeholder="请输入邮箱地址"
+            placeholder="name@example.com"
             @input="clearContactError"
           />
-          <p v-if="errors.contact" class="svc-error">{{ errors.contact }}</p>
+          <p v-if="errors.contact" class="svc-error" role="alert">{{ errors.contact }}</p>
         </div>
 
         <div class="svc-footer">

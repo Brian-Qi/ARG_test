@@ -23,7 +23,7 @@
             <option value="商业使用">商业使用</option>
             <option value="个人参考">个人参考</option>
           </select>
-          <p v-if="errors.useType" class="svc-error">{{ errors.useType }}</p>
+          <p v-if="errors.useType" class="svc-error" role="alert">{{ errors.useType }}</p>
         </div>
 
         <div class="svc-field">
@@ -36,7 +36,7 @@
             type="text"
             placeholder="馆藏号或题名"
           />
-          <p v-if="errors.title" class="svc-error">{{ errors.title }}</p>
+          <p v-if="errors.title" class="svc-error" role="alert">{{ errors.title }}</p>
           <p class="svc-note">可填写公开目录中的馆藏号；若未找到对应馆藏，请提供题名与大致年代。</p>
         </div>
 
@@ -62,7 +62,7 @@
             class="svc-input"
             :class="{ invalid: errors.contact }"
             type="tel"
-            placeholder="请输入手机号"
+            placeholder="138 0000 0000"
             @input="clearContactError"
           />
           <input
@@ -71,10 +71,10 @@
             class="svc-input"
             :class="{ invalid: errors.contact }"
             type="email"
-            placeholder="请输入邮箱地址"
+            placeholder="name@example.com"
             @input="clearContactError"
           />
-          <p v-if="errors.contact" class="svc-error">{{ errors.contact }}</p>
+          <p v-if="errors.contact" class="svc-error" role="alert">{{ errors.contact }}</p>
         </div>
 
         <div class="svc-footer">

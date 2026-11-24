@@ -17,7 +17,7 @@
             <option value="" disabled>请选择</option>
             <option v-for="k in kinds" :key="k" :value="k">{{ k }}</option>
           </select>
-          <p v-if="errors.kind" class="svc-error">{{ errors.kind }}</p>
+          <p v-if="errors.kind" class="svc-error" role="alert">{{ errors.kind }}</p>
         </div>
 
         <div class="svc-field">
@@ -29,7 +29,7 @@
             :class="{ invalid: errors.content }"
             placeholder="请描述您的建议或疑问（10—200 字）"
           ></textarea>
-          <p v-if="errors.content" class="svc-error">{{ errors.content }}</p>
+          <p v-if="errors.content" class="svc-error" role="alert">{{ errors.content }}</p>
         </div>
 
         <div class="svc-field">

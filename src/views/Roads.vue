@@ -1,10 +1,10 @@
 <template>
   <div class="roads-widget">
-    <!-- 五盏灯：选错灭一盏 -->
+    <!-- 五盏灯：选错灭一盏。灯点保持装饰，剩余数单独给屏幕阅读器与视觉同显 -->
     <div class="roads-lamps" aria-hidden="true">
       <span v-for="n in 5" :key="n" class="lamp" :class="{ off: n > lamps }" />
-      <span class="lamp-count">灯火 {{ lamps }} / 5</span>
     </div>
+    <p class="lamp-status" role="status" aria-live="polite">灯火 {{ lamps }} / 5</p>
 
     <div class="archive-grid">
       <article
@@ -17,7 +17,7 @@
         <span class="road-direction">{{ road.direction }}</span>
         <h3>{{ road.opened ? road.god : road.name }}</h3>
         <p>{{ road.opened ? road.truth : road.pitch }}</p>
-        <small>{{ road.opened ? '还原 · ' + road.escape : '点击查看' }}</small>
+        <small v-if="road.opened">还原 · {{ road.escape }}</small>
       </article>
     </div>
 
@@ -29,7 +29,7 @@
           {{ e }}
         </button>
       </div>
-      <p v-if="lastMsg" class="puzzle-msg" :class="{ hint: lastMsgHint }">{{ lastMsg }}</p>
+      <p v-if="lastMsg" class="puzzle-msg" :class="{ hint: lastMsgHint }" role="status">{{ lastMsg }}</p>
     </div>
 
     <Transition name="reveal-in">
@@ -138,7 +138,7 @@ function solve() {
   background: #3a2c1c;
   box-shadow: none;
 }
-.lamp-count {
+.lamp-status {
   margin-left: 0.4rem;
   font-size: 0.72rem;
   letter-spacing: 0.16em;

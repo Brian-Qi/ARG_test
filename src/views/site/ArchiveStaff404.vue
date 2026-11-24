@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="archive-panel">
-      <h2>未检索到该成员档案</h2>
+      <h1>未检索到该成员档案</h1>
       <p>
         在馆藏著录与《杭州民俗数字档案馆 · 工作人员名录》中，均未检索到名为 <b>{{ name }}</b> 的记录。
       </p>
@@ -13,6 +13,7 @@
 
     <!-- 极淡提示：公开页脚同色系、几乎不可见，仅高对比模式可读 -->
     <p class="faint-hint" aria-hidden="true">若为沈晚，去「帮助」页看看。</p>
+    <p class="sr-only">若为沈晚，去「帮助」页看看。</p>
   </div>
 </template>
 

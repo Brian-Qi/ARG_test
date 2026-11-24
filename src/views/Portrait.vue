@@ -14,7 +14,7 @@
         <div class="meta">{{ photo.year }}</div>
         <h3>{{ photo.caption }}</h3>
         <p class="photo-clothes">衣纹：{{ photo.clothes }}</p>
-        <p class="photo-seen">{{ inspected.includes(photo.id) ? '已验看' : '点击验看' }}</p>
+        <p class="photo-seen">{{ inspected.includes(photo.id) ? '已验看' : '' }}</p>
       </button>
     </div>
 
@@ -29,7 +29,7 @@
     </div>
 
     <Transition name="reveal-in">
-      <div v-if="result" class="archive-panel portrait-result">
+      <div v-if="result" class="archive-panel portrait-result" role="status" aria-live="polite">
         <p>{{ result }}</p>
       </div>
     </Transition>
@@ -58,7 +58,7 @@ function inspect(id) {
 
 function judge(answer) {
   if (inspected.value.length < photos.length) {
-    result.value = `先把三张逐一验看（点击照片），再下判断。（已验看 ${inspected.value.length} / ${photos.length}）`
+    result.value = `还有 ${photos.length - inspected.value.length} 张未验看。`
     return
   }
   if (answer === ANSWER) {

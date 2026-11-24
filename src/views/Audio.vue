@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <p v-if="hint" class="deck-hint">{{ hint }}</p>
+    <p v-if="hint" class="deck-hint" role="status">{{ hint }}</p>
 
     <Transition name="reveal-in">
       <div v-if="message" class="archive-panel audio-answer">

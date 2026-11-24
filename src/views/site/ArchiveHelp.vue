@@ -22,7 +22,7 @@
       <p class="help-kicker">只为见过一张残页的人保留</p>
       <p>你翻到过目录之外的那一页。馆藏 <b>HZ-1927-0512</b> 之外还有一份未列入公开目录的关联档案。</p>
       <p>沈晚：<em>“别让它开第六张。查完这五张，去落一笔账。”</em></p>
-      <p class="muted">系统已可切换到保管库视图。</p>
+      
       <RouterLink class="back-link" to="/collection/HZ-1927-0512/0">进入关联档案</RouterLink>
     </section>
 

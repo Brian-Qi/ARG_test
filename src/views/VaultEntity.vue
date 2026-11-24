@@ -20,7 +20,8 @@
             >
           </li>
         </ul>
-        <p v-if="!related.length" class="muted">暂无直接提到该名号的卷宗。</p>
+        <p v-if="!related.length" class="muted" role="status">暂无直接提到该名号的卷宗。</p>
+        <RouterLink v-if="!related.length" class="back-link" :to="`/search?q=${encodeURIComponent(entity.name)}`">在馆藏检索中查这个名号</RouterLink>
       </section>
     </template>
 

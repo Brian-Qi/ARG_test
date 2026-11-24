@@ -4,7 +4,7 @@
     <h2 class="section-title collection-section-title">著录目录 <small>Catalog CSV</small></h2>
     <div class="archive-panel">
       <p class="collection-notice-text">
-        按页著录的目录数据，含页码、日期、摘要与金额，可直接用于书目整理与统计。演示环境以预览方式展示，可复制。
+        按页著录的目录数据，含页码、日期、摘要与金额。
       </p>
       <button class="btn-flat" type="button" @click="showCsv = true">下载著录目录（CSV）</button>
     </div>
