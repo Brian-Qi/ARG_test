@@ -34,6 +34,13 @@
           <component :is="puzzleComponent" />
         </section>
 
+        <!-- 焚余读完之后，得让人知道要回封卷；否则四样齐了也没处落 -->
+        <section v-if="isFenyu" class="archive-panel frag-fenyu">
+          <p v-if="fenyuReady">四样已齐。于封卷之时，方可焚。</p>
+          <p v-else>四样未齐（{{ fenyuHave }} / 4）。四样既齐，于封卷之时，方可焚。</p>
+          <RouterLink class="back-link" to="/f/finale-ledger">去《封卷》→</RouterLink>
+        </section>
+
         <!-- 实体索引 -->
         <section v-if="entityList.length" class="frag-section">
           <h2 class="frag-section-title">相关人物 · 地点 · 神祇</h2>
@@ -79,10 +86,16 @@ import Zhaiyuan from './Zhaiyuan.vue'
 import Glitch from '../components/Glitch.vue'
 import GlitchFlicker from '../components/GlitchFlicker.vue'
 import { resolveRefs } from '../data/net'
+import { GREY_PROOF, greyHave as countGreyHave } from '../data/grey'
 
 const route = useRoute()
 const fragment = computed(() => FRAGMENTS.find((f) => f.id === route.params.id))
 const locked = computed(() => !!fragment.value && !!fragment.value.requires && !game.hasKey(fragment.value.requires))
+
+// 《焚余》：四样回执齐了没有，齐了就该回封卷
+const isFenyu = computed(() => fragment.value?.id === 'fenyu')
+const fenyuHave = computed(() => countGreyHave(game.hasRead))
+const fenyuReady = computed(() => fenyuHave.value === GREY_PROOF.length)
 
 // 调阅即记已读（隐藏碎片由此在实体页/后续检索中稳定显现）
 watch(
@@ -125,6 +138,17 @@ const puzzleHeading = computed(() => HEADINGS[fragment.value?.puzzle] || '此卷
   gap: 2rem;
   align-items: start;
   margin: 20px 0;
+}
+.frag-fenyu {
+  margin: 6px 0 18px;
+  color: #b09a72;
+  font-size: 0.92rem;
+}
+.frag-fenyu p {
+  margin: 0 0 10px;
+}
+.frag-fenyu .back-link {
+  color: #bd9c68;
 }
 .frag-body-solo {
   grid-template-columns: 1fr;

@@ -3,6 +3,7 @@ import FRAGMENTS from '../src/data/fragments'
 import JOURNAL from '../src/data/journal'
 import ENTITIES from '../src/data/entities'
 import { LEVELS, resolveRef } from '../src/data/net'
+import { GREY_PROOF } from '../src/data/grey'
 
 const FRAG_IDS = new Set(FRAGMENTS.map((f) => f.id))
 const ART_IDS = new Set(JOURNAL.map((a) => a.id))
@@ -48,5 +49,10 @@ describe('碎片网 · 引用完整性（原 check_refs.py）', () => {
   it('resolveRef 对已知/未知 id 行为正确', () => {
     expect(resolveRef(FRAGMENTS[0].id)).toBeTruthy()
     expect(resolveRef('__nope__')).toBeNull()
+  })
+
+  it('灰线四样回执都能解析成碎片', () => {
+    expect(GREY_PROOF).toHaveLength(4)
+    for (const id of GREY_PROOF) expect(FRAG_IDS.has(id), `灰线回执 ${id} 不存在`).toBe(true)
   })
 })

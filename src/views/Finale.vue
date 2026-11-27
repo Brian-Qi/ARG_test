@@ -15,11 +15,13 @@
         <button v-if="canGrey" class="grey" @click="end('grey')">销毁账簿</button>
         <button v-if="canHidden" class="quiet" @click="end('hidden')">归还姓名</button>
       </div>
+      <!-- 未解完 / 走过捷径：这是「归还姓名」为什么不可用的原因 -->
       <p v-if="!canHidden" class="choice-note">
         <template v-if="missingHidden.length">还有卷宗未亲手解过：{{ missingHidden.join('、') }}。</template>
         <template v-else>已走过捷径，归还姓名一途已断。</template>
       </p>
-      <p v-else-if="!canGrey" class="choice-note faint">
+      <!-- 焚账这条路：只要还没备齐就说明缺什么，不因可以拿好结局就闭嘴 -->
+      <p v-if="!canGrey" class="choice-note faint">
         <template v-if="!game.hasRead('fenyu')">账烧得掉，也得先知道烧的是什么。</template>
         <template v-else>焚账须凭四样回执：死者之名 · 死者之药 · 死者之签 · 待收之信（{{ greyHave }} / 4）。</template>
       </p>
@@ -31,7 +33,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import game from '../stores/game'
-import { deobfList } from '../utils/obfuscate'
+import { GREY_PROOF, greyHave as countGreyHave } from '../data/grey'
 
 const router = useRouter()
 
@@ -55,8 +57,8 @@ const missingHidden = computed(() => {
   return miss
 })
 // 灰结局支线「焚余」：先读《著录勘误》→ 循线找到《焚余》→ 集齐四样回执，才烧得掉这本账
-const GREY_PROOF = deobfList('==wav9mY0NXZ1dGfwlGbzVmb1RncvZGfhhmevFWe8lnchVHdpJ2b') // 轻度混淆：四样回执清单不在明文
-const greyHave = computed(() => GREY_PROOF.filter((id) => game.hasRead(id)).length)
+// 四样清单与进度判定共用 data/grey.js，别在两处各写一份
+const greyHave = computed(() => countGreyHave(game.hasRead))
 const canGrey = computed(() => game.hasRead('fenyu') && greyHave.value === GREY_PROOF.length)
 
 // 选完即记结局，并跳转到对应的独立结局页
