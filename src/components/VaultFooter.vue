@@ -20,17 +20,56 @@
         <span>强惊吓画面</span>
         <em>{{ game.state.strongScare ? '已开 · 含突脸与血屏' : '已关 · 仅保留文字与线索' }}</em>
       </label>
+
+      <div class="vault-wipe">
+        <button class="wipe-btn" type="button" @click="askWipe">
+          {{ confirming ? '再点一次，确认清除' : '清除记忆' }}
+        </button>
+        <em class="wipe-note">{{ wipeNote }}</em>
+      </div>
     </div>
   </footer>
 </template>
 
 <script setup>
+import { ref, onBeforeUnmount } from 'vue'
+import { useRouter } from 'vue-router'
 import Glitch from './Glitch.vue'
 import game from '../stores/game'
+
+const router = useRouter()
 
 function toggle(e) {
   game.setStrongScare(e.target.checked)
 }
+
+// 清除记忆：删掉这台设备上的全部记录，从 A 面重来。
+// 刷新页面做不到这件事——进度在 localStorage，不是缓存。
+const confirming = ref(false)
+const wipeNote = ref('删除本机全部调阅记录（画面偏好保留）')
+let timer = null
+
+function askWipe() {
+  if (!confirming.value) {
+    confirming.value = true
+    wipeNote.value = '进度、结局、消息都会消失，且不可恢复'
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      confirming.value = false
+      wipeNote.value = '删除本机全部调阅记录（画面偏好保留）'
+    }, 6000)
+    return
+  }
+  if (timer) clearTimeout(timer)
+  game.clearMemory()
+  confirming.value = false
+  wipeNote.value = '已清除。请重新从馆藏目录开始。'
+  router.push('/')
+}
+
+onBeforeUnmount(() => {
+  if (timer) clearTimeout(timer)
+})
 </script>
 
 <style scoped>
@@ -103,5 +142,35 @@ function toggle(e) {
 .scare-toggle input:focus-visible {
   outline: 2px solid #d13424;
   outline-offset: 2px;
+}
+
+/* ---------- 清除记忆 ---------- */
+.vault-wipe {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.wipe-btn {
+  background: transparent;
+  border: 1px solid rgba(157, 40, 26, 0.45);
+  color: #9a8262;
+  font-family: inherit;
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+.wipe-btn:hover {
+  color: #d13424;
+  border-color: #d13424;
+}
+.wipe-note {
+  font-style: normal;
+  color: #6d5a40;
+  font-size: 12px;
 }
 </style>

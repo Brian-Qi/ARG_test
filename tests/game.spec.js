@@ -52,4 +52,29 @@ describe('游戏状态 · 支线/结局/重置', () => {
     game.setStrongScare(true)
     expect(localStorage.getItem('cx_strong')).toBe('on')
   })
+
+  it('清除记忆：删掉全部游玩记录，只留下画面偏好', () => {
+    game.setEnding('grey')
+    game.markBranch('zhaiyuan')
+    game.collectKey('zhenxiang')
+    game.state.namesSolved = true
+    localStorage.setItem('cx_seen_hidden', '1')
+    localStorage.setItem('cx_family_unlocked', '1')
+    game.setStrongScare(false)
+
+    game.clearMemory()
+
+    // 记录清空
+    expect(localStorage.getItem('cx_game')).toBeNull()
+    expect(localStorage.getItem('cx_seen_hidden')).toBeNull()
+    expect(localStorage.getItem('cx_family_unlocked')).toBeNull()
+    expect(localStorage.getItem('cx_endings')).toBeNull()
+    // 状态回到初始
+    expect(game.state.zhaiyuanSolved).toBe(false)
+    expect(game.state.namesSolved).toBe(false)
+    expect(game.state.ending).toBeNull()
+    expect(game.state.keys).toEqual({})
+    // 画面偏好保留
+    expect(localStorage.getItem('cx_strong')).toBe('off')
+  })
 })

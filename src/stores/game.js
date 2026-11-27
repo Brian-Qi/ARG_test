@@ -244,6 +244,38 @@ function reset() {
   } // 二周目：全图放行一并撤销
 }
 
+// —— 清除记忆：删掉这台设备上的全部游玩记录（保留画面偏好）——
+// 进度、结局、消息、族谱、第0页标记一并清空；cx_strong / cx_reduce_motion 是显示偏好，留着。
+const KEEP_ON_WIPE = ['cx_strong', 'cx_reduce_motion']
+function clearMemory() {
+  try {
+    const keys = []
+    for (let i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i))
+    keys
+      .filter((k) => k && k.startsWith('cx_') && !KEEP_ON_WIPE.includes(k))
+      .forEach((k) => localStorage.removeItem(k))
+    const sKeys = []
+    for (let i = 0; i < sessionStorage.length; i++) sKeys.push(sessionStorage.key(i))
+    sKeys.filter((k) => k && k.startsWith('cx_')).forEach((k) => sessionStorage.removeItem(k))
+  } catch (err) {
+    /* 隐私模式下忽略 */
+  }
+  Object.assign(state, {
+    wish: '',
+    signed: false,
+    roadSolved: false,
+    audioSolved: false,
+    portraitSolved: false,
+    zhaiyuanSolved: false,
+    namesSolved: false,
+    ending: null,
+    scare: null,
+    shortcuts: 0,
+    keys: {},
+    read: {}
+  })
+}
+
 // —— 减弱动效：手动覆盖 + prefers-reduced-motion 自动适配 ——
 const K_MOTION = 'cx_reduce_motion'
 const prefersReduced = () =>
@@ -290,7 +322,8 @@ export default {
   playedBefore,
   hasEnding,
   allowViaMap,
-  mapPass
+  mapPass,
+  clearMemory
 }
 
 export { markSeenHidden, seenHidden, shenSearched, markShenSearched }

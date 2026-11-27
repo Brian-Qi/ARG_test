@@ -241,13 +241,12 @@ function submit(placeId) {
   color: #5c4a34;
 }
 .zy-cards {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
   gap: 10px;
   margin-top: 14px;
 }
 .zy-card {
-  flex: 1 1 150px;
   display: flex;
   flex-direction: column;
   gap: 4px;
