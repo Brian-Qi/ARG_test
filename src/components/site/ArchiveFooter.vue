@@ -12,7 +12,7 @@
         <RouterLink to="/records/corrections">数据校正与勘误公告</RouterLink>　 <RouterLink to="/search">检索帮助</RouterLink>　
         <button class="footer-link" type="button" @click="showAbout = true">关于本馆</button>　
         <RouterLink to="/services/feedback">意见建议</RouterLink><br />
-        <span class="faint">本馆为虚构创作 · 实际运营方备案：<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026048634号</a></span>
+        <span class="faint">本馆为虚构创作 · 实际运营方备案：<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">浙ICP备2026048634号-1</a></span>
       </nav>
     </div>
 
